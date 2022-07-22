@@ -3,6 +3,9 @@
     "type": "library",
     "license": "MIT",
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
         "sort-packages": true
     },
     "autoload": {
@@ -15,6 +18,9 @@
         "ext-gmp": "*"
     },
     "require-dev": {
-        "psy/psysh": "*"
+        "psy/psysh": "*",
+        "sandfox.dev/code-standard": "^10@dev",
+        "squizlabs/php_codesniffer": "*",
+        "vimeo/psalm": "^4.24"
     }
 }
