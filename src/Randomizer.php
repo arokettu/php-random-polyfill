@@ -83,7 +83,7 @@ final class Randomizer
 
         $result = $this->importGmp32($result);
 
-        if ($umax === self::$UINT32_MAX) {
+        if ($umax == self::$UINT32_MAX) {
             return $result;
         }
 
@@ -122,7 +122,7 @@ final class Randomizer
 
         $result = $this->importGmp64($result);
 
-        if ($umax === self::$UINT64_MAX) {
+        if ($umax == self::$UINT64_MAX) {
             return $result;
         }
 
