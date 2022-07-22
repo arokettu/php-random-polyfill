@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Random\Engine;
 
-use Random\Engine;
+use Random\CryptoSafeEngine;
 
-final class Secure implements Engine
+final class Secure implements CryptoSafeEngine
 {
     public function generate(): string
     {
