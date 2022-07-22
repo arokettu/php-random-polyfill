@@ -13,9 +13,16 @@ final class Secure implements CryptoSafeEngine
 {
     public function generate(): string
     {
-        return random_bytes(PHP_INT_SIZE);
+        try {
+            return random_bytes(PHP_INT_SIZE);
+        } catch (Exception $e) {
+            return ''; // let Randomizer fail
+        }
     }
 
+    /**
+     * @throws Exception
+     */
     public function __sleep(): array
     {
         throw new Exception("Serialization of 'Random\Engine\Secure' is not allowed");
