@@ -11,6 +11,7 @@ use ValueError;
 
 use function gmp_import;
 use function gmp_init;
+use function gmp_intval;
 use function str_pad;
 use function strlen;
 use function substr;
@@ -22,10 +23,11 @@ final class Randomizer
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
 
-    /** @var Engine|null */
+    /** @var Engine */
     private $engine;
-    /** @var GMP */
+    /** @var GMP|null */
     private static $UINT32_MAX = null;
+    /** @var GMP|null */
     private static $UINT64_MAX = null;
 
     public function __construct(?Engine $engine = null)
@@ -89,7 +91,7 @@ final class Randomizer
 
         $umax += 1;
 
-        if (($umax & ($umax - 1)) === 0) {
+        if (($umax & ($umax - 1)) == 0) {
             return $result & ($umax - 1);
         }
 
@@ -128,7 +130,7 @@ final class Randomizer
 
         $umax += 1;
 
-        if (($umax & ($umax - 1)) === 0) {
+        if (($umax & ($umax - 1)) == 0) {
             return $result & ($umax - 1);
         }
 
