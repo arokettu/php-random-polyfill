@@ -173,4 +173,9 @@ final class Randomizer
         $value = str_pad($value, self::SIZEOF_UINT_64_T, "\0");
         return gmp_import($value, self::SIZEOF_UINT_64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
     }
+
+    public function __wakeup(): void
+    {
+        $this->__construct($this->engine);
+    }
 }
