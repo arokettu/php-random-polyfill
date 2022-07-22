@@ -1,0 +1,20 @@
+{
+    "name": "arokettu/randomizer-polyfill",
+    "type": "library",
+    "license": "MIT",
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Random\\": "src"
+        }
+    },
+    "require": {
+        "php": ">= 7.1",
+        "ext-gmp": "*"
+    },
+    "require-dev": {
+        "psy/psysh": "*"
+    }
+}
