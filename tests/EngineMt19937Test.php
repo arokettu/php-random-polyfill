@@ -12,6 +12,11 @@ class EngineMt19937Test extends TestCase
 {
     public function testMtRandCompare(): void
     {
+        // @see https://www.php.net/manual/en/migration72.incompatible.php#migration72.incompatible.rand-mt_rand-output
+        if (PHP_VERSION_ID < 70200) {
+            return;
+        }
+
         // seed, min, max
         $params = [
             [  7552,              0,           1000],
