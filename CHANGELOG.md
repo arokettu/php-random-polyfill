@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+*Jul 23, 2022*
+
+* Fixed Mt not generating enough data sometimes
+
 ## 0.1.0
 
 *Jul 23, 2022*

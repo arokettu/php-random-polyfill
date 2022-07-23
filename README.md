@@ -42,7 +42,6 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
 
 ## TODO
 
-* Tests & CI
 * `Random\Randomizer`
   * `getBytes($length)`
   * `shuffleArray($array)`

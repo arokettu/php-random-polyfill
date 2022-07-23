@@ -46,7 +46,6 @@ What works
 TODO
 ====
 
-* Tests & CI
 * ``Random\Randomizer``
 
   * ``getBytes($length)``
