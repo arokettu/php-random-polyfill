@@ -22,5 +22,8 @@
         "sandfox.dev/code-standard": "^10@dev",
         "squizlabs/php_codesniffer": "*",
         "vimeo/psalm": "^4.24"
+    },
+    "provide": {
+        "ext-random": "8.1.0"
     }
 }
