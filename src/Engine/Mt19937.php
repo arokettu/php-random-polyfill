@@ -12,10 +12,10 @@ use RuntimeException;
 
 use function array_fill;
 use function array_map;
+use function bin2hex;
+use function gmp_export;
 use function gmp_init;
-use function gmp_strval;
 use function random_int;
-use function str_pad;
 
 use const MT_RAND_MT19937;
 use const MT_RAND_PHP;
@@ -107,7 +107,7 @@ final class Mt19937 implements Engine
         $s = &$this->state;
 
         for ($i = self::N_M; $i--; ++$p) {
-            $s[$p] = $this->twist($s[$p + self::M], $s[$p], $s[$p] + 1);
+            $s[$p] = $this->twist($s[$p + self::M], $s[$p], $s[$p + 1]);
         }
         for ($i = self::M; --$i; ++$p) {
             $s[$p] = $this->twist($s[$p - self::N_M], $s[$p], $s[$p + 1]);
@@ -148,7 +148,7 @@ final class Mt19937 implements Engine
     public function __debugInfo(): array
     {
         $states = array_map(function (GMP $gmp) {
-            return str_pad(gmp_strval($gmp, 16), 8, '0', STR_PAD_LEFT);
+            return bin2hex(gmp_export($gmp, 1, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST));
         }, $this->state);
         $states[] = $this->stateCount;
         $states[] = $this->mode;
