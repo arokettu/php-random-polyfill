@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 //mt_srand(123, MT_RAND_MT19937);
 //$rnd = new \Random\Randomizer($e = new \Random\Engine\Mt19937(123, MT_RAND_MT19937));
