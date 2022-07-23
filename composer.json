@@ -1,5 +1,6 @@
 {
     "name": "arokettu/random-polyfill",
+    "description": "Random Extension Polyfill for PHP",
     "type": "library",
     "license": "BSD-3-Clause",
     "config": {
@@ -14,10 +15,11 @@
         }
     },
     "require": {
-        "php": ">= 7.1",
+        "php": "^7.1 | ^8.0",
         "ext-gmp": "*"
     },
     "require-dev": {
+        "phpunit/phpunit": "^7.5 | ^8.5 | ^9.5",
         "psy/psysh": "*",
         "sandfox.dev/code-standard": "^10@dev",
         "squizlabs/php_codesniffer": "*",
