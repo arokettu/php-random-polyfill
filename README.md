@@ -35,6 +35,7 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
 
 ## TODO
 
+* Tests & CI
 * `Random\Randomizer`
   * `getBytes($length)`
   * `shuffleArray($array)`
@@ -51,6 +52,7 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
 ## License
 
 The library is available as open source under the terms of the [3-Clause BSD License].
-See `COPYING.adoc` for additional licenses.
+See [COPYING.adoc][COPYING] for additional licenses.
 
 [3-Clause BSD License]: https://opensource.org/licenses/BSD-3-Clause
+[COPYING]: COPYING.adoc
