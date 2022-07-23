@@ -4,7 +4,10 @@
 -->
 <ruleset name="Custom Standard" namespace="MyProject\CS\Standard">
     <rule ref="SandFox_PHP71">
+        <!-- all functions are imported -->
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
+        <!-- crashes -->
+        <exclude name="Security.BadFunctions.CallbackFunctions"/>
     </rule>
     <file>src</file>
 <!--    <file>tests</file>-->
