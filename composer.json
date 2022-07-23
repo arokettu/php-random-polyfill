@@ -28,6 +28,11 @@
             "Random\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Arokettu\\Random\\Tests\\": "tests"
+        }
+    },
     "require": {
         "php": "^7.1 | ^8.0",
         "ext-gmp": "*"
