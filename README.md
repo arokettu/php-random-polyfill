@@ -49,6 +49,16 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
   * If I have time
   * Don't count on it
 
+## Documentation
+
+Read full documentation here: <https://sandfox.dev/php/random-polyfill.html>
+
+Also on Read the Docs: <https://php-random-polyfill.readthedocs.io/>
+
+## Support
+
+Please file issues on our main repo at GitLab: <https://gitlab.com/sandfox/php-random-polyfill/-/issues>
+
 ## License
 
 The library is available as open source under the terms of the [3-Clause BSD License].

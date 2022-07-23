@@ -1,8 +1,22 @@
 {
     "name": "arokettu/random-polyfill",
     "description": "Random Extension Polyfill for PHP",
+    "keywords": ["random", "polyfill"],
     "type": "library",
     "license": "BSD-3-Clause",
+    "homepage": "https://sandfox.dev/php/random-polyfill.html",
+    "support": {
+        "issues": "https://gitlab.com/sandfox/php-random-polyfill/-/issues",
+        "source": "https://gitlab.com/sandfox/php-random-polyfill",
+        "docs": "https://php-random-polyfill.readthedocs.io/",
+        "chat": "https://gitter.im/arokettu/community"
+    },
+    "authors": [{
+        "name": "Anton Smirnov",
+        "email": "sandfox@sandfox.me",
+        "role": "developer",
+        "homepage": "https://sandfox.me/"
+    }],
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
