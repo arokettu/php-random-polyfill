@@ -84,6 +84,7 @@ final class Randomizer
         //
         // phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace
         // phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+        /** @psalm-suppress UndefinedThisPropertyFetch */
         if (
             $this->engine instanceof Mt19937 &&
             (function () { return $this->mode === MT_RAND_PHP; })->call($this->engine) // read private property

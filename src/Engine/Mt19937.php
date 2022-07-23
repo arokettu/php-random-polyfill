@@ -98,6 +98,7 @@ final class Mt19937 implements Engine
 
     private function seed(int $seed): void
     {
+        /** @var GMP[] $state */
         $state = array_fill(0, self::N, null);
 
         $prevState = $state[0] = $seed & self::$BIT32;
