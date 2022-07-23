@@ -15,6 +15,7 @@ use function array_map;
 use function gmp_init;
 use function gmp_strval;
 use function random_int;
+use function str_pad;
 
 use const MT_RAND_MT19937;
 use const MT_RAND_PHP;
@@ -25,7 +26,7 @@ final class Mt19937 implements Engine
 {
     private const N = 624;
     private const M = 397;
-    private const M_N = self::M - self::N;
+    private const N_M = self::N - self::M;
 
     /** @var GMP[] */
     private $state;
@@ -105,13 +106,13 @@ final class Mt19937 implements Engine
         $p = 0;
         $s = &$this->state;
 
-        for ($i = self::N - self::M; $i--; ++$p) {
+        for ($i = self::N_M; $i--; ++$p) {
             $s[$p] = $this->twist($s[$p + self::M], $s[$p], $s[$p] + 1);
         }
         for ($i = self::M; --$i; ++$p) {
-            $s[$p] = $this->twist($s[$p + self::M_N], $s[$p], $s[$p + 1]);
+            $s[$p] = $this->twist($s[$p - self::N_M], $s[$p], $s[$p + 1]);
         }
-        $s[$p] = $this->twist($s[$p + self::M_N], $s[$p], $s[0]);
+        $s[$p] = $this->twist($s[$p - self::N_M], $s[$p], $s[0]);
 
         $this->stateCount = 0;
     }
@@ -147,7 +148,7 @@ final class Mt19937 implements Engine
     public function __debugInfo(): array
     {
         $states = array_map(function (GMP $gmp) {
-            return gmp_strval($gmp, 16);
+            return str_pad(gmp_strval($gmp, 16), 8, '0', STR_PAD_LEFT);
         }, $this->state);
         $states[] = $this->stateCount;
         $states[] = $this->mode;
