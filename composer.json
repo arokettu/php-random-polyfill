@@ -1,7 +1,7 @@
 {
     "name": "arokettu/randomizer-polyfill",
     "type": "library",
-    "license": "MIT",
+    "license": "BSD-3-Clause",
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
