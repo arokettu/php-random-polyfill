@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Random;
 
 use GMP;
+use Random\Engine\Mt19937;
 use Random\Engine\Secure;
 use RuntimeException;
 use ValueError;
@@ -80,6 +81,7 @@ final class Randomizer
         $umax = gmp_init($max) - gmp_init($min);
 
         $bit32 =
+            $this->engine instanceof Mt19937 ||
             $this->engine instanceof Secure && PHP_INT_SIZE <= self::SIZEOF_UINT_32_T ||
             $umax > self::$UINT32_MAX;
 
