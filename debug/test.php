@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/Xorshift32.php';
 
 //$rnd = new \Random\Randomizer(new \Random\Engine\Secure());
 $rnd = new \Random\Randomizer(new \Random\Engine\Xorshift32(123));
