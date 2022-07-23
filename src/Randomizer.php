@@ -32,9 +32,19 @@ final class Randomizer
 
     public function __construct(?Engine $engine = null)
     {
+        $this->initConst();
+
         $this->engine = $engine ?? new Engine\Secure();
-        self::$UINT32_MAX = self::$UINT32_MAX ?? gmp_init('4294967295');
-        self::$UINT64_MAX = self::$UINT64_MAX ?? gmp_init('18446744073709551615');
+    }
+
+    private function initConst(): void
+    {
+        if (self::$UINT32_MAX === null) {
+            self::$UINT32_MAX = gmp_init('ffff' . 'ffff', 16);
+        }
+        if (self::$UINT64_MAX === null) {
+            self::$UINT64_MAX = gmp_init('ffff' . 'ffff' . 'ffff' . 'ffff', 16);
+        }
     }
 
     private function generate(): string
@@ -178,6 +188,6 @@ final class Randomizer
 
     public function __wakeup(): void
     {
-        $this->__construct($this->engine);
+        $this->initConst();
     }
 }
