@@ -47,6 +47,10 @@ final class Mt19937 implements Engine
     private static $LO_BIT = null;
     /** @var GMP|null  */
     private static $LO_BITS = null;
+    /** @var GMP|null  */
+    private static $GEN1 = null;
+    /** @var GMP|null  */
+    private static $GEN2 = null;
 
     public function __construct(?int $seed = null, int $mode = MT_RAND_MT19937)
     {
@@ -67,22 +71,28 @@ final class Mt19937 implements Engine
     private function initConst(): void
     {
         if (self::$TWIST_CONST === null) {
-            self::$TWIST_CONST = gmp_init('9908b0df', 16); // can't fit into 32bit int
+            self::$TWIST_CONST = gmp_init('9908b0df', 16); // can't fit into signed 32bit int
         }
         if (self::$BIT32 === null) {
-            self::$BIT32 = gmp_init('ffffffff', 16); // can't fit into 32bit int
+            self::$BIT32 = gmp_init('ffffffff', 16); // can't fit into signed 32bit int
         }
         if (self::$SEED_STEP_VALUE === null) {
-            self::$SEED_STEP_VALUE = gmp_init(1812433253); // can fit into 32bit int
+            self::$SEED_STEP_VALUE = gmp_init(1812433253); // can fit into signed 32bit int
         }
         if (self::$HI_BIT === null) {
-            self::$HI_BIT = gmp_init('80000000', 16); // can't fit into 32bit int
+            self::$HI_BIT = gmp_init('80000000', 16); // can't fit into signed 32bit int
         }
         if (self::$LO_BIT === null) {
-            self::$LO_BIT = gmp_init(1); // can fit into 32bit int
+            self::$LO_BIT = gmp_init(1); // can fit into signed 32bit int
         }
         if (self::$LO_BITS === null) {
-            self::$LO_BITS = gmp_init(0x7FFFFFFF); // can fit into 32bit int
+            self::$LO_BITS = gmp_init(0x7FFFFFFF); // can fit into signed 32bit int
+        }
+        if (self::$GEN1 === null) {
+            self::$GEN1 = gmp_init('9d2c5680', 16); // can't fit into signed 32bit int
+        }
+        if (self::$GEN2 === null) {
+            self::$GEN2 = gmp_init('efc60000', 16); // can't fit into signed 32bit int
         }
     }
 
@@ -136,8 +146,17 @@ final class Mt19937 implements Engine
 
     public function generate(): string
     {
-        // TODO: Implement generate() method.
-        return '';
+        if ($this->stateCount >= self::N) {
+            $this->reload();
+        }
+
+        $s1 = $this->state[$this->stateCount++];
+        $s1 ^= ($s1 >> 11);
+        $s1 ^= ($s1 << 7) & self::$GEN1;
+        $s1 ^= ($s1 << 15) & self::$GEN2;
+        $s1 ^= ($s1 >> 18);
+
+        return gmp_export($s1, 1, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
     }
 
     public function __wakeup(): void
