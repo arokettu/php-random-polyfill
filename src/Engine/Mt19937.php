@@ -166,7 +166,7 @@ final class Mt19937 implements Engine
         $s1 ^= ($s1 << 15) & self::$GEN2;
         $s1 ^= ($s1 >> 18);
 
-        return gmp_export($s1, 1, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
+        return gmp_export($s1, 4, GMP_LITTLE_ENDIAN);
     }
 
     public function __wakeup(): void
@@ -177,7 +177,7 @@ final class Mt19937 implements Engine
     public function __debugInfo(): array
     {
         $states = array_map(function (GMP $gmp) {
-            return bin2hex(gmp_export($gmp, 1, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST));
+            return bin2hex(gmp_export($gmp, 4, GMP_LITTLE_ENDIAN));
         }, $this->state);
         $states[] = $this->stateCount;
         $states[] = $this->mode;
