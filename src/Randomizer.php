@@ -18,11 +18,13 @@ use function strlen;
 use function substr;
 
 use const GMP_LITTLE_ENDIAN;
+use const MT_RAND_PHP;
 
 final class Randomizer
 {
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
+    private const PHP_MT_RAND_MAX = 0x7FFFFFFF;
 
     /** @var Engine */
     private $engine;
@@ -77,6 +79,19 @@ final class Randomizer
         if ($max < $min) {
             throw new ValueError('Argument #2 ($max) must be greater than or equal to argument #1 ($min)');
         }
+
+        // handle MT_RAND_PHP
+        //
+        // phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace
+        // phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
+        if (
+            $this->engine instanceof Mt19937 &&
+            (function () { return $this->mode === MT_RAND_PHP; })->call($this->engine) // read private property
+        ) {
+            return $this->rangeBadscaling($min, $max);
+        }
+        // phpcs:enable Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace
+        // phpcs:enable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
 
         $umax = gmp_init($max) - gmp_init($min);
 
@@ -164,6 +179,15 @@ final class Randomizer
         }
 
         return $result % $umax;
+    }
+
+    private function rangeBadscaling(int $min, int $max): int
+    {
+        $n = $this->generate();
+        $n = $this->importGmp32($n);
+        $n = gmp_intval($n >> 1);
+        // (__n) = (__min) + (zend_long) ((double) ( (double) (__max) - (__min) + 1.0) * ((__n) / ((__tmax) + 1.0)))
+        return $min + (int) (( (float)$max - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0)));
     }
 
     private function doNextInt(): int
