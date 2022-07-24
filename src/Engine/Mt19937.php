@@ -18,12 +18,15 @@ use GMP;
 use InvalidArgumentException;
 use Random\Engine;
 use RuntimeException;
+use Serializable;
 
 use function array_fill;
 use function array_map;
 use function bin2hex;
 use function gmp_export;
+use function gmp_import;
 use function gmp_init;
+use function hex2bin;
 use function random_int;
 
 use const MT_RAND_MT19937;
@@ -31,7 +34,7 @@ use const MT_RAND_PHP;
 use const PHP_INT_MAX;
 use const PHP_INT_MIN;
 
-final class Mt19937 implements Engine
+final class Mt19937 implements Engine, Serializable
 {
     private const N = 624;
     private const M = 397;
@@ -169,12 +172,40 @@ final class Mt19937 implements Engine
         return gmp_export($s1, 4, GMP_LITTLE_ENDIAN);
     }
 
-    public function __wakeup(): void
+    public function serialize(): string
+    {
+        trigger_error('Serialized object will be incompatible with PHP 8.2');
+        return serialize($this->__serialize());
+    }
+
+    /**
+     * @param string $data
+     */
+    public function unserialize($data): void
+    {
+        $this->__unserialize(unserialize($data));
+    }
+
+    public function __serialize(): array
+    {
+        return [[], $this->getStates()];
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function __unserialize(array $data): void
     {
         $this->initConst();
+        $this->loadStates($data[1] ?? []);
     }
 
     public function __debugInfo(): array
+    {
+        return ['__states' => $this->getStates()];
+    }
+
+    private function getStates(): array
     {
         $states = array_map(function (GMP $gmp) {
             return bin2hex(gmp_export($gmp, 4, GMP_LITTLE_ENDIAN));
@@ -182,6 +213,26 @@ final class Mt19937 implements Engine
         $states[] = $this->stateCount;
         $states[] = $this->mode;
 
-        return ['__states' => $states];
+        return $states;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function loadStates(array $states): void
+    {
+        /** @var GMP[] $state */
+        $state = array_fill(0, self::N, null);
+
+        for ($i = 0; $i < self::N; $i++) {
+            if (!isset($states[$i])) {
+                throw new Exception("Engine serialize failed");
+            }
+            $state[$i] = gmp_import(hex2bin($states[$i]), 4, GMP_LITTLE_ENDIAN);
+        }
+
+        $this->state = $state;
+        $this->stateCount = $states[self::N];
+        $this->mode = $states[self::N + 1];
     }
 }

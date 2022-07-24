@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.next
+
+* `Mt19937`
+  * Serialization and unserialization are now compatible with PHP 8.2
+    if performed in PHP 7.4+
+
 ## 0.1.1
 
 *Jul 23, 2022*
