@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Random;
 
+use Closure;
 use GMP;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
@@ -89,25 +90,39 @@ final class Randomizer
             throw new ValueError('Argument #2 ($max) must be greater than or equal to argument #1 ($min)');
         }
 
+        // engine has range func
+        if (
+            $this->engine instanceof Secure
+        ) {
+            /** @psalm-suppress PossiblyInvalidFunctionCall */
+            $result = Closure::bind(function (int $min, int $max): ?int {
+                /** @psalm-suppress UndefinedMethod */
+                return $this->range($min, $max);
+            }, $this->engine, $this->engine)($min, $max);
+
+            if ($result === null) {
+                throw new RuntimeException('Random number generation failed');
+            }
+
+            return $result;
+        }
+
         // handle MT_RAND_PHP
-        //
-        // phpcs:disable Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace
-        // phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
-        /** @psalm-suppress UndefinedThisPropertyFetch */
+        /** @psalm-suppress PossiblyInvalidFunctionCall */
         if (
             $this->engine instanceof Mt19937 &&
-            (function () { return $this->mode === MT_RAND_PHP; })->call($this->engine) // read private property
+            Closure::bind(function () {
+                /** @psalm-suppress UndefinedThisPropertyFetch */
+                return $this->mode === MT_RAND_PHP; // read private property
+            }, $this->engine, $this->engine)()
         ) {
             return $this->rangeBadscaling($min, $max);
         }
-        // phpcs:enable Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace
-        // phpcs:enable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
 
         $umax = gmp_init($max) - gmp_init($min);
 
         $bit32 =
             $this->engine instanceof Mt19937 ||
-            $this->engine instanceof Secure && PHP_INT_SIZE <= self::SIZEOF_UINT_32_T ||
             $umax > self::$UINT32_MAX;
 
         return gmp_intval(($bit32 ? $this->range32($umax) : $this->range64($umax)) + $min);

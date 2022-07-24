@@ -29,6 +29,15 @@ final class Secure implements CryptoSafeEngine
         }
     }
 
+    private function range(int $min, int $max): ?int
+    {
+        try {
+            return random_int($min, $max);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
     /**
      * @throws Exception
      */
