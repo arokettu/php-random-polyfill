@@ -237,6 +237,25 @@ final class Randomizer
         return gmp_import($value, self::SIZEOF_UINT_64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
     }
 
+    public function getBytes(int $length): string
+    {
+        if ($length < 1) {
+            throw new ValueError('Argument #1 ($length) must be greater than 0');
+        }
+
+        $retval = '';
+
+        do {
+            $result = $this->engine->generate();
+            if ($result === '') {
+                throw new RuntimeException('Random number generation failed');
+            }
+            $retval .= $result;
+        } while (strlen($retval) < $length);
+
+        return substr($retval, 0, $length);
+    }
+
     public function __wakeup(): void
     {
         $this->initConst();

@@ -2,6 +2,8 @@
 
 ## 0.next
 
+* `Randomizer`
+  * `getBytes($length)`
 * `Mt19937`
   * Serialization and unserialization are now compatible with PHP 8.2
     if performed in PHP 7.4+
