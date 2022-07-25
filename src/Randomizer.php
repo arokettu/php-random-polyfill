@@ -256,6 +256,26 @@ final class Randomizer
         return substr($retval, 0, $length);
     }
 
+    public function shuffleArray(array $array): array
+    {
+        // handle empty
+        if ($array === []) {
+            return [];
+        }
+
+        $hash = array_values($array);
+        $nLeft = count($hash);
+
+        while (--$nLeft) {
+            $rndIdx = $this->getInt(0, $nLeft);
+            $tmp = $hash[$nLeft];
+            $hash[$nLeft] = $hash[$rndIdx];
+            $hash[$rndIdx] = $tmp;
+        }
+
+        return $hash;
+    }
+
     public function __wakeup(): void
     {
         $this->initConst();
