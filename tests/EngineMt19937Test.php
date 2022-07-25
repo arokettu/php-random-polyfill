@@ -14,7 +14,7 @@ class EngineMt19937Test extends TestCase
     {
         // @see https://www.php.net/manual/en/migration72.incompatible.php#migration72.incompatible.rand-mt_rand-output
         if (PHP_VERSION_ID < 70200) {
-            return;
+            $this->markTestSkipped('PHP 7.1 has glitchy mt_rand');
         }
 
         // seed, min, max
