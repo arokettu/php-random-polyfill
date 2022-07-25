@@ -36,7 +36,6 @@ TODO
 
 * ``Random\Randomizer``
 
-  * ``shuffleArray($array)``
   * ``shuffleBytes($bytes)``
   * ``pickArrayKeys($array, $num)``
 

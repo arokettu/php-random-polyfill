@@ -35,6 +35,7 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
   * `getInt($min, $max)`
   * `getInt()`
   * `getBytes($length)`
+  * `shuffleArray($array)`
 * Engines
   * `Random\Engine` interface
   * `Random\CryptoSafeEngine` interface
@@ -44,7 +45,6 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
 ## TODO
 
 * `Random\Randomizer`
-  * `shuffleArray($array)`
   * `shuffleBytes($bytes)`
   * `pickArrayKeys($array, $num)`
 * Keep updating with fixes from the upcoming betas and release 1.0.0 around PHP 8.2.0 rc 1
