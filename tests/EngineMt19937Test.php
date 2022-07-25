@@ -71,7 +71,7 @@ class EngineMt19937Test extends TestCase
             self::assertEquals(mt_rand(0, 10000), $rnd->getInt(0, 10000), "Index: $i");
         }
 
-        $engSer = unserialize(serialize($engine)); // serialize engine
+        $engSer = @unserialize(serialize($engine)); // serialize engine
 
         $rnd2 = new Randomizer($engSer);
 
@@ -79,10 +79,22 @@ class EngineMt19937Test extends TestCase
             self::assertEquals(mt_rand(0, 10000), $rnd2->getInt(0, 10000), "Index: $i");
         }
 
-        $rndSer = unserialize(serialize($rnd2)); // serialize entire randomizer
+        $rndSer = @unserialize(serialize($rnd2)); // serialize entire randomizer
 
         for ($i = 0; $i < 100; $i++) {
             self::assertEquals(mt_rand(0, 10000), $rndSer->getInt(0, 10000), "Index: $i");
         }
+    }
+
+    public function testSerializableWarning(): void
+    {
+        if (PHP_VERSION_ID >= 70400) {
+            $this->expectNotToPerformAssertions();
+        } else {
+            $this->expectWarning();
+            $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
+        }
+
+        serialize(new Mt19937());
     }
 }
