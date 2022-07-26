@@ -37,9 +37,17 @@ Serialization
 -------------
 
 * Serialization is only compatible if done in PHP 7.4 and later.
-* Serializable entities implement ``\Serializable`` for controlled serialization in PHP 7.1 - 7.3
+* Serializable entities implement ``\Serializable`` for controlled serialization in PHP 7.1 - 7.3.
 * Entities serialized in PHP 7.1 - 7.3 can be unserialized with the polyfill under any version of PHP but will not be
   unserializable by the native extension.
+* Serialization in PHP 7.1 - 7.3 will trigger a warning.
+
+Randomizer
+----------
+
+* `pickArrayKeys()` messes a lot with the internal structure of the PHP hash tables and therefore
+  may produce different results in the userland.
+  Please report if you manage to produce a case where PHP 8.2 and this library disagree.
 
 Mt19937
 -------
