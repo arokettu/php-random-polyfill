@@ -18,6 +18,7 @@ use GMP;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
 use RuntimeException;
+use Serializable;
 use ValueError;
 
 use function array_values;
@@ -32,7 +33,7 @@ use function substr;
 use const GMP_LITTLE_ENDIAN;
 use const MT_RAND_PHP;
 
-final class Randomizer
+final class Randomizer implements Serializable
 {
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
@@ -296,8 +297,30 @@ final class Randomizer
         return $bytes;
     }
 
-    public function __wakeup(): void
+    public function __serialize(): array
+    {
+        return [['engine' => $this->engine]];
+    }
+
+    public function __unserialize(array $data): void
     {
         $this->initConst();
+
+        [$fields] = $data;
+        ['engine' => $this->engine] = $fields;
+    }
+
+    public function serialize(): string
+    {
+        return serialize($this->__serialize());
+    }
+
+    /**
+     * @param string $data
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    public function unserialize($data): void
+    {
+        $this->__unserialize(unserialize($data));
     }
 }
