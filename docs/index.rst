@@ -36,7 +36,6 @@ TODO
 
 * ``Random\Randomizer``
 
-  * ``shuffleBytes($bytes)``
   * ``pickArrayKeys($array, $num)``
 
 * Keep updating with fixes from the upcoming betas and release 1.0.0 around PHP 8.2.0 rc 1

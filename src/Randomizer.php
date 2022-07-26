@@ -20,6 +20,8 @@ use Random\Engine\Secure;
 use RuntimeException;
 use ValueError;
 
+use function array_values;
+use function count;
 use function gmp_import;
 use function gmp_init;
 use function gmp_intval;
@@ -274,6 +276,24 @@ final class Randomizer
         }
 
         return $hash;
+    }
+
+    public function shuffleBytes(string $bytes): string
+    {
+        if (strlen($bytes) <= 1) {
+            return $bytes;
+        }
+
+        $nLeft = strlen($bytes);
+
+        while (--$nLeft) {
+            $rndIdx = $this->getInt(0, $nLeft);
+            $tmp = $bytes[$nLeft];
+            $bytes[$nLeft] = $bytes[$rndIdx];
+            $bytes[$rndIdx] = $tmp;
+        }
+
+        return $bytes;
     }
 
     public function __wakeup(): void
