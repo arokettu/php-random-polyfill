@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Random;
 
 use Closure;
+use Error;
 use GMP;
 use InvalidArgumentException;
 use Random\Engine\Mt19937;
@@ -337,7 +338,20 @@ final class Randomizer implements Serializable
             return $this->engine;
         }
 
-        trigger_error('Undefined property: $' . $name);
+        trigger_error('Undefined property: ' . self::class . '::$' . $name);
         return null;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function __set(string $name, $value): void
+    {
+        throw new Error('Cannot create dynamic property ' . self::class . '::$' . $name);
+    }
+
+    public function __isset(string $name): bool
+    {
+        return $name === 'engine';
     }
 }
