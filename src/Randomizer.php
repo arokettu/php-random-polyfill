@@ -31,6 +31,7 @@ use function gmp_intval;
 use function str_pad;
 use function strlen;
 use function substr;
+use function trigger_error;
 
 use const GMP_LITTLE_ENDIAN;
 use const MT_RAND_PHP;
@@ -317,6 +318,7 @@ final class Randomizer implements Serializable
 
     public function serialize(): string
     {
+        trigger_error('Serialized object will be incompatible with PHP 8.2', E_USER_WARNING);
         return serialize($this->__serialize());
     }
 
