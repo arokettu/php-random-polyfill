@@ -3,6 +3,7 @@
 ## 0.next
 
 * `Randomizer`
+  * `$engine`
   * `getBytes($length)`
   * `shuffleArray($array)`
   * `shuffleBytes($bytes)`

@@ -15,6 +15,7 @@ namespace Random;
 
 use Closure;
 use GMP;
+use InvalidArgumentException;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
 use RuntimeException;
@@ -33,6 +34,9 @@ use function substr;
 use const GMP_LITTLE_ENDIAN;
 use const MT_RAND_PHP;
 
+/**
+ * @property-read Engine $engine
+ */
 final class Randomizer implements Serializable
 {
     private const SIZEOF_UINT_64_T = 8;
@@ -322,5 +326,18 @@ final class Randomizer implements Serializable
     public function unserialize($data): void
     {
         $this->__unserialize(unserialize($data));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        if ($name === 'engine') {
+            return $this->engine;
+        }
+
+        trigger_error('Undefined property: $' . $name);
+        return null;
     }
 }
