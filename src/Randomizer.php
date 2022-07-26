@@ -7,6 +7,8 @@
  * Includes adaptation of C code from the PHP Interpreter
  * @license PHP-3.01 https://spdx.org/licenses/PHP-3.01.html
  * @see https://github.com/php/php-src/blob/eff9aed/ext/random/randomizer.c
+ * @see https://github.com/php/php-src/blob/eff9aed/ext/standard/array.c
+ * @see https://github.com/php/php-src/blob/eff9aed/ext/standard/string.c
  */
 
 declare(strict_types=1);
@@ -16,13 +18,14 @@ namespace Random;
 use Closure;
 use Error;
 use GMP;
-use InvalidArgumentException;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
 use RuntimeException;
 use Serializable;
 use ValueError;
 
+use function array_key_exists;
+use function array_keys;
 use function array_values;
 use function count;
 use function gmp_import;
@@ -301,6 +304,45 @@ final class Randomizer implements Serializable
         }
 
         return $bytes;
+    }
+
+    public function pickArrayKeys(array $array, int $num): array
+    {
+        if ($array === []) {
+            throw new ValueError('Argument #1 ($array) cannot be empty');
+        }
+
+        $numAvail = count($array);
+        $keys = array_keys($array);
+
+        if ($num === 1) {
+            return [$keys[$this->getInt(0, $numAvail - 1)]];
+        }
+
+        if ($num <= 0 || $num > $numAvail) {
+            throw new ValueError(
+                'Argument #2 ($num) must be between 1 and the number of elements in argument #1 ($array)'
+            );
+        }
+
+        $retval = [];
+
+        $i = $num;
+
+        while ($i--) {
+            while (true) {
+                $idx = $this->getInt(0, $numAvail - 1);
+
+                if (array_key_exists($idx, $retval) === false) {
+                    $retval[$idx] = $keys[$idx];
+                    break;
+                }
+            }
+        }
+
+        ksort($retval, SORT_NUMERIC); // sort by indexes
+
+        return array_values($retval); // remove indexes
     }
 
     public function __serialize(): array
