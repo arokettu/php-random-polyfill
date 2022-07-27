@@ -90,9 +90,11 @@ class EngineMt19937Test extends TestCase
     {
         if (PHP_VERSION_ID >= 70400) {
             $this->expectNotToPerformAssertions();
-        } else {
+        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
             $this->expectWarning();
             $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
+        } else {
+            $this->markTestSkipped('PHPUnit is too old for this test');
         }
 
         serialize(new Mt19937());

@@ -7,7 +7,8 @@ require __DIR__ . '/../vendor/autoload.php';
 //$rnd = new \Random\Randomizer(new \Random\Engine\Mt19937(123, MT_RAND_MT19937));
 //$rnd = new \Random\Randomizer(new \Random\Engine\Mt19937(123, MT_RAND_PHP));
 //$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\Zeros());
-$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\Fail());
+//$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\Fail());
+$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\SingleByte());
 
 //$rnd->getBytes(0);
 
