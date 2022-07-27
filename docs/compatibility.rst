@@ -9,6 +9,13 @@ The library is aimed to be compatible with ``ext-random`` from PHP 8.1.
 * Version 0.1 is compatible with PHP 8.2.0 beta 1
 * Version 1.0 will be compatible with PHP 8.2.0 rc 1
 
+Performance
+===========
+
+Well, it uses GMP.
+Guaranteed to be slow.
+Good enough if you need a dozen numbers or so.
+
 What works
 ==========
 
