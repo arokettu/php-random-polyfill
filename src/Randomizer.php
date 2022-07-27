@@ -142,10 +142,10 @@ final class Randomizer implements Serializable
 
     private function range32(GMP $umax): GMP
     {
-        $result = $this->generate();
-        if (strlen($result) < self::SIZEOF_UINT_32_T) {
+        $result = '';
+        do {
             $result .= $this->generate();
-        }
+        } while (strlen($result) < self::SIZEOF_UINT_32_T);
 
         $result = $this->importGmp32($result);
 
@@ -168,10 +168,10 @@ final class Randomizer implements Serializable
                 throw new RuntimeException('Random number generation failed');
             }
 
-            $result = $this->generate();
-            if (strlen($result) < self::SIZEOF_UINT_32_T) {
+            $result = '';
+            do {
                 $result .= $this->generate();
-            }
+            } while (strlen($result) < self::SIZEOF_UINT_32_T);
 
             $result = $this->importGmp32($result);
         }
@@ -207,10 +207,10 @@ final class Randomizer implements Serializable
                 throw new RuntimeException('Random number generation failed');
             }
 
-            $result = $this->generate();
-            if (strlen($result) < self::SIZEOF_UINT_64_T) {
+            $result = '';
+            do {
                 $result .= $this->generate();
-            }
+            } while (strlen($result) < self::SIZEOF_UINT_64_T);
 
             $result = $this->importGmp64($result);
         }
