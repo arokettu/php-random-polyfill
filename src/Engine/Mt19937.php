@@ -89,6 +89,8 @@ use const PHP_INT_MIN;
 
 final class Mt19937 implements Engine, Serializable
 {
+    use Shared\Serialization;
+
     private const N = 624;
     private const M = 397;
     private const N_M = self::N - self::M;
@@ -133,6 +135,9 @@ final class Mt19937 implements Engine, Serializable
         }
     }
 
+    /**
+     * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
+     */
     private function initConst(): void
     {
         if (self::$TWIST_CONST === null) {
@@ -225,41 +230,10 @@ final class Mt19937 implements Engine, Serializable
         return gmp_export($s1, 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
     }
 
-    public function serialize(): string
-    {
-        trigger_error('Serialized object will be incompatible with PHP 8.2', E_USER_WARNING);
-        return serialize($this->__serialize());
-    }
-
     /**
-     * @param string $data
-     * @throws Exception
+     * @return array
+     * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function unserialize($data): void
-    {
-        $this->__unserialize(unserialize($data));
-    }
-
-    public function __serialize(): array
-    {
-        return [[], $this->getStates()];
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->initConst();
-        $this->loadStates($data[1] ?? []);
-    }
-
-    public function __debugInfo(): array
-    {
-        return ['__states' => $this->getStates()];
-    }
-
     private function getStates(): array
     {
         $states = array_map(function (GMP $gmp) {
@@ -273,6 +247,7 @@ final class Mt19937 implements Engine, Serializable
 
     /**
      * @throws Exception
+     * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      */
     private function loadStates(array $states): void
     {
