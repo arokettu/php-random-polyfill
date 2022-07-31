@@ -9,7 +9,7 @@
 * ``arrayPickKeys()`` throws a warning because full compatibility is not achievable.
   Thanks to [Tim Düsterhus][gh@TimWolla] for [the explanation][gh#1]
   * No warning if the engine is ``CryptoSafeEngine``
-* Fixed incorrect range function selection [[#1]][gh#1], thanks to [Tim Düsterhus][gh@TimWolla]
+* Fixed incorrect range function selection [[#1][gh#1]], thanks to [Tim Düsterhus][gh@TimWolla]
 * Fixed byte selection in range64
 
 [gh#1]: https://github.com/arokettu/php-random-polyfill/issues/1
