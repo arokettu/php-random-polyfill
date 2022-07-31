@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.1
+
+*Jul 31, 2022*
+
+* Verified compatibility of custom engines with the current PHP 8.2 master
+* ``getInt()`` now has proper signature ``getInt(int $min, int $max)``
+* ``arrayPickKeys()`` throws a warning because full compatibility is not achievable.
+  Thanks to [Tim Düsterhus][gh@TimWolla] for [the explanation][gh#1]
+  * No warning if the engine is ``CryptoSafeEngine``
+* Fixed incorrect range function selection [[#1]][gh#1], thanks to [Tim Düsterhus][gh@TimWolla]
+* Fixed byte selection in range64
+
+[gh#1]: https://github.com/arokettu/php-random-polyfill/issues/1
+[gh@TimWolla]: https://github.com/TimWolla
+
 ## 0.2.0
 
 *Jul 27, 2022*
