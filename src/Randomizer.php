@@ -134,11 +134,17 @@ final class Randomizer implements Serializable
 
         $umax = gmp_init($max) - gmp_init($min);
 
+        // not (algo->generate_size == 0 || algo->generate_size > sizeof(uint32_t))
         $bit32 =
-            $this->engine instanceof Mt19937 ||
-            $umax > self::$UINT32_MAX;
+            $this->engine instanceof Mt19937;
 
-        return gmp_intval(($bit32 ? $this->range32($umax) : $this->range64($umax)) + $min);
+        if (!$bit32 || $umax > self::$UINT32_MAX) {
+            $rangeval = $this->range64($umax);
+        } else {
+            $rangeval = $this->range32($umax);
+        }
+
+        return gmp_intval($rangeval + $min);
     }
 
     private function range32(GMP $umax): GMP
