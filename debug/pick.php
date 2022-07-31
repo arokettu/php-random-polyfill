@@ -47,3 +47,18 @@ echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
 echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
 echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
 echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
+
+echo PHP_EOL;
+
+$r1 = new \Random\Randomizer(new \Random\Engine\Mt19937(123, MT_RAND_MT19937));
+$r2 = new \Random\Randomizer(new \Random\Engine\Mt19937(123, MT_RAND_MT19937));
+
+$a = [ 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5, 'f' => 6, ];
+unset($a['b']);
+
+$b = [ 'a' => 1, 'c' => 3, 'd' => 4, 'e' => 5, 'f' => 6, ];
+
+var_dump(
+    $r1->pickArrayKeys($a, 1), // [ 0 => 'e' ]
+    $r2->pickArrayKeys($b, 1) // [ 0 => 'd' ]
+);

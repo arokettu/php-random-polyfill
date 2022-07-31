@@ -357,7 +357,7 @@ class RandomizerWithCustomEngineTest extends TestCase
             $rnd = new Randomizer(new Xorshift32($seed));
 
             for ($i = 0; $i < 20; $i++) {
-                $keys = $rnd->pickArrayKeys($array, $i + 1);
+                $keys = @$rnd->pickArrayKeys($array, $i + 1);
                 self::assertEquals($keysExpected[$i], $keys, "Seed: $seed Index: $i");
             }
         }

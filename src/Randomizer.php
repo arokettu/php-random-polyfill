@@ -309,6 +309,11 @@ final class Randomizer implements Serializable
 
     public function pickArrayKeys(array $array, int $num): array
     {
+        if (!($this->engine instanceof CryptoSafeEngine)) {
+            // Crypto-safe engines are not expected to produce reproducible sequences
+            trigger_error('pickArrayKeys() may produce results incompatible with native ext-random', E_USER_WARNING);
+        }
+
         if ($array === []) {
             throw new ValueError('Argument #1 ($array) cannot be empty');
         }

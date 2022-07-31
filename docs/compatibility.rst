@@ -21,7 +21,7 @@ What works
 
 The library will not be a full replacement for ``ext-random`` and total compatibility does not seem to be achievable.
 
-* ``Random\Randomizer`` - WIP
+* ``Random\Randomizer``
 
 * Engines
 
@@ -38,7 +38,8 @@ Version 1.99.0 will be released as an empty package for PHP >= 8.2.
 Known differences
 =================
 
-These differences are considered to be permanent features
+These differences are considered to be permanent features.
+However if you know how to fix them, ideas are welcome.
 
 Serialization
 -------------
@@ -48,20 +49,48 @@ Serialization
 * Entities serialized in PHP 7.1 - 7.3 can be unserialized with the polyfill under any version of PHP but will not be
   unserializable by the native extension.
 * Serialization in PHP 7.1 - 7.3 will trigger a warning.
+  Silence it with ``@`` if you don't care.
 
 Randomizer
 ----------
 
-* `pickArrayKeys()` messes a lot with the internal structure of the PHP hash tables and therefore
+* ``pickArrayKeys()`` messes a lot with the internal structure of the PHP hash tables and therefore
   may produce different results in the userland.
-  Please report if you manage to produce a case where PHP 8.2 and this library disagree.
+  Example from `Tim Düsterhus`__:
+
+  .. code-block:: php
+
+    <?php
+
+    $r1 = new Random\Randomizer(new Random\Engine\Xoshiro256StarStar(1));
+    $r2 = new Random\Randomizer(new Random\Engine\Xoshiro256StarStar(1));
+
+    $a = [ 'a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5, 'f' => 6, ];
+    unset($a['b']);
+
+    $b = [ 'a' => 1, 'c' => 3, 'd' => 4, 'e' => 5, 'f' => 6, ];
+
+    var_dump($a === $b); // bool(true)
+
+    var_dump(
+        $r1->pickArrayKeys($a, 1), // native: [ 0 => 'e' ], lib: [ 0 => 'd' ]
+        $r2->pickArrayKeys($b, 1), // [ 0 => 'd' ]
+    );
+
+  The interpreter operates on the actual hash table that looks different for these arrays.
+  The lib "repacks" arrays and therefore returns ``['d']`` in both cases.
+
+.. __: https://github.com/php/doc-en/issues/1731
+
+* using ``pickArrayKeys()`` will trigger a warning if the engine is not CryptoSafeEngine.
+  Silence it with ``@`` if you don't care.
 
 Mt19937
 -------
 
-Generating integers with ``$max - $min >= mt_getrandmax()`` is considered undefined behavior and likely won't be fixed.
+* Generating integers with ``$max - $min >= mt_getrandmax()`` with ``MT_RAND_PHP`` is considered undefined behavior and likely won't be fixed.
 
 PcgOneseq128XslRr64, Xoshiro256StarStar
 ---------------------------------------
 
-Currently I have no plans about implementing these.
+Not yet.
