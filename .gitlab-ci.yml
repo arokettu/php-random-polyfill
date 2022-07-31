@@ -79,6 +79,9 @@ test-8.2-control:
   extends: .test
   stage: test
   image: php:8.2-rc
+  # current version is compatible with current master, not any existing PHP 8.2 release
+  # todo: disallow failure after 8.2.0 is released
+  allow_failure: true
   script:
     # fake the version for some dependencies
     - composer config platform.php '8.1.0'
