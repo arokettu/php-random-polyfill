@@ -47,6 +47,7 @@ final class Randomizer implements Serializable
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
     private const PHP_MT_RAND_MAX = 0x7FFFFFFF;
+    private const RANDOM_RANGE_ATTEMPTS = 50;
 
     /** @var Engine */
     private $engine;
@@ -171,7 +172,7 @@ final class Randomizer implements Serializable
         $count = 0;
 
         while ($result > $limit) {
-            if (++$count > 50) {
+            if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
                 throw new RuntimeException('Random number generation failed');
             }
 
@@ -188,10 +189,10 @@ final class Randomizer implements Serializable
 
     private function range64(GMP $umax): GMP
     {
-        $result = $this->generate();
-        if (strlen($result) < self::SIZEOF_UINT_64_T) {
+        $result = '';
+        do {
             $result .= $this->generate();
-        }
+        } while (strlen($result) < self::SIZEOF_UINT_64_T);
 
         $result = $this->importGmp64($result);
 
@@ -210,7 +211,7 @@ final class Randomizer implements Serializable
         $count = 0;
 
         while ($result > $limit) {
-            if (++$count > 50) {
+            if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
                 throw new RuntimeException('Random number generation failed');
             }
 
