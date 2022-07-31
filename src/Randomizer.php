@@ -101,7 +101,9 @@ final class Randomizer implements Serializable
     private function doGetInt(int $min, int $max): int
     {
         if ($max < $min) {
-            throw new ValueError('Argument #2 ($max) must be greater than or equal to argument #1 ($min)');
+            throw new ValueError(
+                __METHOD__ . '(): Argument #2 ($max) must be greater than or equal to argument #1 ($min)'
+            );
         }
 
         // engine has range func
@@ -260,7 +262,7 @@ final class Randomizer implements Serializable
     public function getBytes(int $length): string
     {
         if ($length < 1) {
-            throw new ValueError('Argument #1 ($length) must be greater than 0');
+            throw new ValueError(__METHOD__ . '(): Argument #1 ($length) must be greater than 0');
         }
 
         $retval = '';
@@ -322,7 +324,7 @@ final class Randomizer implements Serializable
         }
 
         if ($array === []) {
-            throw new ValueError('Argument #1 ($array) cannot be empty');
+            throw new ValueError(__METHOD__ . '(): Argument #1 ($array) cannot be empty');
         }
 
         $numAvail = count($array);
@@ -334,7 +336,8 @@ final class Randomizer implements Serializable
 
         if ($num <= 0 || $num > $numAvail) {
             throw new ValueError(
-                'Argument #2 ($num) must be between 1 and the number of elements in argument #1 ($array)'
+                __METHOD__ .
+                    '(): Argument #2 ($num) must be between 1 and the number of elements in argument #1 ($array)'
             );
         }
 
