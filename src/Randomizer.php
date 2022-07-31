@@ -87,13 +87,14 @@ final class Randomizer implements Serializable
         return $retval;
     }
 
-    public function getInt(int ...$args): int
+    public function getInt(int $min = null, int $max = null): int
     {
-        if ($args === []) {
+        if (func_num_args() === 0) {
             return $this->doNextInt();
         }
 
-        return $this->doGetInt(...$args);
+        /** @psalm-suppress PossiblyNullArgument this is true and let it crash */
+        return $this->doGetInt($min, $max);
     }
 
     private function doGetInt(int $min, int $max): int
