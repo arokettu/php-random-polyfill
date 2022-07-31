@@ -88,7 +88,8 @@ Randomizer
 Mt19937
 -------
 
-* Generating integers with ``$max - $min >= mt_getrandmax()`` with ``MT_RAND_PHP`` is considered undefined behavior and likely won't be fixed.
+* Generating integers with ``$max - $min >= mt_getrandmax()`` with ``MT_RAND_PHP`` is considered undefined behavior.
+  This library is consistent with PHP 8.2 behavior, not the version it runs under.
 
 PcgOneseq128XslRr64, Xoshiro256StarStar
 ---------------------------------------

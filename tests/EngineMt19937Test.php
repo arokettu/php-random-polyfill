@@ -61,6 +61,35 @@ class EngineMt19937Test extends TestCase
         }
     }
 
+    public function testRangeBeyondGetrandmaxBroken(): void
+    {
+        // test MT_RAND_PHP with mt_rand(), it seems to be consistent between versions
+
+        // only when running 64 bit
+        if (PHP_INT_SIZE === 4) {
+            $this->markTestSkipped("It's a 64 bit test");
+        }
+
+        $seeds = [
+            -4192144863582079149 => [-266242009385968, 103353586833450],
+            4459309995047605710  => [-129159038259155, 137047943910375],
+            1456334543767882081  => [-192263277246342, 112522345566416],
+        ];
+
+        foreach ($seeds as $seed => [$min, $max]) {
+            if ($max - $min <= mt_getrandmax()) {
+                throw new \Exception('Invalid test params');
+            }
+
+            mt_srand($seed, MT_RAND_PHP);
+            $rnd = new Randomizer(new Mt19937($seed, MT_RAND_PHP));
+
+            for ($i = 0; $i < 1000; $i++) {
+                self::assertEquals(mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
+            }
+        }
+    }
+
     public function testSerializable(): void
     {
         mt_srand(2018239802);
