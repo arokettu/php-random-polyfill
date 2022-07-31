@@ -169,7 +169,7 @@ final class Mt19937 implements Engine, Serializable
         $s1 ^= ($s1 << 15) & self::$GEN2;
         $s1 ^= ($s1 >> 18);
 
-        return gmp_export($s1, 4, GMP_LITTLE_ENDIAN);
+        return gmp_export($s1, 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
     }
 
     public function serialize(): string
@@ -210,7 +210,7 @@ final class Mt19937 implements Engine, Serializable
     private function getStates(): array
     {
         $states = array_map(function (GMP $gmp) {
-            return bin2hex(gmp_export($gmp, 4, GMP_LITTLE_ENDIAN));
+            return bin2hex(gmp_export($gmp, 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST));
         }, $this->state);
         $states[] = $this->stateCount;
         $states[] = $this->mode;
@@ -230,7 +230,7 @@ final class Mt19937 implements Engine, Serializable
             if (!isset($states[$i])) {
                 throw new Exception("Engine serialize failed");
             }
-            $state[$i] = gmp_import(hex2bin($states[$i]), 4, GMP_LITTLE_ENDIAN);
+            $state[$i] = gmp_import(hex2bin($states[$i]), 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
         }
 
         $this->state = $state;
