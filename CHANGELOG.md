@@ -1,5 +1,9 @@
 # Changelog
 
+## next
+
+* ``PcgOneseq128XslRr64``
+
 ## 0.2.1
 
 *Jul 31, 2022*

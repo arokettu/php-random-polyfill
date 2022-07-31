@@ -29,6 +29,7 @@ The library will not be a full replacement for ``ext-random`` and total compatib
   * ``Random\CryptoSafeEngine`` interface
   * Secure Engine: ``Random\Engine\Secure``
   * Mersenne Twister: ``Random\Engine\Mt19937``
+  * PCG64: ``Random\Engine\PcgOneseq128XslRr64``
 
 Version 1.99.0
 ==============
@@ -91,7 +92,7 @@ Mt19937
 * Generating integers with ``$max - $min >= mt_getrandmax()`` with ``MT_RAND_PHP`` is considered undefined behavior.
   This library is consistent with PHP 8.2 behavior, not the version it runs under.
 
-PcgOneseq128XslRr64, Xoshiro256StarStar
----------------------------------------
+Xoshiro256StarStar
+------------------
 
 Not yet.

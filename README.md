@@ -6,7 +6,6 @@
 [![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/sandfox/php-random-polyfill/master.svg?style=flat-square)](https://gitlab.com/sandfox/php-random-polyfill/-/pipelines)
 [![Codecov](https://img.shields.io/codecov/c/gl/sandfox/php-random-polyfill?style=flat-square)](https://codecov.io/gl/sandfox/php-random-polyfill/)
 
-
 This is a polyfill for the new `ext-random` extension that will be released with PHP 8.2.
 
 RFC:
@@ -37,16 +36,13 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
   * `Random\CryptoSafeEngine` interface
   * Secure Engine: `Random\Engine\Secure`
   * Mersenne Twister: `Random\Engine\Mt19937`
+  * PCG64: `Random\Engine\PcgOneseq128XslRr64`
 
 ## TODO
 
 * Keep updating with fixes from the upcoming betas and release 1.0.0 around PHP 8.2.0 rc 1
 * Empty `arokettu/random-polyfill` v1.99 for PHP 8.2.0 users
-* Other engines
-  * Maybe
-  * Some day
-  * If I have time
-  * Don't count on it
+* `Xoshiro256StarStar`
 
 ## Documentation
 
