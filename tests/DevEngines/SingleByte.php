@@ -4,7 +4,7 @@ namespace Arokettu\Random\Tests\DevEngines;
 
 use Random\Engine;
 
-class SingleByte implements Engine
+final class SingleByte implements Engine
 {
     /**
      * @var int
