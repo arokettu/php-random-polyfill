@@ -18,11 +18,11 @@ echo mt_rand(), PHP_EOL;
 
 echo PHP_EOL;
 
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
 
 echo PHP_EOL;
 

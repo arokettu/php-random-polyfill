@@ -19,21 +19,21 @@ $a2 = array_combine($a2k = range('a', 'j'), array_map(function ($v) { return $v 
 
 $i = 1;
 
-echo implode(', ', $rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a1, $i++)), PHP_EOL;
 
 echo PHP_EOL;
 
 $i = 1;
 
-echo implode(', ', $rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a2, $i++)), PHP_EOL;
 
 echo PHP_EOL;
 
@@ -42,11 +42,11 @@ unset($a3[0], $a3[2], $a3[3], $a3[4], $a3[6], $a3[8], $a3['a'], $a3['c'], $a3['d
 
 $i = 1;
 
-echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
-echo implode(', ', $rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
+echo implode(', ', @$rnd->pickArrayKeys($a3, $i++)), PHP_EOL;
 
 echo PHP_EOL;
 
@@ -59,6 +59,6 @@ unset($a['b']);
 $b = [ 'a' => 1, 'c' => 3, 'd' => 4, 'e' => 5, 'f' => 6, ];
 
 var_dump(
-    $r1->pickArrayKeys($a, 1), // [ 0 => 'e' ]
-    $r2->pickArrayKeys($b, 1) // [ 0 => 'd' ]
+    @$r1->pickArrayKeys($a, 1), // [ 0 => 'e' ]
+    @$r2->pickArrayKeys($b, 1) // [ 0 => 'd' ]
 );

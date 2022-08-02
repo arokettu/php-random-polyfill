@@ -16,11 +16,11 @@ $rnd = new \Random\Randomizer(new \Random\Engine\PcgOneseq128XslRr64(123));
 //var_dump($rnd->engine);
 //var_dump($rnd->engine->__serialize());
 
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
-echo $rnd->getInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
+echo $rnd->nextInt(), PHP_EOL;
 
 echo PHP_EOL;
 
