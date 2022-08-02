@@ -170,12 +170,11 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
         $accPlus = gmp_init(0);
 
         if ($advance < 0) {
-            // in C negative automagically becomes unsigned
-            $advance = $advance + self::$UINT64_MASK + 1;
+            throw new ValueError(__METHOD__ . '(): Argument #1 ($advance) must be greater than or equal to 0');
         }
 
         while ($advance > 0) {
-            if (($advance & 1) == 1) { // GMP can't be compared to bool and can't be compared with ===
+            if ($advance & 1) {
                 $accMult = ($accMult * $curMult) & self::$UINT128_MASK;
                 $accPlus = ($accPlus * $curMult + $curPlus) & self::$UINT128_MASK;
             }
