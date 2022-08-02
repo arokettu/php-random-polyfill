@@ -88,17 +88,7 @@ final class Randomizer implements Serializable
         return $retval;
     }
 
-    public function getInt(int $min = null, int $max = null): int
-    {
-        if (func_num_args() === 0) {
-            return $this->doNextInt();
-        }
-
-        /** @psalm-suppress PossiblyNullArgument this is true and let it crash */
-        return $this->doGetInt($min, $max);
-    }
-
-    private function doGetInt(int $min, int $max): int
+    public function getInt(int $min, int $max): int
     {
         if ($max < $min) {
             throw new ValueError(
@@ -237,7 +227,7 @@ final class Randomizer implements Serializable
         return $min + (int) (( (float)$max - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0)));
     }
 
-    private function doNextInt(): int
+    public function nextInt(): int
     {
         $result = $this->generate();
         $result = $this->importGmp64($result);
