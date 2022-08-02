@@ -2,7 +2,8 @@
 
 ## next
 
-* ``PcgOneseq128XslRr64``
+* `PcgOneseq128XslRr64`
+* Split `nextInt()` and `getInt($min, $max)`
 
 ## 0.2.1
 
