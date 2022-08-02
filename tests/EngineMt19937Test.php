@@ -33,7 +33,7 @@ class EngineMt19937Test extends TestCase
 
             for ($i = 0; $i < 2000; $i++) {
                 self::assertEquals(mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
-                self::assertEquals(mt_rand(), $rnd->getInt(), "Seed: $seed, Index: $i");
+                self::assertEquals(mt_rand(), $rnd->nextInt(), "Seed: $seed, Index: $i");
             }
         }
     }
@@ -56,7 +56,7 @@ class EngineMt19937Test extends TestCase
 
             for ($i = 0; $i < 2000; $i++) {
                 self::assertEquals(mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
-                self::assertEquals(mt_rand(), $rnd->getInt(), "Seed: $seed, Index: $i");
+                self::assertEquals(mt_rand(), $rnd->nextInt(), "Seed: $seed, Index: $i");
             }
         }
     }

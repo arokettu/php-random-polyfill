@@ -207,7 +207,7 @@ class EngineMt19937KnownTest extends TestCase
         ];
 
         foreach ($sequence as $idx => $int) {
-            self::assertEquals($int, $rnd->getInt(), "Index: " . $idx);
+            self::assertEquals($int, $rnd->nextInt(), "Index: " . $idx);
         }
     }
 
@@ -409,7 +409,7 @@ class EngineMt19937KnownTest extends TestCase
         ];
 
         foreach ($sequence as $idx => $int) {
-            self::assertEquals($int, $rnd->getInt(), "Index: " . $idx);
+            self::assertEquals($int, $rnd->nextInt(), "Index: " . $idx);
         }
     }
 

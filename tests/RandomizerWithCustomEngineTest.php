@@ -109,7 +109,7 @@ class RandomizerWithCustomEngineTest extends TestCase
             $rnd = new Randomizer(new Xorshift32($seed));
 
             for ($i = 0; $i < 20; $i++) {
-                $num = $rnd->getInt();
+                $num = $rnd->nextInt();
                 self::assertEquals($nums[$i], $num, "Seed: $seed Index: $i");
             }
         }
