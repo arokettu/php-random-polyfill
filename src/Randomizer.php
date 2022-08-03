@@ -31,13 +31,18 @@ use function count;
 use function gmp_import;
 use function gmp_init;
 use function gmp_intval;
+use function serialize;
 use function str_pad;
 use function strlen;
 use function substr;
 use function trigger_error;
+use function unserialize;
 
+use const E_USER_WARNING;
 use const GMP_LITTLE_ENDIAN;
+use const GMP_LSW_FIRST;
 use const MT_RAND_PHP;
+use const SORT_NUMERIC;
 
 /**
  * @property-read Engine $engine

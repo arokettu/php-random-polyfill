@@ -34,6 +34,10 @@ use function random_bytes;
 use function str_split;
 use function strlen;
 
+use const GMP_LITTLE_ENDIAN;
+use const GMP_LSW_FIRST;
+use const GMP_MSW_FIRST;
+
 final class PcgOneseq128XslRr64 implements Engine, Serializable
 {
     use Shared\Serialization;

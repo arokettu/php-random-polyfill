@@ -29,6 +29,8 @@ use function gmp_init;
 use function hex2bin;
 use function random_int;
 
+use const GMP_LITTLE_ENDIAN;
+use const GMP_LSW_FIRST;
 use const MT_RAND_MT19937;
 use const MT_RAND_PHP;
 use const PHP_INT_MAX;
