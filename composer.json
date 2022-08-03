@@ -25,7 +25,8 @@
         "sort-packages": true
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
+            "Arokettu\\Random\\": "src",
             "Random\\": "src"
         }
     },
