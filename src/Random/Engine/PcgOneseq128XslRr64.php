@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Random\Engine;
 
+use Arokettu\Random\BigIntExportImport;
+use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
 use Random\Engine;
@@ -34,8 +36,8 @@ use function strlen;
 
 final class PcgOneseq128XslRr64 implements Engine, Serializable
 {
-    use Shared\BigIntExportImport;
-    use Shared\Serialization;
+    use BigIntExportImport;
+    use Serialization;
 
     /** @var GMP|null 128-bit bitmask */
     private static $UINT128_MASK = null;

@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Random;
 
+use Arokettu\Random\BigIntExportImport;
 use Closure;
 use Error;
 use GMP;
@@ -45,7 +46,7 @@ use const SORT_NUMERIC;
  */
 final class Randomizer implements Serializable
 {
-    use Engine\Shared\BigIntExportImport;
+    use BigIntExportImport;
 
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;

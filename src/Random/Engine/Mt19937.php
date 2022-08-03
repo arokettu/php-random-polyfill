@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Random\Engine;
 
+use Arokettu\Random\BigIntExportImport;
+use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
 use InvalidArgumentException;
@@ -87,8 +89,8 @@ use const PHP_INT_MIN;
 
 final class Mt19937 implements Engine, Serializable
 {
-    use Shared\BigIntExportImport;
-    use Shared\Serialization;
+    use BigIntExportImport;
+    use Serialization;
 
     private const N = 624;
     private const M = 397;

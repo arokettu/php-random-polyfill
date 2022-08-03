@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Random\Engine\Shared;
+namespace Arokettu\Random;
 
 use Exception;
 
