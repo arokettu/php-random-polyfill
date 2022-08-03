@@ -25,9 +25,10 @@ final class Xoshiro256StarStar implements Engine
     use Shared\BigIntExportImport;
     use Shared\Serialization;
 
-    private const SIZEOF_UINT64_T = 8;
-
-    /** @var GMP[] */
+    /**
+     * @var GMP[]
+     * @psalm-suppress PropertyNotSetInConstructor Psalm doesn't traverse several levels apparently
+     */
     private $state;
 
     /** @var GMP|null */

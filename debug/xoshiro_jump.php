@@ -2,29 +2,22 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$rnd = new \Random\Randomizer(new \Random\Engine\PcgOneseq128XslRr64(123));
-//$rnd = new \Random\Randomizer(new \Random\Engine\PcgOneseq128XslRr64('1234567890123456'));
+$rnd = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(123));
+//$rnd = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar('12345678901234567890123456789012'));
 
 echo $rnd->nextInt(), PHP_EOL;
 echo $rnd->nextInt(), PHP_EOL;
 
 echo PHP_EOL;
 
-$rnd->engine->jump(1);
+$rnd->engine->jump();
 
 echo $rnd->nextInt(), PHP_EOL;
 echo $rnd->nextInt(), PHP_EOL;
 
 echo PHP_EOL;
 
-$rnd->engine->jump(126);
-
-echo $rnd->nextInt(), PHP_EOL;
-echo $rnd->nextInt(), PHP_EOL;
-
-echo PHP_EOL;
-
-$rnd->engine->jump(0);
+$rnd->engine->jumpLong();
 
 echo $rnd->nextInt(), PHP_EOL;
 echo $rnd->nextInt(), PHP_EOL;

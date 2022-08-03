@@ -362,6 +362,7 @@ final class Randomizer implements Serializable
     /**
      * @return mixed
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
     public function __get(string $name)
     {
         if ($name === 'engine') {
@@ -375,6 +376,7 @@ final class Randomizer implements Serializable
     /**
      * @param mixed $value
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function __set(string $name, $value): void
     {
         throw new Error('Cannot create dynamic property ' . self::class . '::$' . $name);

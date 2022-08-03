@@ -67,7 +67,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
         if ($seed === null) {
             try {
-                $seed = random_bytes(self::$SIZEOF_UINT_128_T);
+                $seed = random_bytes(self::$SIZEOF_UINT128_T);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to generate a random seed');
             }
@@ -75,7 +75,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
         /** @psalm-suppress RedundantConditionGivenDocblockType we don't trust user input */
         if (is_string($seed)) {
-            if (strlen($seed) !== self::$SIZEOF_UINT_128_T) {
+            if (strlen($seed) !== self::$SIZEOF_UINT128_T) {
                 throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) state strings must be 16 bytes');
             }
 
@@ -116,7 +116,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     private function seedString(string $seed): void
     {
-        $this->seed128($this->importGmp128hilo(...str_split($seed, self::$SIZEOF_UINT_64_T)));
+        $this->seed128($this->importGmp128hilo(...str_split($seed, self::$SIZEOF_UINT64_T)));
     }
 
     private function seed128(GMP $seed): void
@@ -196,7 +196,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
             throw new Exception("Engine serialize failed");
         }
         [$hi, $lo] = $states;
-        if (strlen($hi) !== self::$SIZEOF_UINT_64_T * 2 || strlen($lo) !== self::$SIZEOF_UINT_64_T * 2) {
+        if (strlen($hi) !== self::$SIZEOF_UINT64_T * 2 || strlen($lo) !== self::$SIZEOF_UINT64_T * 2) {
             throw new Exception("Engine serialize failed");
         }
         $this->state = $this->importGmp128hilo(hex2bin($hi), hex2bin($lo));
