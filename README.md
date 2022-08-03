@@ -43,6 +43,7 @@ The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
 * Keep updating with fixes from the upcoming betas and release 1.0.0 around PHP 8.2.0 rc 1
 * Empty `arokettu/random-polyfill` v1.99 for PHP 8.2.0 users
 * `Xoshiro256StarStar`
+* Spin-off without extension dependencies?
 
 ## Documentation
 
