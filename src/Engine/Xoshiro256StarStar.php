@@ -13,8 +13,6 @@ use ValueError;
 
 use function bin2hex;
 use function get_debug_type;
-use function gmp_export;
-use function gmp_import;
 use function gmp_init;
 use function is_int;
 use function is_string;
@@ -22,11 +20,9 @@ use function random_bytes;
 use function str_split;
 use function strlen;
 
-use const GMP_LITTLE_ENDIAN;
-use const GMP_LSW_FIRST;
-
 final class Xoshiro256StarStar implements Engine
 {
+    use Shared\BigIntExportImport;
     use Shared\Serialization;
 
     private const SIZEOF_UINT64_T = 8;
@@ -34,8 +30,6 @@ final class Xoshiro256StarStar implements Engine
     /** @var GMP[] */
     private $state;
 
-    /** @var GMP|null 64-bit bitmask */
-    private static $UINT64_MASK = null;
     /** @var GMP|null */
     private static $SPLITMIX64_1;
     /** @var GMP|null */
@@ -87,9 +81,8 @@ final class Xoshiro256StarStar implements Engine
      */
     private function initConst(): void
     {
-        if (self::$UINT64_MASK === null) {
-            self::$UINT64_MASK = gmp_init('ffffffffffffffff', 16);
-        }
+        $this->initGmpConst();
+
         if (self::$SPLITMIX64_1 === null) {
             self::$SPLITMIX64_1 = gmp_init('9e3779b97f4a7c15', 16);
         }
@@ -126,10 +119,10 @@ final class Xoshiro256StarStar implements Engine
         $seeds = str_split($seed, 8);
 
         $this->seed256(
-            gmp_import($seeds[0], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST),
-            gmp_import($seeds[1], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST),
-            gmp_import($seeds[2], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST),
-            gmp_import($seeds[3], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST)
+            $this->importGmp64($seeds[0]),
+            $this->importGmp64($seeds[1]),
+            $this->importGmp64($seeds[2]),
+            $this->importGmp64($seeds[3])
         );
     }
 
@@ -140,7 +133,25 @@ final class Xoshiro256StarStar implements Engine
 
     public function generate(): string
     {
-        return "\0";
+        $r = ($this->rotl($this->state[1] * 5, 7) * 9) & self::$UINT64_MASK;
+        $t = ($this->state[1]) << 17 & self::$UINT64_MASK;
+
+        $this->state[2] ^= $this->state[0];
+        $this->state[3] ^= $this->state[1];
+        $this->state[1] ^= $this->state[2];
+        $this->state[0] ^= $this->state[3];
+
+        $this->state[2] ^= $t;
+
+        $this->state[3] = $this->rotl($this->state[3], 45);
+
+        return $this->exportGmp64($r);
+    }
+
+    private function rotl(GMP $x, int $k): GMP
+    {
+        $x = $x & self::$UINT64_MASK;
+        return (($x << $k) | ($x >> (64 - $k))) & self::$UINT64_MASK;
     }
 
     public function jump(): void
@@ -159,10 +170,10 @@ final class Xoshiro256StarStar implements Engine
     private function getStates(): array
     {
         return [
-            bin2hex(gmp_export($this->state[0], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST)),
-            bin2hex(gmp_export($this->state[1], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST)),
-            bin2hex(gmp_export($this->state[2], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST)),
-            bin2hex(gmp_export($this->state[3], self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST)),
+            bin2hex($this->exportGmp64($this->state[0])),
+            bin2hex($this->exportGmp64($this->state[1])),
+            bin2hex($this->exportGmp64($this->state[2])),
+            bin2hex($this->exportGmp64($this->state[3])),
         ];
     }
 
@@ -171,6 +182,9 @@ final class Xoshiro256StarStar implements Engine
      */
     private function loadStates(array $states): void
     {
-        // TODO: Implement loadStates() method.
+        $this->state = [];
+        for ($i = 0; $i < 4; $i++) {
+            $this->state[$i] = $this->importGmp64(hex2bin($states[$i]));
+        }
     }
 }

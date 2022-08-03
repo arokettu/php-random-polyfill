@@ -10,8 +10,10 @@ require __DIR__ . '/../vendor/autoload.php';
 //$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\Fail());
 //$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\SingleByte());
 //$rnd = new \Random\Randomizer(new \Arokettu\Random\Tests\DevEngines\ThreeBytes());
-$rnd = new \Random\Randomizer(new \Random\Engine\PcgOneseq128XslRr64(123));
+//$rnd = new \Random\Randomizer(new \Random\Engine\PcgOneseq128XslRr64(123));
 //$rnd = new \Random\Randomizer(new \Random\Engine\PcgOneseq128XslRr64('1234567890123456'));
+$rnd = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar(123));
+//$rnd = new \Random\Randomizer(new \Random\Engine\Xoshiro256StarStar('12345678901234567890123456789012'));
 
 //var_dump($rnd->engine);
 //var_dump($rnd->engine->__serialize());
