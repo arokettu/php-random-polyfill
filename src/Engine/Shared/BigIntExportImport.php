@@ -15,6 +15,9 @@ use function substr;
 use const GMP_LITTLE_ENDIAN;
 use const GMP_LSW_FIRST;
 
+/**
+ * @internal
+ */
 trait BigIntExportImport
 {
     /** @var positive-int */
