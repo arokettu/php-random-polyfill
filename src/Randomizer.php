@@ -28,19 +28,15 @@ use function array_key_exists;
 use function array_keys;
 use function array_values;
 use function count;
-use function gmp_import;
 use function gmp_init;
 use function gmp_intval;
 use function serialize;
-use function str_pad;
 use function strlen;
 use function substr;
 use function trigger_error;
 use function unserialize;
 
 use const E_USER_WARNING;
-use const GMP_LITTLE_ENDIAN;
-use const GMP_LSW_FIRST;
 use const MT_RAND_PHP;
 use const SORT_NUMERIC;
 
@@ -49,6 +45,8 @@ use const SORT_NUMERIC;
  */
 final class Randomizer implements Serializable
 {
+    use Engine\Shared\BigIntExportImport;
+
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
     private const PHP_MT_RAND_MAX = 0x7FFFFFFF;
@@ -56,10 +54,6 @@ final class Randomizer implements Serializable
 
     /** @var Engine */
     private $engine;
-    /** @var GMP|null */
-    private static $UINT32_MAX = null;
-    /** @var GMP|null */
-    private static $UINT64_MAX = null;
 
     public function __construct(?Engine $engine = null)
     {
@@ -70,12 +64,7 @@ final class Randomizer implements Serializable
 
     private function initConst(): void
     {
-        if (self::$UINT32_MAX === null) {
-            self::$UINT32_MAX = gmp_init('ffff' . 'ffff', 16);
-        }
-        if (self::$UINT64_MAX === null) {
-            self::$UINT64_MAX = gmp_init('ffff' . 'ffff' . 'ffff' . 'ffff', 16);
-        }
+        $this->initGmpConst();
     }
 
     private function generate(): string
@@ -136,7 +125,7 @@ final class Randomizer implements Serializable
         $bit32 =
             $this->engine instanceof Mt19937;
 
-        if (!$bit32 || $umax > self::$UINT32_MAX) {
+        if (!$bit32 || $umax > self::$UINT32_MASK) {
             $rangeval = $this->range64($umax);
         } else {
             $rangeval = $this->range32($umax);
@@ -154,7 +143,7 @@ final class Randomizer implements Serializable
 
         $result = $this->importGmp32($result);
 
-        if ($umax == self::$UINT32_MAX) {
+        if ($umax == self::$UINT32_MASK) {
             return $result;
         }
 
@@ -164,7 +153,7 @@ final class Randomizer implements Serializable
             return $result & ($umax - 1);
         }
 
-        $limit = self::$UINT32_MAX - (self::$UINT32_MAX % $umax) - 1;
+        $limit = self::$UINT32_MASK - (self::$UINT32_MASK % $umax) - 1;
 
         $count = 0;
 
@@ -193,7 +182,7 @@ final class Randomizer implements Serializable
 
         $result = $this->importGmp64($result);
 
-        if ($umax == self::$UINT64_MAX) {
+        if ($umax == self::$UINT64_MASK) {
             return $result;
         }
 
@@ -203,7 +192,7 @@ final class Randomizer implements Serializable
             return $result & ($umax - 1);
         }
 
-        $limit = self::$UINT64_MAX - (self::$UINT64_MAX % $umax) - 1;
+        $limit = self::$UINT64_MASK - (self::$UINT64_MASK % $umax) - 1;
 
         $count = 0;
 
@@ -238,20 +227,6 @@ final class Randomizer implements Serializable
         $result = $this->importGmp64($result);
 
         return gmp_intval($result >> 1);
-    }
-
-    private function importGmp32(string $value): GMP
-    {
-        $value = substr($value, 0, self::SIZEOF_UINT_32_T);
-        $value = str_pad($value, self::SIZEOF_UINT_32_T, "\0");
-        return gmp_import($value, self::SIZEOF_UINT_32_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
-    }
-
-    private function importGmp64(string $value): GMP
-    {
-        $value = substr($value, 0, self::SIZEOF_UINT_64_T);
-        $value = str_pad($value, self::SIZEOF_UINT_64_T, "\0");
-        return gmp_import($value, self::SIZEOF_UINT_64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
     }
 
     public function getBytes(int $length): string

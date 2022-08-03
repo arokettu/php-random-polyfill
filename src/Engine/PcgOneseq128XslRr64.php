@@ -22,11 +22,9 @@ use TypeError;
 use ValueError;
 
 use function array_is_list;
-use function bin2hex;
+use function array_map;
 use function count;
 use function get_debug_type;
-use function gmp_export;
-use function gmp_import;
 use function gmp_init;
 use function is_int;
 use function is_string;
@@ -34,17 +32,10 @@ use function random_bytes;
 use function str_split;
 use function strlen;
 
-use const GMP_LITTLE_ENDIAN;
-use const GMP_LSW_FIRST;
-use const GMP_MSW_FIRST;
-
 final class PcgOneseq128XslRr64 implements Engine, Serializable
 {
+    use Shared\BigIntExportImport;
     use Shared\Serialization;
-
-    private const SIZEOF_UINT128_T = 16;
-    private const SIZEOF_UINT64_T = 8;
-    private const BITS_64 = 64; // obviously
 
     /** @var GMP|null 128-bit bitmask */
     private static $UINT128_MASK = null;
@@ -76,7 +67,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
         if ($seed === null) {
             try {
-                $seed = random_bytes(self::SIZEOF_UINT128_T);
+                $seed = random_bytes(self::$SIZEOF_UINT_128_T);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to generate a random seed');
             }
@@ -84,7 +75,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
         /** @psalm-suppress RedundantConditionGivenDocblockType we don't trust user input */
         if (is_string($seed)) {
-            if (strlen($seed) !== self::SIZEOF_UINT128_T) {
+            if (strlen($seed) !== self::$SIZEOF_UINT_128_T) {
                 throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) state strings must be 16 bytes');
             }
 
@@ -104,20 +95,16 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      */
     private function initConst(): void
     {
-        if (self::$UINT128_MASK === null) {
-            self::$UINT128_MASK = gmp_init('ffffffffffffffffffffffffffffffff', 16);
-        }
-        if (self::$UINT64_MASK === null) {
-            self::$UINT64_MASK = gmp_init('ffffffffffffffff', 16);
-        }
+        $this->initGmpConst();
+
         if (self::$STEP_MUL_CONST === null) {
             self::$STEP_MUL_CONST =
-                gmp_init('2549297995355413924', 10) << self::BITS_64 |
+                gmp_init('2549297995355413924', 10) << 64 |
                 gmp_init('4865540595714422341', 10);
         }
         if (self::$STEP_ADD_CONST === null) {
             self::$STEP_ADD_CONST =
-                gmp_init('6364136223846793005', 10) << self::BITS_64 |
+                gmp_init('6364136223846793005', 10) << 64 |
                 gmp_init('1442695040888963407', 10);
         }
     }
@@ -129,7 +116,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     private function seedString(string $seed): void
     {
-        $this->seed128(gmp_import($seed, self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_MSW_FIRST));
+        $this->seed128($this->importGmp128hilo(...str_split($seed, self::$SIZEOF_UINT_64_T)));
     }
 
     private function seed128(GMP $seed): void
@@ -153,7 +140,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     private function rotr64(GMP $state): string
     {
-        $hi = $state >> self::BITS_64;
+        $hi = $state >> 64;
         $lo = $state & self::$UINT64_MASK;
 
         $v = $hi ^ $lo;
@@ -162,7 +149,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
         $result = ($v >> $s) | ($v << (-$s & 63));
         $result &= self::$UINT64_MASK;
 
-        return gmp_export($result, self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
+        return $this->exportGmp64($result);
     }
 
     public function jump(int $advance): void
@@ -196,9 +183,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      */
     private function getStates(): array
     {
-        return str_split(bin2hex(
-            gmp_export($this->state, self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_MSW_FIRST)
-        ), self::SIZEOF_UINT64_T * 2);
+        return array_map('bin2hex', $this->exportGmp128hilo($this->state));
     }
 
     /**
@@ -211,9 +196,9 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
             throw new Exception("Engine serialize failed");
         }
         [$hi, $lo] = $states;
-        if (strlen($hi) !== self::SIZEOF_UINT64_T * 2 || strlen($lo) !== self::SIZEOF_UINT64_T * 2) {
+        if (strlen($hi) !== self::$SIZEOF_UINT_64_T * 2 || strlen($lo) !== self::$SIZEOF_UINT_64_T * 2) {
             throw new Exception("Engine serialize failed");
         }
-        $this->state = gmp_import(hex2bin($lo . $hi), self::SIZEOF_UINT64_T, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
+        $this->state = $this->importGmp128hilo(hex2bin($hi), hex2bin($lo));
     }
 }

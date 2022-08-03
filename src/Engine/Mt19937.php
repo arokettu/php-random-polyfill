@@ -23,14 +23,10 @@ use Serializable;
 use function array_fill;
 use function array_map;
 use function bin2hex;
-use function gmp_export;
-use function gmp_import;
 use function gmp_init;
 use function hex2bin;
 use function random_int;
 
-use const GMP_LITTLE_ENDIAN;
-use const GMP_LSW_FIRST;
 use const MT_RAND_MT19937;
 use const MT_RAND_PHP;
 use const PHP_INT_MAX;
@@ -91,6 +87,7 @@ use const PHP_INT_MIN;
 
 final class Mt19937 implements Engine, Serializable
 {
+    use Shared\BigIntExportImport;
     use Shared\Serialization;
 
     private const N = 624;
@@ -106,8 +103,6 @@ final class Mt19937 implements Engine, Serializable
 
     /** @var GMP|null  */
     private static $TWIST_CONST = null;
-    /** @var GMP|null  */
-    private static $BIT32 = null;
     /** @var GMP|null  */
     private static $SEED_STEP_VALUE = null;
     /** @var GMP|null  */
@@ -142,11 +137,10 @@ final class Mt19937 implements Engine, Serializable
      */
     private function initConst(): void
     {
+        $this->initGmpConst();
+
         if (self::$TWIST_CONST === null) {
             self::$TWIST_CONST = gmp_init('9908b0df', 16); // can't fit into signed 32bit int
-        }
-        if (self::$BIT32 === null) {
-            self::$BIT32 = gmp_init('ffffffff', 16); // can't fit into signed 32bit int
         }
         if (self::$SEED_STEP_VALUE === null) {
             self::$SEED_STEP_VALUE = gmp_init(1812433253); // can fit into signed 32bit int
@@ -173,9 +167,10 @@ final class Mt19937 implements Engine, Serializable
         /** @var GMP[] $state */
         $state = array_fill(0, self::N, null);
 
-        $prevState = $state[0] = $seed & self::$BIT32;
+        $prevState = $state[0] = $seed & self::$UINT32_MASK;
         for ($i = 1; $i < self::N; $i++) {
-            $prevState = $state[$i] = (self::$SEED_STEP_VALUE * ($prevState ^ ($prevState >> 30)) + $i) & self::$BIT32;
+            $prevState = $state[$i] =
+                (self::$SEED_STEP_VALUE * ($prevState ^ ($prevState >> 30)) + $i) & self::$UINT32_MASK;
         }
 
         $this->state = $state;
@@ -229,7 +224,7 @@ final class Mt19937 implements Engine, Serializable
         $s1 ^= ($s1 << 15) & self::$GEN2;
         $s1 ^= ($s1 >> 18);
 
-        return gmp_export($s1, 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
+        return $this->exportGmp32($s1);
     }
 
     /**
@@ -239,7 +234,7 @@ final class Mt19937 implements Engine, Serializable
     private function getStates(): array
     {
         $states = array_map(function (GMP $gmp) {
-            return bin2hex(gmp_export($gmp, 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST));
+            return bin2hex($this->exportGmp32($gmp));
         }, $this->state);
         $states[] = $this->stateCount;
         $states[] = $this->mode;
@@ -260,7 +255,7 @@ final class Mt19937 implements Engine, Serializable
             if (!isset($states[$i])) {
                 throw new Exception("Engine serialize failed");
             }
-            $state[$i] = gmp_import(hex2bin($states[$i]), 4, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
+            $state[$i] = $this->importGmp32(hex2bin($states[$i]));
         }
 
         $this->state = $state;
