@@ -2,7 +2,9 @@
 
 ## next
 
+* Verified compatibility with PHP 8.2.0 beta2
 * `PcgOneseq128XslRr64`
+* `Xoshiro256StarStar`
 * Split `nextInt()` and `getInt($min, $max)`
 
 ## 0.2.1
