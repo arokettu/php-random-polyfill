@@ -20,11 +20,20 @@ use const GMP_LSW_FIRST;
  */
 trait BigIntExportImport
 {
-    /** @var positive-int */
+    /**
+     * @var int
+     * @psalm-var positive-int
+     */
     private static $SIZEOF_UINT32_T = 4;
-    /** @var positive-int */
+    /**
+     * @var int
+     * @psalm-var positive-int
+     */
     private static $SIZEOF_UINT64_T = 8;
-    /** @var positive-int */
+    /**
+     * @var int
+     * @psalm-var positive-int
+     */
     private static $SIZEOF_UINT128_T = 16;
 
     /** @var GMP|null 32-bit bitmask aka max 32-bit uint */
