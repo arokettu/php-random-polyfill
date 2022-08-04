@@ -15,7 +15,7 @@ class EngineMt19937KnownTest extends TestCase
         $engine = new Mt19937(-2086314273, MT_RAND_MT19937); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
-        // 1000 elements to be longer than the period
+        // 1000 elements to be longer than the reload period
         $sequence = [
             9479, 10187, 19022, 18782, 2921, 17842, 5442, 1905, 11901, 19070, 7239, 10934, 16361, 11995, 9423, 7395,
             10576, 11396, 6511, 17770, 14701, 833, 13948, 13619, 11994, 16520, 14771, 8816, 691, 3555, 4380, 18704,
@@ -90,7 +90,7 @@ class EngineMt19937KnownTest extends TestCase
         $engine = new Mt19937(1248441108, MT_RAND_MT19937); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
-        // 1000 elements to be longer than the period
+        // 1000 elements to be longer than the reload period
         $sequence = [
             728784114, 55828619, 1429935550, 324202873, 2028087559, 2130879108, 748463393, 2131681056, 1937829615,
             981222956, 348594119, 1520329204, 1629798995, 418050810, 1800409243, 1728843375, 32052929, 466152632,
@@ -292,7 +292,7 @@ class EngineMt19937KnownTest extends TestCase
         $engine = new Mt19937(-406797440, MT_RAND_PHP); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
-        // 1000 elements to be longer than the period
+        // 1000 elements to be longer than the reload period
         $sequence = [
             1715057558, 679961448, 787571784, 565851890, 1819358640, 1216661520, 286814088, 544751734, 1045744423,
             1648601982, 1937510670, 1920894948, 644614633, 371518545, 651575121, 1301442034, 88059996, 1789190448,
