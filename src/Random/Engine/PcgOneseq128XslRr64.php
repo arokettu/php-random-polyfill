@@ -113,7 +113,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     private function seedInt(int $seed): void
     {
-        $this->seed128(gmp_init($seed));
+        $this->seed128($seed & self::$UINT64_MASK);
     }
 
     private function seedString(string $seed): void
