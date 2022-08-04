@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 use Random\Engine\Mt19937;
 use Random\Randomizer;
 
+/**
+ * Test Mt19937 against the current core mt_rand() function
+ */
 class EngineMt19937Test extends TestCase
 {
     public function testMtRandCompare(): void
