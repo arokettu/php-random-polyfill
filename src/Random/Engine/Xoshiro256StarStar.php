@@ -39,6 +39,22 @@ final class Xoshiro256StarStar implements Engine
     private static $SPLITMIX64_2;
     /** @var GMP|null */
     private static $SPLITMIX64_3;
+    /** @var GMP|null */
+    private static $JUMP1;
+    /** @var GMP|null */
+    private static $JUMP2;
+    /** @var GMP|null */
+    private static $JUMP3;
+    /** @var GMP|null */
+    private static $JUMP4;
+    /** @var GMP|null */
+    private static $JUMP_LONG1;
+    /** @var GMP|null */
+    private static $JUMP_LONG2;
+    /** @var GMP|null */
+    private static $JUMP_LONG3;
+    /** @var GMP|null */
+    private static $JUMP_LONG4;
 
     /**
      * @param string|int|null $seed
@@ -94,6 +110,30 @@ final class Xoshiro256StarStar implements Engine
         }
         if (self::$SPLITMIX64_3 === null) {
             self::$SPLITMIX64_3 = gmp_init('94d049bb133111eb', 16);
+        }
+        if (self::$JUMP1 === null) {
+            self::$JUMP1 = gmp_init('180ec6d33cfd0aba', 16);
+        }
+        if (self::$JUMP2 === null) {
+            self::$JUMP2 = gmp_init('d5a61266f0c9392c', 16);
+        }
+        if (self::$JUMP3 === null) {
+            self::$JUMP3 = gmp_init('a9582618e03fc9aa', 16);
+        }
+        if (self::$JUMP4 === null) {
+            self::$JUMP4 = gmp_init('39abdc4529b1661c', 16);
+        }
+        if (self::$JUMP_LONG1 === null) {
+            self::$JUMP_LONG1 = gmp_init('76e15d3efefdcbbf', 16);
+        }
+        if (self::$JUMP_LONG2 === null) {
+            self::$JUMP_LONG2 = gmp_init('c5004e441c522fb3', 16);
+        }
+        if (self::$JUMP_LONG3 === null) {
+            self::$JUMP_LONG3 = gmp_init('77710069854ee241', 16);
+        }
+        if (self::$JUMP_LONG4 === null) {
+            self::$JUMP_LONG4 = gmp_init('39109bb02acbe635', 16);
         }
     }
 
@@ -159,12 +199,46 @@ final class Xoshiro256StarStar implements Engine
 
     public function jump(): void
     {
-
+        $this->doJump([
+            self::$JUMP1,
+            self::$JUMP2,
+            self::$JUMP3,
+            self::$JUMP4,
+        ]);
     }
 
     public function jumpLong(): void
     {
+        $this->doJump([
+            self::$JUMP_LONG1,
+            self::$JUMP_LONG2,
+            self::$JUMP_LONG3,
+            self::$JUMP_LONG4,
+        ]);
+    }
 
+    private function doJump(array $jmp): void
+    {
+        $s0 = $s1 = $s2 = $s3 = gmp_init(0);
+        $one = gmp_init(1);
+
+        for ($i = 0; $i < 4; $i++) {
+            for ($j = 0; $j < 64; $j++) {
+                if (($jmp[$i] & $one << $j) > 0) {
+                    $s0 ^= $this->state[0];
+                    $s1 ^= $this->state[1];
+                    $s2 ^= $this->state[2];
+                    $s3 ^= $this->state[3];
+                }
+
+                $this->generate();
+            }
+        }
+
+        $this->state[0] = $s0;
+        $this->state[1] = $s1;
+        $this->state[2] = $s2;
+        $this->state[3] = $s3;
     }
 
     /**
