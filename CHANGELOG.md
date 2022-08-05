@@ -1,6 +1,8 @@
 # Changelog
 
-## next
+## 0.3.0
+
+*Aug 5, 2022*
 
 * Verified compatibility with PHP 8.2.0 beta 2
 * `PcgOneseq128XslRr64`
