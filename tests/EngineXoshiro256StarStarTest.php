@@ -189,4 +189,25 @@ class EngineXoshiro256StarStarTest extends TestCase
             }
         }
     }
+
+    public function testJump(): void
+    {
+        $engine = new Xoshiro256StarStar(123456);
+
+        self::assertEquals('c4cb8684e9e8d520', bin2hex($engine->generate()));
+        self::assertEquals('7d731154119f2626', bin2hex($engine->generate()));
+        self::assertEquals('d68c804f79efddb7', bin2hex($engine->generate()));
+
+        $engine->jump();
+
+        self::assertEquals('e02b9c3c698a50be', bin2hex($engine->generate()));
+        self::assertEquals('a47af196a01f0697', bin2hex($engine->generate()));
+        self::assertEquals('cb4baa5e2923ab4f', bin2hex($engine->generate()));
+
+        $engine->jumpLong();
+
+        self::assertEquals('c5a7ed51bdd8f289', bin2hex($engine->generate()));
+        self::assertEquals('fe1c26e9363fa406', bin2hex($engine->generate()));
+        self::assertEquals('b9345e05be4b96ea', bin2hex($engine->generate()));
+    }
 }

@@ -189,4 +189,31 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
             }
         }
     }
+
+    public function testJump(): void
+    {
+        $engine = new PcgOneseq128XslRr64(123456);
+
+        self::assertEquals('5541cb1034d23cbe', bin2hex($engine->generate()));
+        self::assertEquals('41d1f22928582772', bin2hex($engine->generate()));
+        self::assertEquals('1763bf76310a3e44', bin2hex($engine->generate()));
+
+        $engine->jump(0);
+
+        self::assertEquals('688456c10d3a6d63', bin2hex($engine->generate()));
+        self::assertEquals('4e50c51b77ee1e75', bin2hex($engine->generate()));
+        self::assertEquals('a43ff17b5a2d94a4', bin2hex($engine->generate()));
+
+        $engine->jump(127);
+
+        self::assertEquals('640a138e2e137c2f', bin2hex($engine->generate()));
+        self::assertEquals('9cbbb1317b3e3bf6', bin2hex($engine->generate()));
+        self::assertEquals('9f0466861d538c75', bin2hex($engine->generate()));
+
+        $engine->jump(256);
+
+        self::assertEquals('d20987c39c791f24', bin2hex($engine->generate()));
+        self::assertEquals('a635504550a7a8ab', bin2hex($engine->generate()));
+        self::assertEquals('07f2a1f42e889d98', bin2hex($engine->generate()));
+    }
 }
