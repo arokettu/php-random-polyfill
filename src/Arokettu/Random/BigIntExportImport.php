@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright Copyright © 2022 Anton Smirnov
+ * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
+ */
+
 declare(strict_types=1);
 
 namespace Arokettu\Random;
