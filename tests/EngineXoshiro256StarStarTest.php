@@ -210,4 +210,53 @@ class EngineXoshiro256StarStarTest extends TestCase
         self::assertEquals('fe1c26e9363fa406', bin2hex($engine->generate()));
         self::assertEquals('b9345e05be4b96ea', bin2hex($engine->generate()));
     }
+
+    public function testSerialize(): void
+    {
+        $engine1 = new Xoshiro256StarStar();
+
+        $engine1->generate();
+        $engine1->generate();
+
+        $engine2 = unserialize(@serialize($engine1));
+
+        self::assertEquals($engine1->generate(), $engine2->generate());
+    }
+
+    public function testSerializeKnown(): void
+    {
+        if (PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        // seed = 123456, 3 generates
+        $serialized =
+            'O:32:"Random\Engine\Xoshiro256StarStar":2:{i:0;a:0:{}i:1;a:4:{i:0;s:16:"ef30ee3b093b3bbd";i:1;s:16:"4da7' .
+            'adf2fac619de";i:2;s:16:"9e6b4c55d1c15380";i:3;s:16:"326ebe04d6f1b44f";}}';
+
+        $engine1 = new Xoshiro256StarStar(123456);
+        $engine1->generate();
+        $engine1->generate();
+        $engine1->generate();
+
+        self::assertEquals($serialized, serialize($engine1));
+
+        $engine2 = unserialize($serialized);
+
+        self::assertEquals($engine1->generate(), $engine2->generate());
+    }
+
+    public function testSerializeWarning(): void
+    {
+        if (PHP_VERSION_ID >= 70400) {
+            $this->expectNotToPerformAssertions();
+        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+            $this->expectWarning();
+            $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
+        } else {
+            $this->markTestSkipped('PHPUnit is too old for this test');
+        }
+
+        serialize(new Xoshiro256StarStar());
+    }
 }

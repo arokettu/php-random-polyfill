@@ -10,6 +10,7 @@ use Exception;
 use GMP;
 use Random\Engine;
 use RuntimeException;
+use Serializable;
 use TypeError;
 use ValueError;
 
@@ -22,7 +23,7 @@ use function random_bytes;
 use function str_split;
 use function strlen;
 
-final class Xoshiro256StarStar implements Engine
+final class Xoshiro256StarStar implements Engine, Serializable
 {
     use BigIntExportImport;
     use Serialization;

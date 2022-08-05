@@ -216,4 +216,53 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
         self::assertEquals('a635504550a7a8ab', bin2hex($engine->generate()));
         self::assertEquals('07f2a1f42e889d98', bin2hex($engine->generate()));
     }
+
+    public function testSerialize(): void
+    {
+        $engine1 = new PcgOneseq128XslRr64();
+
+        $engine1->generate();
+        $engine1->generate();
+
+        $engine2 = unserialize(@serialize($engine1));
+
+        self::assertEquals($engine1->generate(), $engine2->generate());
+    }
+
+    public function testSerializeKnown(): void
+    {
+        if (PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        // seed = 123456, 3 generates
+        $serialized =
+            'O:33:"Random\Engine\PcgOneseq128XslRr64":2:{i:0;a:0:{}i:1;a:2:{i:0;s:16:"48443d943ea2ee8f";i:1;s:16:"c31' .
+            '5cdb584ba153a";}}';
+
+        $engine1 = new PcgOneseq128XslRr64(123456);
+        $engine1->generate();
+        $engine1->generate();
+        $engine1->generate();
+
+        self::assertEquals($serialized, serialize($engine1));
+
+        $engine2 = unserialize($serialized);
+
+        self::assertEquals($engine1->generate(), $engine2->generate());
+    }
+
+    public function testSerializeWarning(): void
+    {
+        if (PHP_VERSION_ID >= 70400) {
+            $this->expectNotToPerformAssertions();
+        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+            $this->expectWarning();
+            $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
+        } else {
+            $this->markTestSkipped('PHPUnit is too old for this test');
+        }
+
+        serialize(new PcgOneseq128XslRr64());
+    }
 }

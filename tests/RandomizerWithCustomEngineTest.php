@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests;
 
+use Arokettu\Random\Tests\DevEngines\SingleByte;
 use Arokettu\Random\Tests\DevEngines\Xorshift32;
+use Arokettu\Random\Tests\DevEngines\Zeros;
 use PHPUnit\Framework\TestCase;
 use Random\Randomizer;
 
@@ -361,5 +363,54 @@ class RandomizerWithCustomEngineTest extends TestCase
                 self::assertEquals($keysExpected[$i], $keys, "Seed: $seed Index: $i");
             }
         }
+    }
+
+    public function testSerialize(): void
+    {
+        $rnd1 = new Randomizer(new Xorshift32(random_int(0, PHP_INT_MAX)));
+
+        $rnd1->nextInt();
+        $rnd1->nextInt();
+
+        $rnd2 = unserialize(@serialize($rnd1));
+
+        self::assertEquals($rnd1->nextInt(), $rnd2->nextInt());
+    }
+
+    public function testSerializeKnown(): void
+    {
+        if (PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        // seed = 123456, 3 generates
+        $serialized =
+            "O:17:\"Random\\Randomizer\":1:{i:0;a:1:{s:6:\"engine\";O:43:\"Arokettu\\Random\\Tests\\DevEngines\\Singl" .
+            "eByte\":1:{s:48:\"\0Arokettu\\Random\\Tests\\DevEngines\\SingleByte\0chr\";i:3;}}}";
+
+        $rnd1 = new Randomizer(new SingleByte());
+        $rnd1->nextInt();
+        $rnd1->nextInt();
+        $rnd1->nextInt();
+
+        self::assertEquals($serialized, serialize($rnd1));
+
+        $rnd2 = unserialize($serialized);
+
+        self::assertEquals($rnd1->nextInt(), $rnd2->nextInt());
+    }
+
+    public function testSerializeWarning(): void
+    {
+        if (PHP_VERSION_ID >= 70400) {
+            $this->expectNotToPerformAssertions();
+        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+            $this->expectWarning();
+            $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
+        } else {
+            $this->markTestSkipped('PHPUnit is too old for this test');
+        }
+
+        serialize(new Randomizer(new Zeros()));
     }
 }
