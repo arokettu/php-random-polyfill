@@ -71,7 +71,7 @@ class EngineMt19937Test extends TestCase
         // test MT_RAND_PHP with mt_rand(), it seems to be consistent between versions
 
         // only when running 64 bit
-        if (PHP_INT_SIZE === 4) {
+        if (PHP_INT_SIZE < 8) {
             $this->markTestSkipped("It's a 64 bit test");
         }
 

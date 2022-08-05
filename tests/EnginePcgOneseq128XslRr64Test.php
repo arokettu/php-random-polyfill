@@ -56,6 +56,25 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
                 '8c67376c4e5d5647', '9bf1b7d830c3bcb5', '7e49c0a52e89aa60', 'bb6e20e82ff98701', '45cc2144f81bd70d',
                 '2d314a38461386f3', 'eb1cb38d17995b30', '0b6fd2197b2b5e97', '369e77181fffef05', '627dbc44203e798f',
             ],
+        ];
+
+        foreach ($seq as $seed => $bytesExpected) {
+            $engine = new PcgOneseq128XslRr64($seed);
+
+            for ($i = 0; $i < 100; $i++) {
+                $bytes = bin2hex($engine->generate());
+                self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
+            }
+        }
+    }
+
+    public function testSeedInt64(): void
+    {
+        if (PHP_INT_SIZE < 8) {
+            $this->markTestSkipped('64 bit only');
+        }
+
+        $seq = [
             6159709666678653989 => [
                 'ca8a8c7bb93e0b81', 'cc6c6ef5fa7aec03', '35791f3041d77f7e', '676023804391f22e', 'fb902cdd86b0886b',
                 '68729efc3cc7847a', '43eceb67e23ba9bd', '91c1b012980dda73', 'ebc1844b088ed3d9', '527b5eac2245f4d8',

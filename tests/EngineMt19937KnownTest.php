@@ -501,7 +501,7 @@ class EngineMt19937KnownTest extends TestCase
         // for bug to bug compatibility
 
         // only when running 64 bit
-        if (PHP_INT_SIZE === 4) {
+        if (PHP_INT_SIZE < 8) {
             $this->markTestSkipped("It's a 64 bit test");
         }
 

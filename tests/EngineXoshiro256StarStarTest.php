@@ -56,6 +56,25 @@ class EngineXoshiro256StarStarTest extends TestCase
                 'da13c77ced09ca25', 'd4bc7a62a01e96cf', 'e1a7152bfefa913b', 'f2758876ffb1b1cd', '9a4d0c4550e96e6a',
                 'c54e4e92993bf2cb', 'da402550954d8816', '38b6bc436b950608', '6f4d8c406c5c2ab1', 'd8f1d094682dd37c',
             ],
+        ];
+
+        foreach ($seq as $seed => $bytesExpected) {
+            $engine = new Xoshiro256StarStar($seed);
+
+            for ($i = 0; $i < 100; $i++) {
+                $bytes = bin2hex($engine->generate());
+                self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
+            }
+        }
+    }
+
+    public function testSeedInt64(): void
+    {
+        if (PHP_INT_SIZE < 8) {
+            $this->markTestSkipped('64 bit only');
+        }
+
+        $seq = [
             -7554633497861286132 => [
                 '4eabd9e48b9b35a4', '92ce43bbcf1d1ccd', '82cafd3d8de767be', '4f7db910e0389ac8', '1aa585de9d756e08',
                 'fbed6de2e17b606d', '04cfc6946bb2b8a6', 'ce617ce31fc2d2d1', '256b02708488213d', '78acde993e6fd6af',
