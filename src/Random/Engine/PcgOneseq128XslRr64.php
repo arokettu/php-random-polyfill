@@ -39,14 +39,10 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     use BigIntExportImport;
     use Serialization;
 
-    /** @var GMP|null 128-bit bitmask */
-    private static $UINT128_MASK = null;
-    /** @var GMP|null 64-bit bitmask */
-    private static $UINT64_MASK = null;
-    /** @var GMP|null */
-    private static $STEP_MUL_CONST = null;
-    /** @var GMP|null */
-    private static $STEP_ADD_CONST = null;
+    /** @var GMP */
+    private static $STEP_MUL_CONST;
+    /** @var GMP */
+    private static $STEP_ADD_CONST;
 
     /**
      * @var GMP state
@@ -94,6 +90,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     /**
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
+     * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
     private function initConst(): void
     {

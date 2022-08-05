@@ -43,27 +43,27 @@ final class Xoshiro256StarStar implements Engine, Serializable
      */
     private $state;
 
-    /** @var GMP|null */
+    /** @var GMP */
     private static $SPLITMIX64_1;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $SPLITMIX64_2;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $SPLITMIX64_3;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP1;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP2;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP3;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP4;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP_LONG1;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP_LONG2;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP_LONG3;
-    /** @var GMP|null */
+    /** @var GMP */
     private static $JUMP_LONG4;
 
     /**
@@ -107,6 +107,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
     /**
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
+     * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
     private function initConst(): void
     {

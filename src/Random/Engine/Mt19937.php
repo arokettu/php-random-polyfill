@@ -103,20 +103,20 @@ final class Mt19937 implements Engine, Serializable
     /** @var int */
     private $mode;
 
-    /** @var GMP|null  */
-    private static $TWIST_CONST = null;
-    /** @var GMP|null  */
-    private static $SEED_STEP_VALUE = null;
-    /** @var GMP|null  */
-    private static $HI_BIT = null;
-    /** @var GMP|null  */
-    private static $LO_BIT = null;
-    /** @var GMP|null  */
-    private static $LO_BITS = null;
-    /** @var GMP|null  */
-    private static $GEN1 = null;
-    /** @var GMP|null  */
-    private static $GEN2 = null;
+    /** @var GMP */
+    private static $TWIST_CONST;
+    /** @var GMP */
+    private static $SEED_STEP_VALUE;
+    /** @var GMP */
+    private static $HI_BIT;
+    /** @var GMP */
+    private static $LO_BIT;
+    /** @var GMP */
+    private static $LO_BITS;
+    /** @var GMP */
+    private static $GEN1;
+    /** @var GMP */
+    private static $GEN2;
 
     public function __construct(?int $seed = null, int $mode = MT_RAND_MT19937)
     {
@@ -136,6 +136,7 @@ final class Mt19937 implements Engine, Serializable
 
     /**
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
+     * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
     private function initConst(): void
     {

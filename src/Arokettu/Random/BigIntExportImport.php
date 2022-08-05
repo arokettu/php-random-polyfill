@@ -41,13 +41,16 @@ trait BigIntExportImport
      */
     private static $SIZEOF_UINT128_T = 16;
 
-    /** @var GMP|null 32-bit bitmask aka max 32-bit uint */
-    private static $UINT32_MASK = null;
-    /** @var GMP|null 64-bit bitmask aka max 64-bit uint */
-    private static $UINT64_MASK = null;
-    /** @var GMP|null 128-bit bitmask aka max 128-bit uint */
-    private static $UINT128_MASK = null;
+    /** @var GMP 32-bit bitmask aka max 32-bit uint */
+    private static $UINT32_MASK;
+    /** @var GMP 64-bit bitmask aka max 64-bit uint */
+    private static $UINT64_MASK;
+    /** @var GMP 128-bit bitmask aka max 128-bit uint */
+    private static $UINT128_MASK;
 
+    /**
+     * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
+     */
     private function initGmpConst(): void
     {
         if (self::$UINT32_MASK === null) {
