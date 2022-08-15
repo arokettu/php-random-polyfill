@@ -17,10 +17,10 @@ use Arokettu\Random\BigIntExportImport;
 use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
-use InvalidArgumentException;
 use Random\Engine;
 use RuntimeException;
 use Serializable;
+use ValueError;
 
 use function array_fill;
 use function array_map;
@@ -123,7 +123,7 @@ final class Mt19937 implements Engine, Serializable
         $this->initConst();
 
         if ($mode !== MT_RAND_PHP && $mode !== MT_RAND_MT19937) {
-            throw new InvalidArgumentException('Argument #2 ($mode) mode must be MT_RAND_MT19937 or MT_RAND_PHP');
+            throw new ValueError(__METHOD__ . '(): Argument #2 ($mode) must be either MT_RAND_MT19937 or MT_RAND_PHP');
         }
         $this->mode = $mode;
 
