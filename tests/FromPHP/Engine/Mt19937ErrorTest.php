@@ -32,6 +32,6 @@ class Mt19937ErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 }

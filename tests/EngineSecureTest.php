@@ -7,6 +7,7 @@ namespace Arokettu\Random\Tests;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\Secure;
 use Random\Randomizer;
+use RuntimeException;
 
 class EngineSecureTest extends TestCase
 {
@@ -22,7 +23,16 @@ class EngineSecureTest extends TestCase
 
     public function testNonSerializable(): void
     {
-        $this->expectException(\Exception::class);
-        serialize(new Secure());
+        try {
+            serialize(new Secure());
+        } catch (\Throwable $e) {
+            self::assertEquals(\Exception::class, get_class($e));
+            self::assertEquals("Serialization of 'Random\Engine\Secure' is not allowed", $e->getMessage());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 }

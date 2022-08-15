@@ -163,7 +163,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testMt19937InvalidHex(): void
@@ -315,7 +315,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testMt19937InvalidCount(): void
@@ -467,7 +467,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testMt19937InvalidMode(): void
@@ -619,7 +619,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testPcgOneseq128XslRr64MalformedHex(): void
@@ -645,7 +645,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testPcgOneseq128XslRr64InvalidHex(): void
@@ -671,7 +671,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testXoshiro256StarStarMalformedHex(): void
@@ -697,7 +697,7 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testXoshiro256StarStarInvalidHex(): void
@@ -723,6 +723,6 @@ class AllSerializeErrorTest extends TestCase
             return;
         }
 
-        throw new RuntimeException('Must throw');
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 }
