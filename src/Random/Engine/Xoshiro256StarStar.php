@@ -268,11 +268,17 @@ final class Xoshiro256StarStar implements Engine, Serializable
     /**
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      */
-    private function loadStates(array $states): void
+    private function loadStates(array $states): bool
     {
         $this->state = [];
         for ($i = 0; $i < 4; $i++) {
-            $this->state[$i] = $this->importGmp64(hex2bin($states[$i]));
+            $stateBin = @hex2bin($states[$i]);
+            if ($stateBin === false) {
+                return false;
+            }
+            $this->state[$i] = $this->importGmp64($stateBin);
         }
+
+        return true;
     }
 }

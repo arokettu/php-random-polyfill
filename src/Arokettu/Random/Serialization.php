@@ -21,7 +21,7 @@ use function unserialize;
 trait Serialization
 {
     abstract protected function getStates(): array;
-    abstract protected function loadStates(array $states): void;
+    abstract protected function loadStates(array $states): bool;
     abstract protected function initConst(): void;
 
     public function serialize(): string
@@ -51,7 +51,10 @@ trait Serialization
     public function __unserialize(array $data): void
     {
         $this->initConst();
-        $this->loadStates($data[1] ?? []);
+        $result = $this->loadStates($data[1] ?? []);
+        if ($result === false) {
+            throw new Exception(sprintf('Invalid serialization data for %s object', static::class));
+        }
     }
 
     public function __debugInfo(): array

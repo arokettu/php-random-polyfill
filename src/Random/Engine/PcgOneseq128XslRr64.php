@@ -189,15 +189,22 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @throws Exception
      */
-    private function loadStates(array $states): void
+    private function loadStates(array $states): bool
     {
         if (!array_is_list($states) || count($states) < 2) {
-            throw new Exception("Engine serialize failed");
+            return false;
         }
         [$hi, $lo] = $states;
         if (strlen($hi) !== self::$SIZEOF_UINT64_T * 2 || strlen($lo) !== self::$SIZEOF_UINT64_T * 2) {
-            throw new Exception("Engine serialize failed");
+            return false;
         }
-        $this->state = $this->importGmp128hilo(hex2bin($hi), hex2bin($lo));
+        $hiBin = @hex2bin($hi);
+        $loBin = @hex2bin($lo);
+        if ($hiBin === false || $loBin === false) {
+            return false;
+        }
+        $this->state = $this->importGmp128hilo($hiBin, $loBin);
+
+        return true;
     }
 }

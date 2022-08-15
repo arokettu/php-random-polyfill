@@ -249,20 +249,37 @@ final class Mt19937 implements Engine, Serializable
      * @throws Exception
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      */
-    private function loadStates(array $states): void
+    private function loadStates(array $states): bool
     {
         /** @var GMP[] $state */
         $state = array_fill(0, self::N, null);
 
         for ($i = 0; $i < self::N; $i++) {
             if (!isset($states[$i])) {
-                throw new Exception("Engine serialize failed");
+                return false;
             }
-            $state[$i] = $this->importGmp32(hex2bin($states[$i]));
+            $stateBin = @hex2bin($states[$i]);
+            if ($stateBin === false) {
+                return false;
+            }
+            $state[$i] = $this->importGmp32($stateBin);
         }
 
         $this->state = $state;
-        $this->stateCount = $states[self::N];
-        $this->mode = $states[self::N + 1];
+        $count = $states[self::N];
+        $mode = $states[self::N + 1];
+
+        if ($mode !== MT_RAND_PHP && $mode !== MT_RAND_MT19937) {
+            return false;
+        }
+
+        if ($count > self::N) {
+            return false;
+        }
+
+        $this->stateCount = $count;
+        $this->mode = $mode;
+
+        return true;
     }
 }
