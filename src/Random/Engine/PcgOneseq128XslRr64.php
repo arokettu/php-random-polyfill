@@ -96,14 +96,12 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      */
     private function initConst(): void
     {
-        $this->initGmpConst();
-
         if (self::$STEP_MUL_CONST === null) {
+            $this->initGmpConst();
+
             self::$STEP_MUL_CONST =
                 gmp_init('2549297995355413924', 10) << 64 |
                 gmp_init('4865540595714422341', 10);
-        }
-        if (self::$STEP_ADD_CONST === null) {
             self::$STEP_ADD_CONST =
                 gmp_init('6364136223846793005', 10) << 64 |
                 gmp_init('1442695040888963407', 10);
@@ -155,7 +153,6 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     public function jump(int $advance): void
     {
-        /** @var GMP $curMult for psalm */
         $curMult = self::$STEP_MUL_CONST;
         $curPlus = self::$STEP_ADD_CONST;
         $accMult = gmp_init(1);

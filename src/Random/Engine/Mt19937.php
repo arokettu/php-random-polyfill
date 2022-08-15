@@ -142,28 +142,16 @@ final class Mt19937 implements Engine, Serializable
      */
     private function initConst(): void
     {
-        $this->initGmpConst();
-
         if (self::$TWIST_CONST === null) {
-            self::$TWIST_CONST = gmp_init('9908b0df', 16); // can't fit into signed 32bit int
-        }
-        if (self::$SEED_STEP_VALUE === null) {
-            self::$SEED_STEP_VALUE = gmp_init(1812433253); // can fit into signed 32bit int
-        }
-        if (self::$HI_BIT === null) {
-            self::$HI_BIT = gmp_init('80000000', 16); // can't fit into signed 32bit int
-        }
-        if (self::$LO_BIT === null) {
-            self::$LO_BIT = gmp_init(1); // can fit into signed 32bit int
-        }
-        if (self::$LO_BITS === null) {
-            self::$LO_BITS = gmp_init(0x7FFFFFFF); // can fit into signed 32bit int
-        }
-        if (self::$GEN1 === null) {
-            self::$GEN1 = gmp_init('9d2c5680', 16); // can't fit into signed 32bit int
-        }
-        if (self::$GEN2 === null) {
-            self::$GEN2 = gmp_init('efc60000', 16); // can't fit into signed 32bit int
+            $this->initGmpConst();
+
+            self::$TWIST_CONST      = gmp_init('9908b0df', 16); // can't fit into signed 32bit int
+            self::$SEED_STEP_VALUE  = gmp_init(1812433253); // can fit into signed 32bit int
+            self::$HI_BIT           = gmp_init('80000000', 16); // can't fit into signed 32bit int
+            self::$LO_BIT           = gmp_init(1); // can fit into signed 32bit int
+            self::$LO_BITS          = gmp_init(0x7FFFFFFF); // can fit into signed 32bit int
+            self::$GEN1             = gmp_init('9d2c5680', 16); // can't fit into signed 32bit int
+            self::$GEN2             = gmp_init('efc60000', 16); // can't fit into signed 32bit int
         }
     }
 

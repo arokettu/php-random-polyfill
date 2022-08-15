@@ -54,12 +54,8 @@ trait BigIntExportImport
     private function initGmpConst(): void
     {
         if (self::$UINT32_MASK === null) {
-            self::$UINT32_MASK = gmp_init('ffffffff', 16);
-        }
-        if (self::$UINT64_MASK === null) {
-            self::$UINT64_MASK = gmp_init('ffffffffffffffff', 16);
-        }
-        if (self::$UINT128_MASK === null) {
+            self::$UINT32_MASK  = gmp_init('ffffffff', 16);
+            self::$UINT64_MASK  = gmp_init('ffffffffffffffff', 16);
             self::$UINT128_MASK = gmp_init('ffffffffffffffffffffffffffffffff', 16);
         }
     }
