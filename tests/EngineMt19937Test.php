@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests;
 
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\Mt19937;
 use Random\Randomizer;
@@ -84,7 +85,7 @@ class EngineMt19937Test extends TestCase
 
         foreach ($seeds as $seed => [$min, $max]) {
             if ($max - $min <= mt_getrandmax()) {
-                throw new \Exception('Invalid test params');
+                throw new LogicException('Invalid test params');
             }
 
             mt_srand($seed, MT_RAND_PHP);
