@@ -76,7 +76,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
         /** @psalm-suppress RedundantConditionGivenDocblockType we don't trust user input */
         if (is_string($seed)) {
             if (strlen($seed) !== self::$SIZEOF_UINT128_T) {
-                throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) state strings must be 16 bytes');
+                throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) must be a 16 byte (128 bit) string');
             }
 
             $this->seedString($seed);
