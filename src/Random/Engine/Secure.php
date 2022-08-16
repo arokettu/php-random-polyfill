@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Random\Engine;
 
+use Arokettu\Random\NoDynamicProperties;
 use Exception;
 use Random\CryptoSafeEngine;
 
@@ -20,6 +21,8 @@ use function random_bytes;
 
 final class Secure implements CryptoSafeEngine
 {
+    use NoDynamicProperties;
+
     public function generate(): string
     {
         try {

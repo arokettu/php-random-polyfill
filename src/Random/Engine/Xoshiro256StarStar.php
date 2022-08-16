@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Random\Engine;
 
 use Arokettu\Random\BigIntExportImport;
+use Arokettu\Random\NoDynamicProperties;
 use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
@@ -35,6 +36,7 @@ use function strlen;
 final class Xoshiro256StarStar implements Engine, Serializable
 {
     use BigIntExportImport;
+    use NoDynamicProperties;
     use Serialization;
 
     /**

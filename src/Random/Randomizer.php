@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace Random;
 
 use Arokettu\Random\BigIntExportImport;
+use Arokettu\Random\NoDynamicProperties;
 use Closure;
-use Error;
 use GMP;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
@@ -47,6 +47,7 @@ use const SORT_NUMERIC;
 final class Randomizer implements Serializable
 {
     use BigIntExportImport;
+    use NoDynamicProperties;
 
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
@@ -372,15 +373,6 @@ final class Randomizer implements Serializable
 
         trigger_error('Undefined property: ' . self::class . '::$' . $name);
         return null;
-    }
-
-    /**
-     * @param mixed $value
-     */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-    public function __set(string $name, $value): void
-    {
-        throw new Error('Cannot create dynamic property ' . self::class . '::$' . $name);
     }
 
     public function __isset(string $name): bool
