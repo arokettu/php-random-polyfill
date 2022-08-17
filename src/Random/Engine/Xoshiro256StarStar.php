@@ -87,7 +87,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
         if (is_string($seed)) {
             if (strlen($seed) !== 32) {
-                throw new ValueError('state strings must be 32 bytes');
+                throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) must be a 32 byte (256 bit) string');
             }
 
             $this->seedString($seed);
