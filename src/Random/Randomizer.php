@@ -323,14 +323,12 @@ final class Randomizer implements Serializable
 
         $i = $num;
 
-        while ($i--) {
-            while (true) {
-                $idx = $this->getInt(0, $numAvail - 1);
+        while ($i) {
+            $idx = $this->getInt(0, $numAvail - 1);
 
-                if (array_key_exists($idx, $retval) === false) {
-                    $retval[$idx] = $keys[$idx];
-                    break;
-                }
+            if (array_key_exists($idx, $retval) === false) {
+                $retval[$idx] = $keys[$idx];
+                $i--;
             }
         }
 
