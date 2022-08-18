@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer;
 
+use Arokettu\Random\Tests\DevEngines\UserEngine;
 use PHPUnit\Framework\TestCase;
 use Random\Engine;
 use Random\Engine\Mt19937;
 use Random\Engine\PcgOneseq128XslRr64;
 use Random\Engine\Secure;
-use Random\Engine\UserEngine;
 use Random\Engine\Xoshiro256StarStar;
 use Random\RandomException;
 use Random\Randomizer;
@@ -19,6 +19,10 @@ use Random\Randomizer;
  */
 class BasicTest extends TestCase
 {
+    // Original test had 1000, but it's too heavy for the non-native lib
+    // also, tests are mostly duplicates
+    private const ITERATIONS = 100;
+
     public function testBasic(): void
     {
         $engines = [];
@@ -39,7 +43,7 @@ class BasicTest extends TestCase
             $randomizer = new Randomizer($engine);
 
             // nextInt
-            for ($i = 0; $i < 1000; $i++) {
+            for ($i = 0; $i < self::ITERATIONS; $i++) {
                 try {
                     $randomizer->nextInt();
                 } catch (RandomException $e) {
@@ -48,20 +52,20 @@ class BasicTest extends TestCase
             }
 
             // getInt
-            for ($i = 0; $i < 1000; $i++) {
+            for ($i = 0; $i < self::ITERATIONS; $i++) {
                 $result = $randomizer->getInt(-50, 50);
                 self::assertGreaterThanOrEqual(-50, $result, get_class($engine));
                 self::assertLessThanOrEqual(50, $result, get_class($engine));
             }
 
             // getBytes
-            for ($i = 0; $i < 1000; $i++) {
+            for ($i = 0; $i < self::ITERATIONS; $i++) {
                 $length = \random_int(1, 1024);
                 self::assertEquals($length, \strlen($randomizer->getBytes($length)), get_class($engine));
             }
 
             // shuffleArray
-            $array = range(1, 1000);
+            $array = range(1, self::ITERATIONS);
             $shuffled_array = $randomizer->shuffleArray($array);
             self::assertNotEquals($array, $shuffled_array, get_class($engine));
 

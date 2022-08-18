@@ -18,6 +18,7 @@ namespace Random;
 use Arokettu\Random\BigIntExportImport;
 use Arokettu\Random\NoDynamicProperties;
 use Closure;
+use Error;
 use GMP;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
@@ -60,6 +61,11 @@ final class Randomizer implements Serializable
     public function __construct(?Engine $engine = null)
     {
         $this->initConst();
+
+        /** @psalm-suppress RedundantConditionGivenDocblockType not yet initialized */
+        if ($this->engine !== null) {
+            throw new Error('Cannot modify readonly property Random\Randomizer::$engine');
+        }
 
         $this->engine = $engine ?? new Engine\Secure();
     }
