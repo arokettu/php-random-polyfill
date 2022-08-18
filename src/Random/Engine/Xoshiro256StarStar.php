@@ -78,7 +78,10 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
         if ($seed === null) {
             try {
-                $this->seedString(random_bytes(32));
+                do {
+                    $seed = random_bytes(32);
+                } while ($seed === "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
+                $this->seedString($seed);
             } catch (Exception $e) {
                 throw new RuntimeException('Random number generation failed');
             }
@@ -88,6 +91,10 @@ final class Xoshiro256StarStar implements Engine, Serializable
         if (is_string($seed)) {
             if (strlen($seed) !== 32) {
                 throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) must be a 32 byte (256 bit) string');
+            }
+
+            if ($seed === "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0") {
+                throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) must not consist entirely of NUL bytes');
             }
 
             $this->seedString($seed);
