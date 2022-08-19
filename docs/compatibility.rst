@@ -8,6 +8,7 @@ The library is aimed to be compatible with ``ext-random`` from PHP 8.1.
 
 * Version 0.1 is compatible with PHP 8.2.0 beta 1
 * Version 0.3 is compatible with PHP 8.2.0 beta 2
+* Version 0.4 is compatible with PHP 8.2.0 beta 3
 * Version 1.0 will be compatible with PHP 8.2.0 rc 1
 
 Performance
