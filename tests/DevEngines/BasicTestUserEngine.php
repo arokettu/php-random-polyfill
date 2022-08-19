@@ -9,7 +9,7 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/basic.phpt
  */
-class UserEngine implements Engine
+class BasicTestUserEngine implements Engine
 {
     public function generate(): string
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer;
 
-use Arokettu\Random\Tests\DevEngines\UserEngine;
+use Arokettu\Random\Tests\DevEngines\BasicTestUserEngine;
 use PHPUnit\Framework\TestCase;
 use Random\Engine;
 use Random\Engine\Mt19937;
@@ -37,7 +37,7 @@ class BasicTest extends TestCase
                 return \random_bytes(16);
             }
         };
-        $engines[] = new UserEngine();
+        $engines[] = new BasicTestUserEngine();
 
         foreach ($engines as $engine) {
             $randomizer = new Randomizer($engine);

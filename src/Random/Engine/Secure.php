@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Random\Engine;
 
 use Arokettu\Random\NoDynamicProperties;
+use Error;
 use Exception;
 use Random\CryptoSafeEngine;
 
@@ -47,5 +48,10 @@ final class Secure implements CryptoSafeEngine
     public function __sleep(): array
     {
         throw new Exception("Serialization of 'Random\Engine\Secure' is not allowed");
+    }
+
+    public function __clone()
+    {
+        throw new Error('Trying to clone an uncloneable object of class Random\Engine\Secure');
     }
 }

@@ -30,8 +30,10 @@ use function array_key_exists;
 use function array_keys;
 use function array_values;
 use function count;
+use function floatval;
 use function gmp_init;
 use function gmp_intval;
+use function intval;
 use function serialize;
 use function strlen;
 use function substr;
@@ -48,7 +50,9 @@ use const SORT_NUMERIC;
 final class Randomizer implements Serializable
 {
     use BigIntExportImport;
-    use NoDynamicProperties;
+    use NoDynamicProperties {
+        __set as nodyn__set;
+    }
 
     private const SIZEOF_UINT_64_T = 8;
     private const SIZEOF_UINT_32_T = 4;
@@ -226,7 +230,8 @@ final class Randomizer implements Serializable
         $n = $this->importGmp32($n);
         $n = gmp_intval($n >> 1);
         // (__n) = (__min) + (zend_long) ((double) ( (double) (__max) - (__min) + 1.0) * ((__n) / ((__tmax) + 1.0)))
-        return $min + (int) (( (float)$max - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0)));
+        /** @noinspection PhpCastIsUnnecessaryInspection */
+        return intval($min + intval((floatval($max) - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0))));
     }
 
     public function nextInt(): int
@@ -377,6 +382,19 @@ final class Randomizer implements Serializable
 
         trigger_error('Undefined property: ' . self::class . '::$' . $name);
         return null;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    public function __set(string $name, $value): void
+    {
+        if ($name === 'engine') {
+            throw new Error('Cannot modify readonly property Random\Randomizer::$engine');
+        }
+
+        $this->nodyn__set($name, $value);
     }
 
     public function __isset(string $name): bool
