@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+*Aug 19, 2022*
+
+* Verified compatibility with PHP 8.2.0 beta 3
+* Tests ported from the PHP engine
+* Various compatibility fixes
+* Exceptions compatibility (mostly)
+
 ## 0.3.0
 
 *Aug 5, 2022*
