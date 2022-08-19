@@ -6,6 +6,9 @@ namespace Arokettu\Random;
 
 use Error;
 
+/**
+ * @internal
+ */
 trait NoDynamicProperties
 {
     /**
