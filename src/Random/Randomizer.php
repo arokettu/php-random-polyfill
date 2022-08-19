@@ -22,7 +22,6 @@ use Error;
 use GMP;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
-use RuntimeException;
 use Serializable;
 use ValueError;
 
@@ -86,7 +85,7 @@ final class Randomizer implements Serializable
         $size = strlen($retval);
 
         if ($size === 0) {
-            throw new RuntimeException('Random number generation failed');
+            throw new BrokenRandomEngineError('A random engine must return a non-empty string');
         } elseif ($size > self::SIZEOF_UINT_64_T) {
             $retval = substr($retval, 0, self::SIZEOF_UINT_64_T);
         }
@@ -107,16 +106,10 @@ final class Randomizer implements Serializable
             $this->engine instanceof Secure
         ) {
             /** @psalm-suppress PossiblyInvalidFunctionCall */
-            $result = Closure::bind(function (int $min, int $max): ?int {
+            return Closure::bind(function (int $min, int $max): ?int {
                 /** @psalm-suppress UndefinedMethod */
                 return $this->range($min, $max);
             }, $this->engine, $this->engine)($min, $max);
-
-            if ($result === null) {
-                throw new RuntimeException('Random number generation failed');
-            }
-
-            return $result;
         }
 
         // handle MT_RAND_PHP
@@ -171,7 +164,7 @@ final class Randomizer implements Serializable
 
         while ($result > $limit) {
             if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
-                throw new RuntimeException('Random number generation failed');
+                throw new BrokenRandomEngineError('Failed to generate an acceptable random number in 50 attempts');
             }
 
             $result = '';
@@ -210,7 +203,7 @@ final class Randomizer implements Serializable
 
         while ($result > $limit) {
             if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
-                throw new RuntimeException('Random number generation failed');
+                throw new BrokenRandomEngineError('Failed to generate an acceptable random number in 50 attempts');
             }
 
             $result = '';
@@ -253,7 +246,7 @@ final class Randomizer implements Serializable
         do {
             $result = $this->engine->generate();
             if ($result === '') {
-                throw new RuntimeException('Random number generation failed');
+                throw new BrokenRandomEngineError('A random engine must return a non-empty string');
             }
             $retval .= $result;
         } while (strlen($retval) < $length);
