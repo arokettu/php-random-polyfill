@@ -91,10 +91,17 @@ class SerializeTest extends TestCase
             $randomizer2 = unserialize(@serialize($randomizer));
         } catch (Throwable $e) {
             self::assertEquals(\Exception::class, get_class($e));
-            self::assertMatchesRegularExpression(
-                "/Serialization of '.*@anonymous' is not allowed/",
-                $e->getMessage()
-            );
+            if (method_exists(__CLASS__, 'assertMatchesRegularExpression')) {
+                self::assertMatchesRegularExpression(
+                    "/Serialization of '.*@anonymous' is not allowed/",
+                    $e->getMessage()
+                );
+            } else {
+                self::assertRegExp(
+                    "/Serialization of '.*@anonymous' is not allowed/",
+                    $e->getMessage()
+                );
+            }
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
