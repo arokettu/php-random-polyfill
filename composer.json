@@ -49,6 +49,7 @@
         "vimeo/psalm": "^4.24"
     },
     "provide": {
-        "ext-random": "8.2.0"
+        "ext-random": "8.2.0",
+        "arokettu/random-polyfill-nogmp": "self.version"
     }
 }
