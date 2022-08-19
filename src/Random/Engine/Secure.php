@@ -26,20 +26,12 @@ final class Secure implements CryptoSafeEngine
 
     public function generate(): string
     {
-        try {
-            return random_bytes(PHP_INT_SIZE);
-        } catch (Exception $e) {
-            return ''; // let Randomizer fail
-        }
+        return random_bytes(PHP_INT_SIZE);
     }
 
     private function range(int $min, int $max): ?int
     {
-        try {
-            return random_int($min, $max);
-        } catch (\Exception $e) {
-            return null;
-        }
+        return random_int($min, $max);
     }
 
     /**
