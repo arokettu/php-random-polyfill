@@ -37,7 +37,7 @@
     },
     "require": {
         "php": "^7.1 | ^8.0",
-        "ext-gmp": "*",
+        "arokettu/unsigned": "^0.1.0",
         "symfony/polyfill-php80": "^1.22",
         "symfony/polyfill-php81": "^1.22"
     },
@@ -50,5 +50,8 @@
     },
     "provide": {
         "ext-random": "8.2.0"
+    },
+    "suggest": {
+        "ext-gmp": "For significantly faster calculation"
     }
 }
