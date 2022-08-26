@@ -58,7 +58,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function __construct($seed = null)
     {
-        $this->initConst();
+        $this->initMath();
 
         if (is_int($seed)) {
             $this->seedInt($seed);
@@ -94,7 +94,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
-    private function initConst(): void
+    private function initMath(): void
     {
         if (self::$STEP_MUL_CONST === null) {
             $this->initGmpConst();

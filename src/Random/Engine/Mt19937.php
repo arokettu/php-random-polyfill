@@ -122,7 +122,7 @@ final class Mt19937 implements Engine, Serializable
 
     public function __construct(?int $seed = null, int $mode = MT_RAND_MT19937)
     {
-        $this->initConst();
+        $this->initMath();
 
         if ($mode !== MT_RAND_PHP && $mode !== MT_RAND_MT19937) {
             throw new ValueError(__METHOD__ . '(): Argument #2 ($mode) must be either MT_RAND_MT19937 or MT_RAND_PHP');
@@ -140,7 +140,7 @@ final class Mt19937 implements Engine, Serializable
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
-    private function initConst(): void
+    private function initMath(): void
     {
         if (self::$TWIST_CONST === null) {
             $this->initGmpConst();

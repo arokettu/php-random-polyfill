@@ -22,7 +22,7 @@ trait Serialization
 {
     abstract protected function getStates(): array;
     abstract protected function loadStates(array $states): bool;
-    abstract protected function initConst(): void;
+    abstract protected function initMath(): void;
 
     public function serialize(): string
     {
@@ -50,7 +50,7 @@ trait Serialization
      */
     public function __unserialize(array $data): void
     {
-        $this->initConst();
+        $this->initMath();
         $result = $this->loadStates($data[1] ?? []);
         if ($result === false) {
             throw new Exception(sprintf('Invalid serialization data for %s object', static::class));

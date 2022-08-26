@@ -7,13 +7,15 @@
  * Includes adaptation of C code from the PHP Interpreter
  * @license PHP-3.01 https://spdx.org/licenses/PHP-3.01.html
  * @see https://github.com/php/php-src/blob/master/ext/random/engine_xoshiro256starstar.c
+ *
+ * @noinspection PhpComposerExtensionStubsInspection
  */
 
 declare(strict_types=1);
 
 namespace Random\Engine;
 
-use Arokettu\Random\BigIntExportImport;
+use Arokettu\Random\Math;
 use Arokettu\Random\NoDynamicProperties;
 use Arokettu\Random\Serialization;
 use Exception;
@@ -26,55 +28,66 @@ use ValueError;
 
 use function bin2hex;
 use function get_debug_type;
-use function gmp_init;
 use function is_int;
 use function is_string;
 use function random_bytes;
 use function str_split;
 use function strlen;
 
+/**
+ * @noinspection PhpComposerExtensionStubsInspection
+ */
 final class Xoshiro256StarStar implements Engine, Serializable
 {
-    use BigIntExportImport;
     use NoDynamicProperties;
     use Serialization;
 
     /**
-     * @var GMP[]
+     * @var GMP[]|string[]
      * @psalm-suppress PropertyNotSetInConstructor Psalm doesn't traverse several levels apparently
      */
     private $state;
 
-    /** @var GMP */
+    /** @var Math */
+    private static $math;
+
+    /** @var GMP|string */
     private static $SPLITMIX64_1;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $SPLITMIX64_2;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $SPLITMIX64_3;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP1;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP2;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP3;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP4;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP_LONG1;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP_LONG2;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP_LONG3;
-    /** @var GMP */
+    /** @var GMP|string */
     private static $JUMP_LONG4;
+    /** @var GMP|string */
+    private static $ZERO;
+    /** @var GMP|string */
+    private static $ONE;
+    /** @var GMP|string */
+    private static $FIVE;
+    /** @var GMP|string */
+    private static $NINE;
 
     /**
      * @param string|int|null $seed
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function __construct($seed = null)
     {
-        $this->initConst();
+        $this->initMath();
 
         if ($seed === null) {
             try {
@@ -118,30 +131,35 @@ final class Xoshiro256StarStar implements Engine, Serializable
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
-    private function initConst(): void
+    private function initMath(): void
     {
-        if (self::$SPLITMIX64_1 === null) {
-            $this->initGmpConst();
+        if (self::$math === null) {
+            self::$math = Math::create(Math::SIZEOF_64);
 
-            self::$SPLITMIX64_1 = gmp_init('9e3779b97f4a7c15', 16);
-            self::$SPLITMIX64_2 = gmp_init('bf58476d1ce4e5b9', 16);
-            self::$SPLITMIX64_3 = gmp_init('94d049bb133111eb', 16);
+            self::$SPLITMIX64_1 = self::$math->fromHex('9e3779b97f4a7c15');
+            self::$SPLITMIX64_2 = self::$math->fromHex('bf58476d1ce4e5b9');
+            self::$SPLITMIX64_3 = self::$math->fromHex('94d049bb133111eb');
 
-            self::$JUMP1 = gmp_init('180ec6d33cfd0aba', 16);
-            self::$JUMP2 = gmp_init('d5a61266f0c9392c', 16);
-            self::$JUMP3 = gmp_init('a9582618e03fc9aa', 16);
-            self::$JUMP4 = gmp_init('39abdc4529b1661c', 16);
+            self::$JUMP1 = self::$math->fromHex('180ec6d33cfd0aba');
+            self::$JUMP2 = self::$math->fromHex('d5a61266f0c9392c');
+            self::$JUMP3 = self::$math->fromHex('a9582618e03fc9aa');
+            self::$JUMP4 = self::$math->fromHex('39abdc4529b1661c');
 
-            self::$JUMP_LONG1 = gmp_init('76e15d3efefdcbbf', 16);
-            self::$JUMP_LONG2 = gmp_init('c5004e441c522fb3', 16);
-            self::$JUMP_LONG3 = gmp_init('77710069854ee241', 16);
-            self::$JUMP_LONG4 = gmp_init('39109bb02acbe635', 16);
+            self::$JUMP_LONG1 = self::$math->fromHex('76e15d3efefdcbbf');
+            self::$JUMP_LONG2 = self::$math->fromHex('c5004e441c522fb3');
+            self::$JUMP_LONG3 = self::$math->fromHex('77710069854ee241');
+            self::$JUMP_LONG4 = self::$math->fromHex('39109bb02acbe635');
+
+            self::$ZERO = self::$math->fromInt(0);
+            self::$ONE  = self::$math->fromInt(1);
+            self::$FIVE = self::$math->fromInt(5);
+            self::$NINE = self::$math->fromInt(9);
         }
     }
 
     private function seedInt(int $seed): void
     {
-        $seed = $seed & self::$UINT64_MASK;
+        $seed = self::$math->fromInt($seed);
 
         $this->seed256(
             $this->splitmix64($seed),
@@ -151,12 +169,16 @@ final class Xoshiro256StarStar implements Engine, Serializable
         );
     }
 
-    private function splitmix64(GMP &$seed): GMP
+    /**
+     * @param string|GMP $seed
+     * @return string|GMP
+     */
+    private function splitmix64(&$seed)
     {
-        $r = $seed = ($seed + self::$SPLITMIX64_1) & self::$UINT64_MASK;
-        $r = (($r ^ ($r >> 30)) * self::$SPLITMIX64_2) & self::$UINT64_MASK;
-        $r = (($r ^ ($r >> 27)) * self::$SPLITMIX64_3) & self::$UINT64_MASK;
-        return ($r ^ ($r >> 31));
+        $r = $seed = self::$math->add($seed, self::$SPLITMIX64_1);
+        $r = self::$math->mul(($r ^ self::$math->shiftRight($r, 30)), self::$SPLITMIX64_2);
+        $r = self::$math->mul(($r ^ self::$math->shiftRight($r, 27)), self::$SPLITMIX64_3);
+        return $r ^ self::$math->shiftRight($r, 31);
     }
 
     private function seedString(string $seed): void
@@ -164,22 +186,31 @@ final class Xoshiro256StarStar implements Engine, Serializable
         $seeds = str_split($seed, 8);
 
         $this->seed256(
-            $this->importGmp64($seeds[0]),
-            $this->importGmp64($seeds[1]),
-            $this->importGmp64($seeds[2]),
-            $this->importGmp64($seeds[3])
+            self::$math->fromBinary($seeds[0]),
+            self::$math->fromBinary($seeds[1]),
+            self::$math->fromBinary($seeds[2]),
+            self::$math->fromBinary($seeds[3])
         );
     }
 
-    private function seed256(GMP $s0, GMP $s1, GMP $s2, GMP $s3): void
+    /**
+     * @param GMP|string $s0
+     * @param GMP|string $s1
+     * @param GMP|string $s2
+     * @param GMP|string $s3
+     */
+    private function seed256($s0, $s1, $s2, $s3): void
     {
         $this->state = [$s0, $s1, $s2, $s3];
     }
 
     public function generate(): string
     {
-        $r = ($this->rotl($this->state[1] * 5, 7) * 9) & self::$UINT64_MASK;
-        $t = ($this->state[1]) << 17 & self::$UINT64_MASK;
+        $r = self::$math->mul(
+            $this->rotl(self::$math->mul($this->state[1], self::$FIVE), 7),
+            self::$NINE
+        );
+        $t = self::$math->shiftLeft($this->state[1], 17);
 
         $this->state[2] ^= $this->state[0];
         $this->state[3] ^= $this->state[1];
@@ -190,13 +221,18 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
         $this->state[3] = $this->rotl($this->state[3], 45);
 
-        return $this->exportGmp64($r);
+        return self::$math->toBinary($r);
     }
 
-    private function rotl(GMP $x, int $k): GMP
+    /**
+     * @param GMP|string $x
+     * @return GMP|string
+     */
+    private function rotl($x, int $k)
     {
-        $x = $x & self::$UINT64_MASK;
-        return (($x << $k) | ($x >> (64 - $k))) & self::$UINT64_MASK;
+        return
+            self::$math->shiftLeft($x, $k) |
+            self::$math->shiftRight($x, 64 - $k);
     }
 
     public function jump(): void
@@ -221,12 +257,12 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
     private function doJump(array $jmp): void
     {
-        $s0 = $s1 = $s2 = $s3 = gmp_init(0);
-        $one = gmp_init(1);
+        $s0 = $s1 = $s2 = $s3 = self::$ZERO;
+        $one = self::$ONE;
 
         for ($i = 0; $i < 4; $i++) {
             for ($j = 0; $j < 64; $j++) {
-                if (($jmp[$i] & $one << $j) > 0) {
+                if (($jmp[$i] & self::$math->shiftLeft($one, $j)) != self::$ZERO) {
                     $s0 ^= $this->state[0];
                     $s1 ^= $this->state[1];
                     $s2 ^= $this->state[2];
@@ -249,10 +285,10 @@ final class Xoshiro256StarStar implements Engine, Serializable
     private function getStates(): array
     {
         return [
-            bin2hex($this->exportGmp64($this->state[0])),
-            bin2hex($this->exportGmp64($this->state[1])),
-            bin2hex($this->exportGmp64($this->state[2])),
-            bin2hex($this->exportGmp64($this->state[3])),
+            bin2hex(self::$math->toBinary($this->state[0])),
+            bin2hex(self::$math->toBinary($this->state[1])),
+            bin2hex(self::$math->toBinary($this->state[2])),
+            bin2hex(self::$math->toBinary($this->state[3])),
         ];
     }
 
@@ -267,7 +303,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
             if ($stateBin === false) {
                 return false;
             }
-            $this->state[$i] = $this->importGmp64($stateBin);
+            $this->state[$i] = self::$math->fromBinary($stateBin);
         }
 
         return true;
