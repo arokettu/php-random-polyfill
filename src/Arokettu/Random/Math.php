@@ -17,6 +17,7 @@ use function extension_loaded;
 
 abstract class Math
 {
+    public const SIZEOF_UINT32_T = 4;
     public const SIZEOF_UINT64_T = 8;
     public const SIZEOF_UINT128_T = 16;
 
@@ -30,6 +31,11 @@ abstract class Math
 
     protected static function build(int $sizeof): self
     {
+        // only less because PHP int is always signed
+        if ($sizeof < PHP_INT_SIZE) {
+            return new MathNative($sizeof);
+        }
+
         if (extension_loaded('gmp')) {
             return new MathGMP($sizeof);
         }
@@ -43,64 +49,64 @@ abstract class Math
     abstract protected function __construct(int $sizeof);
 
     /**
-     * @param string|GMP $value
+     * @param int|string|GMP $value
      * @param int $shift
-     * @return string|GMP
+     * @return int|string|GMP
      */
     abstract public function shiftLeft($value, int $shift);
 
     /**
-     * @param string|GMP $value
+     * @param int|string|GMP $value
      * @param int $shift
-     * @return string|GMP
+     * @return int|string|GMP
      */
     abstract public function shiftRight($value, int $shift);
 
     /**
-     * @param string|GMP $value1
-     * @param string|GMP $value2
-     * @return string|GMP
+     * @param int|string|GMP $value1
+     * @param int|string|GMP $value2
+     * @return int|string|GMP
      */
     abstract public function add($value1, $value2);
 
     /**
-     * @param string|GMP $value1
-     * @param string|GMP $value2
-     * @return string|GMP
+     * @param int|string|GMP $value1
+     * @param int|string|GMP $value2
+     * @return int|string|GMP
      */
     abstract public function mul($value1, $value2);
 
     /**
      * @param string $value
-     * @return string|GMP
+     * @return int|string|GMP
      */
     abstract public function fromHex(string $value);
 
     /**
      * @param int $value
-     * @return string|GMP
+     * @return int|string|GMP
      */
     abstract public function fromInt(int $value);
 
     /**
      * @param string $value
-     * @return string|GMP
+     * @return int|string|GMP
      */
     abstract public function fromBinary(string $value);
 
     /**
-     * @param string|GMP $value
+     * @param int|string|GMP $value
      */
     abstract public function toInt($value): int;
 
     /**
-     * @param string|GMP $value
+     * @param int|string|GMP $value
      */
     abstract public function toBinary($value): string;
 
     /**
-     * @param string|GMP $value
-     * @return string[]|GMP[]
+     * @param int|string|GMP $value
+     * @return int[]|string[]|GMP[]
      */
     abstract public function splitHiLo($value): array;
 }
