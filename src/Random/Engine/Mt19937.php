@@ -89,7 +89,6 @@ use const PHP_INT_MIN;
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// todo: fix Mt19937 + MathUnsigned
 final class Mt19937 implements Engine, Serializable
 {
     use NoDynamicProperties;
