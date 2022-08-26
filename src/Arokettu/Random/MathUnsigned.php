@@ -19,6 +19,8 @@ use function Arokettu\Unsigned\from_int;
 use function Arokettu\Unsigned\mul;
 use function Arokettu\Unsigned\shift_left;
 use function Arokettu\Unsigned\shift_right;
+use function Arokettu\Unsigned\to_int;
+use function str_split;
 use function strlen;
 
 /**
@@ -114,8 +116,27 @@ final class MathUnsigned extends Math
     /**
      * @param string $value
      */
+    public function toInt($value): int
+    {
+        return to_int($value);
+    }
+
+    /**
+     * @param string $value
+     */
     public function toBinary($value): string
     {
         return $value;
+    }
+
+    /**
+     * @param string $value
+     * @return string[]
+     */
+    public function splitHiLo($value): array
+    {
+        /** @psalm-suppress PossiblyInvalidArrayAccess */
+        [$lo, $hi] = str_split($value, $this->sizeof >> 1);
+        return [$hi, $lo];
     }
 }

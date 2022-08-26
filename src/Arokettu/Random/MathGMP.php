@@ -16,8 +16,12 @@ namespace Arokettu\Random;
 use GMP;
 use InvalidArgumentException;
 
+use function gmp_export;
 use function gmp_import;
+use function gmp_init;
+use function gmp_intval;
 use function gmp_pow;
+use function str_pad;
 use function strlen;
 
 use const GMP_LITTLE_ENDIAN;
@@ -119,8 +123,34 @@ final class MathGMP extends Math
     /**
      * @param GMP $value
      */
+    public function toInt($value): int
+    {
+        return gmp_intval($value);
+    }
+
+    /**
+     * @param GMP $value
+     */
     public function toBinary($value): string
     {
+        // gmp_export returns empty string for zero, we should return exact bytes as sizeof
         return str_pad(gmp_export($value, $this->sizeof, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST), $this->sizeof, "\0");
+    }
+
+    /**
+     * @param GMP $value
+     * @return GMP[]
+     */
+    public function splitHiLo($value): array
+    {
+        // A lot of assumptions about correct usage here
+        $halfSize = $this->sizeof >> 1;
+        /** @var self $halfMath */
+        $halfMath = Math::create($halfSize);
+
+        return [
+            $value >> ($halfSize * 8),
+            $value & $halfMath->mask,
+        ];
     }
 }

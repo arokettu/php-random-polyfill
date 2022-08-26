@@ -134,7 +134,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
     private function initMath(): void
     {
         if (self::$math === null) {
-            self::$math = Math::create(Math::SIZEOF_64);
+            self::$math = Math::create(Math::SIZEOF_UINT64_T);
 
             self::$SPLITMIX64_1 = self::$math->fromHex('9e3779b97f4a7c15');
             self::$SPLITMIX64_2 = self::$math->fromHex('bf58476d1ce4e5b9');

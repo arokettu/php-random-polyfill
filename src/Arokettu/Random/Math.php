@@ -17,7 +17,8 @@ use function extension_loaded;
 
 abstract class Math
 {
-    public const SIZEOF_64 = 8;
+    public const SIZEOF_UINT64_T = 8;
+    public const SIZEOF_UINT128_T = 16;
 
     /** @var Math[] */
     private static $maths = [];
@@ -90,5 +91,16 @@ abstract class Math
     /**
      * @param string|GMP $value
      */
+    abstract public function toInt($value): int;
+
+    /**
+     * @param string|GMP $value
+     */
     abstract public function toBinary($value): string;
+
+    /**
+     * @param string|GMP $value
+     * @return string[]|GMP[]
+     */
+    abstract public function splitHiLo($value): array;
 }
