@@ -45,17 +45,17 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     /** @var Math */
     private static $math128;
 
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $STEP_MUL_CONST;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $STEP_ADD_CONST;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $ZERO;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $ONE;
 
     /**
-     * @var GMP|string state
+     * @var GMP|string|int state
      * @psalm-suppress PropertyNotSetInConstructor Psalm doesn't traverse several levels apparently
      */
     private $state;
@@ -131,7 +131,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     }
 
     /**
-     * @param GMP|string $seed
+     * @param GMP|string|int $seed
      */
     private function seed128($seed): void
     {
@@ -156,7 +156,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     }
 
     /**
-     * @param GMP|string $state
+     * @param GMP|string|int $state
      */
     private function rotr64($state): string
     {

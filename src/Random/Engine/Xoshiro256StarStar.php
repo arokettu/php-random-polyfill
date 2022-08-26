@@ -43,7 +43,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
     use Serialization;
 
     /**
-     * @var GMP[]|string[]
+     * @var GMP[]|string[]|int[]
      * @psalm-suppress PropertyNotSetInConstructor Psalm doesn't traverse several levels apparently
      */
     private $state;
@@ -51,35 +51,35 @@ final class Xoshiro256StarStar implements Engine, Serializable
     /** @var Math */
     private static $math;
 
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $SPLITMIX64_1;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $SPLITMIX64_2;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $SPLITMIX64_3;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP1;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP2;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP3;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP4;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP_LONG1;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP_LONG2;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP_LONG3;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $JUMP_LONG4;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $ZERO;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $ONE;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $FIVE;
-    /** @var GMP|string */
+    /** @var GMP|string|int */
     private static $NINE;
 
     /**
@@ -194,10 +194,10 @@ final class Xoshiro256StarStar implements Engine, Serializable
     }
 
     /**
-     * @param GMP|string $s0
-     * @param GMP|string $s1
-     * @param GMP|string $s2
-     * @param GMP|string $s3
+     * @param GMP|string|int $s0
+     * @param GMP|string|int $s1
+     * @param GMP|string|int $s2
+     * @param GMP|string|int $s3
      */
     private function seed256($s0, $s1, $s2, $s3): void
     {
@@ -225,8 +225,8 @@ final class Xoshiro256StarStar implements Engine, Serializable
     }
 
     /**
-     * @param GMP|string $x
-     * @return GMP|string
+     * @param GMP|string|int $x
+     * @return GMP|string|int
      */
     private function rotl($x, int $k)
     {
