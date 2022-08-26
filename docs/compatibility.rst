@@ -14,8 +14,8 @@ The library is aimed to be compatible with ``ext-random`` from PHP 8.1.
 Performance
 ===========
 
-Well, it uses GMP, it's guaranteed to be slow.
-According to my tests, Randomizer + Mersenne Twister is 20 times slower than native.
+Well, even with GMP, it's guaranteed to be slow.
+According to my tests, the lib is 20 times slower than native with GMP or 80 times slower than native without any extensions.
 Good enough if you need a dozen numbers or so.
 
 What works
