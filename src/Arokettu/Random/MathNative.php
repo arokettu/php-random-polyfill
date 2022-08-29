@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Arokettu\Random;
 
-use InvalidArgumentException;
-
 use function bin2hex;
 use function dechex;
 use function extension_loaded;
@@ -150,10 +148,14 @@ class MathNative extends Math
      */
     public function fromBinary(string $value)
     {
-        if (strlen($value) < $this->sizeof) {
-            throw new InvalidArgumentException("Value must be {$this->sizeof} bytes long");
+        switch (strlen($value) <=> $this->sizeof) {
+            case -1:
+                $value = str_pad($value, $this->sizeof, "\0");
+                break;
+
+            case 1:
+                $value = substr($value, 0, $this->sizeof);
         }
-        $value = substr($value, 0, $this->sizeof);
 
         return $this->fromHex(bin2hex(strrev($value)));
     }
@@ -163,6 +165,18 @@ class MathNative extends Math
      */
     public function toInt($value): int
     {
+        return $value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function toSignedInt($value): int
+    {
+        if ($value & 1 << ($this->sizeof * 8 - 1)) { // sign
+            $value -= 1 << $this->sizeof * 8;
+        }
+
         return $value;
     }
 

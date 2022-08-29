@@ -137,6 +137,11 @@ abstract class Math
     /**
      * @param int|string|GMP $value
      */
+    abstract public function toSignedInt($value): int;
+
+    /**
+     * @param int|string|GMP $value
+     */
     abstract public function toBinary($value): string;
 
     /**

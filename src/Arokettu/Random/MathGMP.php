@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Arokettu\Random;
 
 use GMP;
-use InvalidArgumentException;
 
 use function gmp_export;
 use function gmp_import;
@@ -180,6 +179,18 @@ final class MathGMP extends Math
      */
     public function toInt($value): int
     {
+        return gmp_intval($value);
+    }
+
+    /**
+     * @param GMP $value
+     */
+    public function toSignedInt($value): int
+    {
+        if (($value & 1 << ($this->sizeof * 8 - 1)) != 0) { // sign
+            $value -= gmp_pow(2, $this->sizeof * 8);
+        }
+
         return gmp_intval($value);
     }
 

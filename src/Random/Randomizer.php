@@ -150,10 +150,7 @@ final class Randomizer implements Serializable
             return $this->rangeBadscaling($min, $max);
         }
 
-        $umax = self::$math64->sub(
-            self::$math64->fromInt($max),
-            self::$math64->fromInt($min)
-        );
+        $umax = self::$math64->subInt(self::$math64->fromInt($max), $min);
 
         // not (algo->generate_size == 0 || algo->generate_size > sizeof(uint32_t))
         $bit32 =
@@ -161,11 +158,12 @@ final class Randomizer implements Serializable
 
         if (!$bit32 || self::$math64->compare($umax, self::$UINT32_MAX_64) > 0) {
             $rangeval = $this->range64($umax);
+            return self::$math64->toSignedInt(self::$math64->addInt($rangeval, $min));
         } else {
+            $umax = self::$math32->subInt(self::$math32->fromInt($max), $min);
             $rangeval = $this->range32($umax);
+            return self::$math32->toSignedInt(self::$math32->addInt($rangeval, $min));
         }
-
-        return self::$math64->toInt(self::$math64->add($rangeval, $min));
     }
 
     /**

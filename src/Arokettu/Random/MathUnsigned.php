@@ -11,15 +11,15 @@ declare(strict_types=1);
 
 namespace Arokettu\Random;
 
-use InvalidArgumentException;
-
 use function Arokettu\Unsigned\add;
 use function Arokettu\Unsigned\add_int;
 use function Arokettu\Unsigned\compare;
 use function Arokettu\Unsigned\from_hex;
 use function Arokettu\Unsigned\from_int;
+use function Arokettu\Unsigned\is_bit_set;
 use function Arokettu\Unsigned\mod;
 use function Arokettu\Unsigned\mul;
+use function Arokettu\Unsigned\neg;
 use function Arokettu\Unsigned\shift_left;
 use function Arokettu\Unsigned\shift_right;
 use function Arokettu\Unsigned\sub;
@@ -161,10 +161,14 @@ final class MathUnsigned extends Math
      */
     public function fromBinary(string $value)
     {
-        if (strlen($value) < $this->sizeof) {
-            throw new InvalidArgumentException("Value must be {$this->sizeof} bytes long");
+        switch (strlen($value) <=> $this->sizeof) {
+            case -1:
+                $value = str_pad($value, $this->sizeof, "\0");
+                break;
+
+            case 1:
+                $value = substr($value, 0, $this->sizeof);
         }
-        $value = substr($value, 0, $this->sizeof);
 
         return $value;
     }
@@ -174,6 +178,19 @@ final class MathUnsigned extends Math
      */
     public function toInt($value): int
     {
+        return to_int($value);
+    }
+
+    /**
+     * @param string $value
+     */
+    public function toSignedInt($value): int
+    {
+        if (is_bit_set($value, $this->sizeof * 8 - 1)) {
+            $valueNeg = neg($value);
+            return $valueNeg === $value ? PHP_INT_MIN : -to_int($valueNeg);
+        }
+
         return to_int($value);
     }
 
