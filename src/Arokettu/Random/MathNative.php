@@ -69,11 +69,61 @@ class MathNative extends Math
      * @param int $value2
      * @return int
      */
+    public function addInt($value1, int $value2)
+    {
+        return ($value1 + $value2) & $this->mask;
+    }
+
+    /**
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
+    public function sub($value1, $value2)
+    {
+        return ($value1 - $value2) & $this->mask;
+    }
+
+    /**
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
+    public function subInt($value1, int $value2)
+    {
+        return ($value1 - $value2) & $this->mask;
+    }
+
+    /**
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
     public function mul($value1, $value2)
     {
         $value1 = $this->auxMath->fromInt($value1);
         $value2 = $this->auxMath->fromInt($value2);
         return $this->auxMath->toInt($this->auxMath->mul($value1, $value2));
+    }
+
+    /**
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
+    public function mod($value1, $value2)
+    {
+        return $value1 % $value2;
+    }
+
+    /**
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
+    public function compare($value1, $value2): int
+    {
+        return $value1 <=> $value2;
     }
 
     /**
@@ -100,9 +150,10 @@ class MathNative extends Math
      */
     public function fromBinary(string $value)
     {
-        if (strlen($value) !== $this->sizeof) {
+        if (strlen($value) < $this->sizeof) {
             throw new InvalidArgumentException("Value must be {$this->sizeof} bytes long");
         }
+        $value = substr($value, 0, $this->sizeof);
 
         return $this->fromHex(bin2hex(strrev($value)));
     }

@@ -14,11 +14,16 @@ namespace Arokettu\Random;
 use InvalidArgumentException;
 
 use function Arokettu\Unsigned\add;
+use function Arokettu\Unsigned\add_int;
+use function Arokettu\Unsigned\compare;
 use function Arokettu\Unsigned\from_hex;
 use function Arokettu\Unsigned\from_int;
+use function Arokettu\Unsigned\mod;
 use function Arokettu\Unsigned\mul;
 use function Arokettu\Unsigned\shift_left;
 use function Arokettu\Unsigned\shift_right;
+use function Arokettu\Unsigned\sub;
+use function Arokettu\Unsigned\sub_int;
 use function Arokettu\Unsigned\to_int;
 use function str_split;
 use function strlen;
@@ -74,12 +79,62 @@ final class MathUnsigned extends Math
 
     /**
      * @param string $value1
+     * @param int $value2
+     * @return string
+     */
+    public function addInt($value1, int $value2)
+    {
+        return add_int($value1, $value2);
+    }
+
+    /**
+     * @param string $value1
+     * @param string $value2
+     * @return string
+     */
+    public function sub($value1, $value2)
+    {
+        return sub($value1, $value2);
+    }
+
+    /**
+     * @param string $value1
+     * @param int $value2
+     * @return string
+     */
+    public function subInt($value1, int $value2)
+    {
+        return sub_int($value1, $value2);
+    }
+
+    /**
+     * @param string $value1
      * @param string $value2
      * @return string
      */
     public function mul($value1, $value2)
     {
         return mul($value1, $value2);
+    }
+
+    /**
+     * @param string $value1
+     * @param string $value2
+     * @return string
+     */
+    public function mod($value1, $value2)
+    {
+        return mod($value1, $value2);
+    }
+
+    /**
+     * @param string $value1
+     * @param string $value2
+     * @return int
+     */
+    public function compare($value1, $value2): int
+    {
+        return compare($value1, $value2);
     }
 
     /**
@@ -106,9 +161,10 @@ final class MathUnsigned extends Math
      */
     public function fromBinary(string $value)
     {
-        if (strlen($value) !== $this->sizeof) {
+        if (strlen($value) < $this->sizeof) {
             throw new InvalidArgumentException("Value must be {$this->sizeof} bytes long");
         }
+        $value = substr($value, 0, $this->sizeof);
 
         return $value;
     }

@@ -81,12 +81,62 @@ final class MathGMP extends Math
 
     /**
      * @param GMP $value1
+     * @param int $value2
+     * @return GMP
+     */
+    public function addInt($value1, int $value2)
+    {
+        return ($value1 + $value2) & $this->mask;
+    }
+
+    /**
+     * @param GMP $value1
+     * @param GMP $value2
+     * @return GMP
+     */
+    public function sub($value1, $value2)
+    {
+        return ($value1 - $value2) & $this->mask;
+    }
+
+    /**
+     * @param GMP $value1
+     * @param int $value2
+     * @return GMP
+     */
+    public function subInt($value1, int $value2)
+    {
+        return ($value1 - $value2) & $this->mask;
+    }
+
+    /**
+     * @param GMP $value1
      * @param GMP $value2
      * @return GMP
      */
     public function mul($value1, $value2)
     {
         return ($value1 * $value2) & $this->mask;
+    }
+
+    /**
+     * @param GMP $value1
+     * @param GMP $value2
+     * @return GMP
+     */
+    public function mod($value1, $value2)
+    {
+        return $value1 % $value2;
+    }
+
+    /**
+     * @param GMP $value1
+     * @param GMP $value2
+     * @return int
+     */
+    public function compare($value1, $value2): int
+    {
+        return $value1 <=> $value2;
     }
 
     /**
@@ -113,8 +163,13 @@ final class MathGMP extends Math
      */
     public function fromBinary(string $value)
     {
-        if (strlen($value) !== $this->sizeof) {
-            throw new InvalidArgumentException("Value must be {$this->sizeof} bytes long");
+        switch (strlen($value) <=> $this->sizeof) {
+            case -1:
+                $value = str_pad($value, $this->sizeof, "\0");
+                break;
+
+            case 1:
+                $value = substr($value, 0, $this->sizeof);
         }
 
         return gmp_import($value, $this->sizeof, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);

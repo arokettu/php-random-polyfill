@@ -9,13 +9,15 @@
  * @see https://github.com/php/php-src/blob/eff9aed/ext/random/randomizer.c
  * @see https://github.com/php/php-src/blob/eff9aed/ext/standard/array.c
  * @see https://github.com/php/php-src/blob/eff9aed/ext/standard/string.c
+ *
+ * @noinspection PhpComposerExtensionStubsInspection
  */
 
 declare(strict_types=1);
 
 namespace Random;
 
-use Arokettu\Random\BigIntExportImport;
+use Arokettu\Random\Math;
 use Arokettu\Random\NoDynamicProperties;
 use Closure;
 use Error;
@@ -30,8 +32,6 @@ use function array_keys;
 use function array_values;
 use function count;
 use function floatval;
-use function gmp_init;
-use function gmp_intval;
 use function intval;
 use function serialize;
 use function strlen;
@@ -48,22 +48,34 @@ use const SORT_NUMERIC;
  */
 final class Randomizer implements Serializable
 {
-    use BigIntExportImport;
     use NoDynamicProperties {
         __set as nodyn__set;
     }
 
-    private const SIZEOF_UINT_64_T = 8;
-    private const SIZEOF_UINT_32_T = 4;
     private const PHP_MT_RAND_MAX = 0x7FFFFFFF;
     private const RANDOM_RANGE_ATTEMPTS = 50;
+
+    /** @var Math */
+    private static $math32;
+    /** @var Math */
+    private static $math64;
+    /** @var GMP|int|string */
+    private static $UINT32_ZERO;
+    /** @var GMP|int|string */
+    private static $UINT32_MAX;
+    /** @var GMP|int|string */
+    private static $UINT64_ZERO;
+    /** @var GMP|int|string */
+    private static $UINT64_MAX;
+    /** @var GMP|int|string */
+    private static $UINT32_MAX_64;
 
     /** @var Engine */
     private $engine;
 
     public function __construct(?Engine $engine = null)
     {
-        $this->initConst();
+        $this->initMath();
 
         /** @psalm-suppress RedundantConditionGivenDocblockType not yet initialized */
         if ($this->engine !== null) {
@@ -73,9 +85,23 @@ final class Randomizer implements Serializable
         $this->engine = $engine ?? new Engine\Secure();
     }
 
-    private function initConst(): void
+    /**
+     * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
+     */
+    private function initMath(): void
     {
-        $this->initGmpConst();
+        if (self::$math32 === null) {
+            self::$math32 = Math::create(Math::SIZEOF_UINT32_T);
+            self::$math64 = Math::create(Math::SIZEOF_UINT64_T);
+
+            self::$UINT32_ZERO = self::$math32->fromInt(0);
+            self::$UINT32_MAX  = self::$math32->fromHex('ffffffff');
+
+            self::$UINT64_ZERO = self::$math64->fromInt(0);
+            self::$UINT64_MAX  = self::$math64->fromHex('ffffffffffffffff');
+
+            self::$UINT32_MAX_64 = self::$math64->fromHex('ffffffff');
+        }
     }
 
     private function generate(): string
@@ -86,8 +112,8 @@ final class Randomizer implements Serializable
 
         if ($size === 0) {
             throw new BrokenRandomEngineError('A random engine must return a non-empty string');
-        } elseif ($size > self::SIZEOF_UINT_64_T) {
-            $retval = substr($retval, 0, self::SIZEOF_UINT_64_T);
+        } elseif ($size > Math::SIZEOF_UINT64_T) {
+            $retval = substr($retval, 0, Math::SIZEOF_UINT64_T);
         }
 
         return $retval;
@@ -124,41 +150,56 @@ final class Randomizer implements Serializable
             return $this->rangeBadscaling($min, $max);
         }
 
-        $umax = gmp_init($max) - gmp_init($min);
+        $umax = self::$math64->sub(
+            self::$math64->fromInt($max),
+            self::$math64->fromInt($min)
+        );
 
         // not (algo->generate_size == 0 || algo->generate_size > sizeof(uint32_t))
         $bit32 =
             $this->engine instanceof Mt19937;
 
-        if (!$bit32 || $umax > self::$UINT32_MASK) {
+        if (!$bit32 || self::$math64->compare($umax, self::$UINT32_MAX_64) > 0) {
             $rangeval = $this->range64($umax);
         } else {
             $rangeval = $this->range32($umax);
         }
 
-        return gmp_intval($rangeval + $min);
+        return self::$math64->toInt(self::$math64->add($rangeval, $min));
     }
 
-    private function range32(GMP $umax): GMP
+    /**
+     * @param GMP|string|int $umax
+     * @return GMP|string|int
+     */
+    private function range32($umax)
     {
         $result = '';
         do {
             $result .= $this->generate();
-        } while (strlen($result) < self::SIZEOF_UINT_32_T);
+        } while (strlen($result) < Math::SIZEOF_UINT32_T);
 
-        $result = $this->importGmp32($result);
+        $result = self::$math32->fromBinary($result);
 
-        if ($umax == self::$UINT32_MASK) {
+        if ($umax == self::$UINT32_MAX) {
             return $result;
         }
 
-        $umax += 1;
+        $umax1 = $umax;
+        $umax = self::$math32->addInt($umax, 1);
 
-        if (($umax & ($umax - 1)) == 0) {
-            return $result & ($umax - 1);
+        if (($umax & $umax1) == self::$UINT32_ZERO) {
+            return $result & $umax1;
         }
 
-        $limit = self::$UINT32_MASK - (self::$UINT32_MASK % $umax) - 1;
+        $limit = //self::$UINT32_MAX - (self::$UINT32_MAX % $umax) - 1;
+            self::$math32->subInt(
+                self::$math32->sub(
+                    self::$UINT32_MAX,
+                    self::$math32->mod(self::$UINT32_MAX, $umax)
+                ),
+                1
+            );
 
         $count = 0;
 
@@ -170,34 +211,46 @@ final class Randomizer implements Serializable
             $result = '';
             do {
                 $result .= $this->generate();
-            } while (strlen($result) < self::SIZEOF_UINT_32_T);
+            } while (strlen($result) < Math::SIZEOF_UINT32_T);
 
-            $result = $this->importGmp32($result);
+            $result = self::$math32->fromBinary($result);
         }
 
-        return $result % $umax;
+        return self::$math32->mod($result, $umax);
     }
 
-    private function range64(GMP $umax): GMP
+    /**
+     * @param GMP|string|int $umax
+     * @return GMP|string|int
+     */
+    private function range64($umax)
     {
         $result = '';
         do {
             $result .= $this->generate();
-        } while (strlen($result) < self::SIZEOF_UINT_64_T);
+        } while (strlen($result) < Math::SIZEOF_UINT64_T);
 
-        $result = $this->importGmp64($result);
+        $result = self::$math64->fromBinary($result);
 
-        if ($umax == self::$UINT64_MASK) {
+        if ($umax == self::$UINT64_MAX) {
             return $result;
         }
 
-        $umax += 1;
+        $umax1 = $umax;
+        $umax = self::$math64->addInt($umax, 1);
 
-        if (($umax & ($umax - 1)) == 0) {
-            return $result & ($umax - 1);
+        if (($umax & $umax1) == self::$UINT64_ZERO) {
+            return $result & $umax1;
         }
 
-        $limit = self::$UINT64_MASK - (self::$UINT64_MASK % $umax) - 1;
+        $limit = //self::$UINT64_MAX - (self::$UINT64_MAX % $umax) - 1;
+            self::$math64->subInt(
+                self::$math64->sub(
+                    self::$UINT64_MAX,
+                    self::$math64->mod(self::$UINT64_MAX, $umax)
+                ),
+                1
+            );
 
         $count = 0;
 
@@ -209,19 +262,19 @@ final class Randomizer implements Serializable
             $result = '';
             do {
                 $result .= $this->generate();
-            } while (strlen($result) < self::SIZEOF_UINT_64_T);
+            } while (strlen($result) < Math::SIZEOF_UINT64_T);
 
-            $result = $this->importGmp64($result);
+            $result = self::$math64->fromBinary($result);
         }
 
-        return $result % $umax;
+        return self::$math64->mod($result, $umax);
     }
 
     private function rangeBadscaling(int $min, int $max): int
     {
         $n = $this->generate();
-        $n = $this->importGmp32($n);
-        $n = gmp_intval($n >> 1);
+        $n = self::$math32->fromBinary($n);
+        $n = self::$math32->toInt(self::$math32->shiftRight($n, 1));
         // (__n) = (__min) + (zend_long) ((double) ( (double) (__max) - (__min) + 1.0) * ((__n) / ((__tmax) + 1.0)))
         /** @noinspection PhpCastIsUnnecessaryInspection */
         return intval($min + intval((floatval($max) - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0))));
@@ -230,9 +283,9 @@ final class Randomizer implements Serializable
     public function nextInt(): int
     {
         $result = $this->generate();
-        $result = $this->importGmp64($result);
+        $result = self::$math64->fromBinary($result);
 
-        return gmp_intval($result >> 1);
+        return self::$math64->toInt(self::$math64->shiftRight($result, 1));
     }
 
     public function getBytes(int $length): string
@@ -342,7 +395,7 @@ final class Randomizer implements Serializable
 
     public function __unserialize(array $data): void
     {
-        $this->initConst();
+        $this->initMath();
 
         [$fields] = $data;
         ['engine' => $this->engine] = $fields;
