@@ -201,7 +201,7 @@ final class Randomizer implements Serializable
 
         $count = 0;
 
-        while ($result > $limit) {
+        while (self::$math32->compare($result, $limit) > 0) {
             if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
                 throw new BrokenRandomEngineError('Failed to generate an acceptable random number in 50 attempts');
             }
@@ -252,7 +252,7 @@ final class Randomizer implements Serializable
 
         $count = 0;
 
-        while ($result > $limit) {
+        while (self::$math64->compare($result, $limit) > 0) {
             if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
                 throw new BrokenRandomEngineError('Failed to generate an acceptable random number in 50 attempts');
             }
