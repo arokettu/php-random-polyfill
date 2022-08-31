@@ -77,6 +77,17 @@ class RandomizerWithCustomEngineTest extends TestCase
         }
     }
 
+    public function testGetIntWrongRange(): void
+    {
+        $this->expectException(\ValueError::class);
+        $this->expectExceptionMessage(
+            'Random\Randomizer::getInt(): Argument #2 ($max) must be greater than or equal to argument #1 ($min)'
+        );
+
+        $rnd = new Randomizer(new Xorshift32(123));
+        $rnd->getInt(1, -1);
+    }
+
     public function testNextInt(): void
     {
         $testMatrix = [
@@ -172,6 +183,15 @@ class RandomizerWithCustomEngineTest extends TestCase
         }
     }
 
+    public function testGetBytesTooLow(): void
+    {
+        $this->expectException(\ValueError::class);
+        $this->expectExceptionMessage('Random\Randomizer::getBytes(): Argument #1 ($length) must be greater than 0');
+
+        $rnd = new Randomizer(new Xorshift32(123));
+        $rnd->getBytes(0);
+    }
+
     public function testShuffleArray(): void
     {
         $array = \range(1, 100);
@@ -235,6 +255,14 @@ class RandomizerWithCustomEngineTest extends TestCase
             $shuffled = $rnd->shuffleBytes($string);
             self::assertEquals($shuffledExpected, $shuffled, "Seed: $seed");
         }
+    }
+
+    public function testShuffleEmpty(): void
+    {
+        $rnd = new Randomizer(new Xorshift32(123));
+
+        self::assertEquals('', $rnd->shuffleBytes(''));
+        self::assertEquals([], $rnd->shuffleArray([]));
     }
 
     public function testPickKeys(): void

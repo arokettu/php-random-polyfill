@@ -21,7 +21,7 @@ use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
 use Random\Engine;
-use RuntimeException;
+use Random\RandomException;
 use Serializable;
 use TypeError;
 use ValueError;
@@ -53,6 +53,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     /**
      * @param string|int|null $seed
+     * @throws RandomException
      */
     public function __construct($seed = null)
     {
@@ -66,8 +67,11 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
         if ($seed === null) {
             try {
                 $seed = \random_bytes(Math::SIZEOF_UINT128_T);
+                // @codeCoverageIgnoreStart
+                // catch unreproducible
             } catch (Exception $e) {
-                throw new RuntimeException('Failed to generate a random seed');
+                throw new RandomException('Failed to generate a random seed', 0, $e);
+                // @codeCoverageIgnoreEnd
             }
         }
 
@@ -89,6 +93,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     }
 
     /**
+     * @codeCoverageIgnore
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
@@ -207,7 +212,10 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     private function loadStates(array $states): bool
     {
         if (!\array_is_list($states) || \count($states) < 2) {
+            // @codeCoverageIgnoreStart
+            // trust the logic
             return false;
+            // @codeCoverageIgnoreEnd
         }
         [$hi, $lo] = $states;
         if (\strlen($hi) !== Math::SIZEOF_UINT64_T * 2 || \strlen($lo) !== Math::SIZEOF_UINT64_T * 2) {

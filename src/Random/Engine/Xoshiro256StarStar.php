@@ -21,7 +21,7 @@ use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
 use Random\Engine;
-use RuntimeException;
+use Random\RandomException;
 use Serializable;
 use TypeError;
 use ValueError;
@@ -76,6 +76,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
     /**
      * @param string|int|null $seed
+     * @throws RandomException
      */
     public function __construct($seed = null)
     {
@@ -87,8 +88,11 @@ final class Xoshiro256StarStar implements Engine, Serializable
                     $seed = \random_bytes(32);
                 } while ($seed === "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
                 $this->seedString($seed);
+                // @codeCoverageIgnoreStart
+                // catch unreproducible
             } catch (Exception $e) {
-                throw new RuntimeException('Random number generation failed');
+                throw new RandomException('Failed to generate a random seed', 0, $e);
+                // @codeCoverageIgnoreEnd
             }
             return;
         }
@@ -120,6 +124,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
     }
 
     /**
+     * @codeCoverageIgnore
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */

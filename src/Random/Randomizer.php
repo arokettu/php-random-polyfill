@@ -70,6 +70,7 @@ final class Randomizer implements Serializable
     }
 
     /**
+     * @codeCoverageIgnore
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
     private function initMath(): void
@@ -187,7 +188,10 @@ final class Randomizer implements Serializable
 
         while (self::$math32->compare($result, $limit) > 0) {
             if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
+                // @codeCoverageIgnoreStart
+                // MT doesn't do that and other engines don't use range32
                 throw new BrokenRandomEngineError('Failed to generate an acceptable random number in 50 attempts');
+                // @codeCoverageIgnoreEnd
             }
 
             $result = '';
@@ -408,7 +412,7 @@ final class Randomizer implements Serializable
             return $this->engine;
         }
 
-        \trigger_error('Undefined property: ' . self::class . '::$' . $name);
+        \trigger_error('Undefined property: ' . self::class . '::$' . $name, \E_USER_WARNING);
         return null;
     }
 

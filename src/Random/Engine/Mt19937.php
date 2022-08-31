@@ -21,7 +21,7 @@ use Arokettu\Random\Serialization;
 use Exception;
 use GMP;
 use Random\Engine;
-use RuntimeException;
+use Random\RandomException;
 use Serializable;
 use ValueError;
 
@@ -114,6 +114,9 @@ final class Mt19937 implements Engine, Serializable
     /** @var GMP|string|int */
     private static $ZERO;
 
+    /**
+     * @throws RandomException
+     */
     public function __construct(?int $seed = null, int $mode = \MT_RAND_MT19937)
     {
         $this->initMath();
@@ -125,12 +128,16 @@ final class Mt19937 implements Engine, Serializable
 
         try {
             $this->seed($seed ?? \random_int(\PHP_INT_MIN, \PHP_INT_MAX));
+            // @codeCoverageIgnoreStart
+            // catch unreproducible
         } catch (Exception $e) {
-            throw new RuntimeException('Random number generation failed');
+            throw new RandomException('Failed to generate a random seed', 0, $e);
+            // @codeCoverageIgnoreEnd
         }
     }
 
     /**
+     * @codeCoverageIgnore
      * @psalm-suppress TraitMethodSignatureMismatch abstract private is 8.0+
      * @psalm-suppress DocblockTypeContradiction the "constants" are initialized here
      */
@@ -254,7 +261,10 @@ final class Mt19937 implements Engine, Serializable
 
         for ($i = 0; $i < self::N; $i++) {
             if (!isset($states[$i])) {
+                // @codeCoverageIgnoreStart
+                // trust the logic
                 return false;
+                // @codeCoverageIgnoreEnd
             }
             $stateBin = @\hex2bin($states[$i]);
             if ($stateBin === false) {

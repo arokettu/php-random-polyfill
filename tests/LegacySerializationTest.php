@@ -17,6 +17,10 @@ class LegacySerializationTest extends TestCase
 {
     public function testLegacySerialization(): void
     {
+        if (\PHP_VERSION_ID >= 80200) {
+            $this->markTestSkipped('Native implementation is incompatible');
+        }
+
         $engine1 = new Mt19937(null, \MT_RAND_MT19937);
         $engine2 = new Mt19937(null, \MT_RAND_MT19937);
         $engine2->unserialize(@$engine1->serialize());
@@ -50,6 +54,10 @@ class LegacySerializationTest extends TestCase
 
     public function testKnownLegacyUnserialize(): void
     {
+        if (\PHP_VERSION_ID >= 80200) {
+            $this->markTestSkipped('Native implementation is incompatible');
+        }
+
         $serializedPCG =
             'C:33:"Random\Engine\PcgOneseq128XslRr64":82:{a:2:{i:0;a:0:{}i:1;a:2:{i:0;s:16:"401892524857b9cc";' .
             'i:1;s:16:"c6de1a2570db7cba";}}}';

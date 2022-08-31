@@ -36,6 +36,27 @@ class DynamicPropertiesTest extends TestCase
         throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
+    public function testRandomizerNonexistent(): void
+    {
+        if (!\method_exists($this, 'expectWarning')) { // not PHPUnit 8/9
+            $this->markTestSkipped('PHPUnit is too old for this test');
+        }
+
+        $this->expectWarning();
+        $this->expectWarningMessage('Undefined property: Random\Randomizer::$test');
+
+        $r = new Randomizer();
+        self::assertNull(@$r->test);
+        $x = \strval($r->test); // trigger warning
+    }
+
+    public function testRandomizerIsset(): void
+    {
+        $r = new Randomizer();
+        self::assertTrue(isset($r->engine));
+        self::assertFalse(isset($r->test));
+    }
+
     public function testSecure(): void
     {
         try {

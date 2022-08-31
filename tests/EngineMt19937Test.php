@@ -135,4 +135,15 @@ class EngineMt19937Test extends TestCase
 
         \serialize(new Mt19937());
     }
+
+    public function testVerySpecialRange32Branch(): void
+    {
+        \mt_srand(123456);
+        $r = new Randomizer(new Mt19937(123456));
+
+        self::assertEquals(
+            \mt_rand(-0x7fffffff - 1, 0x7fffffff),    // 32 bit PHP_INT_MIN, PHP_INT_MAX
+            $r->getInt(-0x7fffffff - 1, 0x7fffffff)   // 32 bit PHP_INT_MIN, PHP_INT_MAX
+        );
+    }
 }
