@@ -269,6 +269,12 @@ final class Randomizer implements Serializable
     public function nextInt(): int
     {
         $result = $this->generate();
+        // @codeCoverageSkipStart
+        // coverage runs on 64 but this stuff is for 32
+        if (\strlen($result) > \PHP_INT_SIZE) {
+            throw new RandomException('Generated value exceeds size of int');
+        }
+        // @codeCoverageSkipEnd
         $result = self::$math64->fromBinary($result);
 
         return self::$math64->toInt(self::$math64->shiftRight($result, 1));
