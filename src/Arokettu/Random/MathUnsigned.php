@@ -16,10 +16,8 @@ use function Arokettu\Unsigned\add_int;
 use function Arokettu\Unsigned\compare;
 use function Arokettu\Unsigned\from_hex;
 use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\is_bit_set;
 use function Arokettu\Unsigned\mod;
 use function Arokettu\Unsigned\mul;
-use function Arokettu\Unsigned\neg;
 use function Arokettu\Unsigned\shift_left;
 use function Arokettu\Unsigned\shift_right;
 use function Arokettu\Unsigned\sub;
@@ -32,6 +30,7 @@ use function strlen;
 /**
  * @internal
  * @psalm-suppress MoreSpecificImplementedParamType
+ * @codeCoverageIgnore We don't care about math that was not used
  */
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 // phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint

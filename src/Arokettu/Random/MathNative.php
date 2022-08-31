@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright Copyright © 2022 Anton Smirnov
+ * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
+ *
+ * @noinspection PhpMissingReturnTypeInspection
+ */
+
 declare(strict_types=1);
 
 namespace Arokettu\Random;
@@ -12,6 +19,13 @@ use function hexdec;
 use function strlen;
 use function strrev;
 
+/**
+ * @internal
+ * @psalm-suppress MoreSpecificImplementedParamType
+ * @codeCoverageIgnore We don't care about math that was not used
+ */
+// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+// phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
 class MathNative extends Math
 {
     /** @var int */

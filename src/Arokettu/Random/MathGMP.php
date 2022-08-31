@@ -29,6 +29,7 @@ use const GMP_LSW_FIRST;
 /**
  * @internal
  * @psalm-suppress MoreSpecificImplementedParamType
+ * @codeCoverageIgnore We don't care about math that was not used
  */
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 // phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint

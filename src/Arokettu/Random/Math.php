@@ -15,6 +15,9 @@ use GMP;
 
 use function extension_loaded;
 
+/**
+ * @codeCoverageIgnore We don't care about math that was not used
+ */
 abstract class Math
 {
     public const SIZEOF_UINT32_T = 4;
