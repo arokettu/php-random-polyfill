@@ -24,8 +24,6 @@ use function Arokettu\Unsigned\sub;
 use function Arokettu\Unsigned\sub_int;
 use function Arokettu\Unsigned\to_int;
 use function Arokettu\Unsigned\to_signed_int;
-use function str_split;
-use function strlen;
 
 /**
  * @internal
@@ -161,13 +159,13 @@ final class MathUnsigned extends Math
      */
     public function fromBinary(string $value)
     {
-        switch (strlen($value) <=> $this->sizeof) {
+        switch (\strlen($value) <=> $this->sizeof) {
             case -1:
-                $value = str_pad($value, $this->sizeof, "\0");
+                $value = \str_pad($value, $this->sizeof, "\0");
                 break;
 
             case 1:
-                $value = substr($value, 0, $this->sizeof);
+                $value = \substr($value, 0, $this->sizeof);
         }
 
         return $value;
@@ -204,7 +202,7 @@ final class MathUnsigned extends Math
     public function splitHiLo($value): array
     {
         /** @psalm-suppress PossiblyInvalidArrayAccess */
-        [$lo, $hi] = str_split($value, $this->sizeof >> 1);
+        [$lo, $hi] = \str_split($value, $this->sizeof >> 1);
         return [$hi, $lo];
     }
 }

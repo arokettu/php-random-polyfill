@@ -11,14 +11,6 @@ declare(strict_types=1);
 
 namespace Arokettu\Random;
 
-use function bin2hex;
-use function dechex;
-use function extension_loaded;
-use function hex2bin;
-use function hexdec;
-use function strlen;
-use function strrev;
-
 /**
  * @internal
  * @psalm-suppress MoreSpecificImplementedParamType
@@ -43,7 +35,7 @@ class MathNative extends Math
         $this->mask = (2 ** ($sizeof * 8)) - 1;
         $this->sizeof = $sizeof;
         // multiplier to avoid overflow
-        $this->auxMath = extension_loaded('gmp') ? new MathGMP($sizeof) : new MathUnsigned($sizeof);
+        $this->auxMath = \extension_loaded('gmp') ? new MathGMP($sizeof) : new MathUnsigned($sizeof);
     }
 
     /**
@@ -144,7 +136,7 @@ class MathNative extends Math
      */
     public function fromHex(string $value)
     {
-        return hexdec($value);
+        return \hexdec($value);
     }
 
     /**
@@ -162,16 +154,16 @@ class MathNative extends Math
      */
     public function fromBinary(string $value)
     {
-        switch (strlen($value) <=> $this->sizeof) {
+        switch (\strlen($value) <=> $this->sizeof) {
             case -1:
-                $value = str_pad($value, $this->sizeof, "\0");
+                $value = \str_pad($value, $this->sizeof, "\0");
                 break;
 
             case 1:
-                $value = substr($value, 0, $this->sizeof);
+                $value = \substr($value, 0, $this->sizeof);
         }
 
-        return $this->fromHex(bin2hex(strrev($value)));
+        return $this->fromHex(\bin2hex(\strrev($value)));
     }
 
     /**
@@ -199,9 +191,9 @@ class MathNative extends Math
      */
     public function toBinary($value): string
     {
-        $hex = dechex($value);
-        $bin = hex2bin(strlen($hex) % 2 ? '0' . $hex : $hex);
-        return str_pad(strrev($bin), $this->sizeof, "\0");
+        $hex = \dechex($value);
+        $bin = \hex2bin(\strlen($hex) % 2 ? '0' . $hex : $hex);
+        return \str_pad(\strrev($bin), $this->sizeof, "\0");
     }
 
     /**

@@ -27,22 +27,6 @@ use Random\Engine\Secure;
 use Serializable;
 use ValueError;
 
-use function array_key_exists;
-use function array_keys;
-use function array_values;
-use function count;
-use function floatval;
-use function intval;
-use function serialize;
-use function strlen;
-use function substr;
-use function trigger_error;
-use function unserialize;
-
-use const E_USER_WARNING;
-use const MT_RAND_PHP;
-use const SORT_NUMERIC;
-
 /**
  * @property-read Engine $engine
  */
@@ -108,12 +92,12 @@ final class Randomizer implements Serializable
     {
         $retval = $this->engine->generate();
 
-        $size = strlen($retval);
+        $size = \strlen($retval);
 
         if ($size === 0) {
             throw new BrokenRandomEngineError('A random engine must return a non-empty string');
         } elseif ($size > Math::SIZEOF_UINT64_T) {
-            $retval = substr($retval, 0, Math::SIZEOF_UINT64_T);
+            $retval = \substr($retval, 0, Math::SIZEOF_UINT64_T);
         }
 
         return $retval;
@@ -144,7 +128,7 @@ final class Randomizer implements Serializable
             $this->engine instanceof Mt19937 &&
             Closure::bind(function () {
                 /** @psalm-suppress UndefinedThisPropertyFetch */
-                return $this->mode === MT_RAND_PHP; // read private property
+                return $this->mode === \MT_RAND_PHP; // read private property
             }, $this->engine, $this->engine)()
         ) {
             return $this->rangeBadscaling($min, $max);
@@ -175,7 +159,7 @@ final class Randomizer implements Serializable
         $result = '';
         do {
             $result .= $this->generate();
-        } while (strlen($result) < Math::SIZEOF_UINT32_T);
+        } while (\strlen($result) < Math::SIZEOF_UINT32_T);
 
         $result = self::$math32->fromBinary($result);
 
@@ -209,7 +193,7 @@ final class Randomizer implements Serializable
             $result = '';
             do {
                 $result .= $this->generate();
-            } while (strlen($result) < Math::SIZEOF_UINT32_T);
+            } while (\strlen($result) < Math::SIZEOF_UINT32_T);
 
             $result = self::$math32->fromBinary($result);
         }
@@ -226,7 +210,7 @@ final class Randomizer implements Serializable
         $result = '';
         do {
             $result .= $this->generate();
-        } while (strlen($result) < Math::SIZEOF_UINT64_T);
+        } while (\strlen($result) < Math::SIZEOF_UINT64_T);
 
         $result = self::$math64->fromBinary($result);
 
@@ -260,7 +244,7 @@ final class Randomizer implements Serializable
             $result = '';
             do {
                 $result .= $this->generate();
-            } while (strlen($result) < Math::SIZEOF_UINT64_T);
+            } while (\strlen($result) < Math::SIZEOF_UINT64_T);
 
             $result = self::$math64->fromBinary($result);
         }
@@ -275,7 +259,7 @@ final class Randomizer implements Serializable
         $n = self::$math32->toInt(self::$math32->shiftRight($n, 1));
         // (__n) = (__min) + (zend_long) ((double) ( (double) (__max) - (__min) + 1.0) * ((__n) / ((__tmax) + 1.0)))
         /** @noinspection PhpCastIsUnnecessaryInspection */
-        return intval($min + intval((floatval($max) - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0))));
+        return \intval($min + \intval((\floatval($max) - $min + 1.0) * ($n / (self::PHP_MT_RAND_MAX + 1.0))));
     }
 
     public function nextInt(): int
@@ -300,9 +284,9 @@ final class Randomizer implements Serializable
                 throw new BrokenRandomEngineError('A random engine must return a non-empty string');
             }
             $retval .= $result;
-        } while (strlen($retval) < $length);
+        } while (\strlen($retval) < $length);
 
-        return substr($retval, 0, $length);
+        return \substr($retval, 0, $length);
     }
 
     public function shuffleArray(array $array): array
@@ -312,8 +296,8 @@ final class Randomizer implements Serializable
             return [];
         }
 
-        $hash = array_values($array);
-        $nLeft = count($hash);
+        $hash = \array_values($array);
+        $nLeft = \count($hash);
 
         while (--$nLeft) {
             $rndIdx = $this->getInt(0, $nLeft);
@@ -327,11 +311,11 @@ final class Randomizer implements Serializable
 
     public function shuffleBytes(string $bytes): string
     {
-        if (strlen($bytes) <= 1) {
+        if (\strlen($bytes) <= 1) {
             return $bytes;
         }
 
-        $nLeft = strlen($bytes);
+        $nLeft = \strlen($bytes);
 
         while (--$nLeft) {
             $rndIdx = $this->getInt(0, $nLeft);
@@ -347,15 +331,15 @@ final class Randomizer implements Serializable
     {
         if (!($this->engine instanceof CryptoSafeEngine)) {
             // Crypto-safe engines are not expected to produce reproducible sequences
-            trigger_error('pickArrayKeys() may produce results incompatible with native ext-random', E_USER_WARNING);
+            \trigger_error('pickArrayKeys() may produce results incompatible with native ext-random', \E_USER_WARNING);
         }
 
         if ($array === []) {
             throw new ValueError(__METHOD__ . '(): Argument #1 ($array) cannot be empty');
         }
 
-        $numAvail = count($array);
-        $keys = array_keys($array);
+        $numAvail = \count($array);
+        $keys = \array_keys($array);
 
         if ($num === 1) {
             return [$keys[$this->getInt(0, $numAvail - 1)]];
@@ -375,15 +359,15 @@ final class Randomizer implements Serializable
         while ($i) {
             $idx = $this->getInt(0, $numAvail - 1);
 
-            if (array_key_exists($idx, $retval) === false) {
+            if (\array_key_exists($idx, $retval) === false) {
                 $retval[$idx] = $keys[$idx];
                 $i--;
             }
         }
 
-        ksort($retval, SORT_NUMERIC); // sort by indexes
+        \ksort($retval, \SORT_NUMERIC); // sort by indexes
 
-        return array_values($retval); // remove indexes
+        return \array_values($retval); // remove indexes
     }
 
     public function __serialize(): array
@@ -401,8 +385,8 @@ final class Randomizer implements Serializable
 
     public function serialize(): string
     {
-        trigger_error('Serialized object will be incompatible with PHP 8.2', E_USER_WARNING);
-        return serialize($this->__serialize());
+        \trigger_error('Serialized object will be incompatible with PHP 8.2', \E_USER_WARNING);
+        return \serialize($this->__serialize());
     }
 
     /**
@@ -411,7 +395,7 @@ final class Randomizer implements Serializable
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function unserialize($data): void
     {
-        $this->__unserialize(unserialize($data));
+        $this->__unserialize(\unserialize($data));
     }
 
     /**
@@ -424,7 +408,7 @@ final class Randomizer implements Serializable
             return $this->engine;
         }
 
-        trigger_error('Undefined property: ' . self::class . '::$' . $name);
+        \trigger_error('Undefined property: ' . self::class . '::$' . $name);
         return null;
     }
 

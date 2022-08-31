@@ -25,17 +25,6 @@ use RuntimeException;
 use Serializable;
 use ValueError;
 
-use function array_fill;
-use function array_map;
-use function bin2hex;
-use function hex2bin;
-use function random_int;
-
-use const MT_RAND_MT19937;
-use const MT_RAND_PHP;
-use const PHP_INT_MAX;
-use const PHP_INT_MIN;
-
 /*
     The following mt19937 algorithms are based on a C++ class MTRand by
     Richard J. Wagner. For more information see the web page at
@@ -125,17 +114,17 @@ final class Mt19937 implements Engine, Serializable
     /** @var GMP|string|int */
     private static $ZERO;
 
-    public function __construct(?int $seed = null, int $mode = MT_RAND_MT19937)
+    public function __construct(?int $seed = null, int $mode = \MT_RAND_MT19937)
     {
         $this->initMath();
 
-        if ($mode !== MT_RAND_PHP && $mode !== MT_RAND_MT19937) {
+        if ($mode !== \MT_RAND_PHP && $mode !== \MT_RAND_MT19937) {
             throw new ValueError(__METHOD__ . '(): Argument #2 ($mode) must be either MT_RAND_MT19937 or MT_RAND_PHP');
         }
         $this->mode = $mode;
 
         try {
-            $this->seed($seed ?? random_int(PHP_INT_MIN, PHP_INT_MAX));
+            $this->seed($seed ?? \random_int(\PHP_INT_MIN, \PHP_INT_MAX));
         } catch (Exception $e) {
             throw new RuntimeException('Random number generation failed');
         }
@@ -165,7 +154,7 @@ final class Mt19937 implements Engine, Serializable
     private function seed(int $seed): void
     {
         /** @var GMP[]|string[]|int[] $state */
-        $state = array_fill(0, self::N, null);
+        $state = \array_fill(0, self::N, null);
 
         $prevState = $state[0] = self::$math->fromInt($seed);
         for ($i = 1; $i < self::N; $i++) {
@@ -215,7 +204,7 @@ final class Mt19937 implements Engine, Serializable
 
         $mixBits = self::$math->shiftRight($u & self::$HI_BIT | $v & self::$LO_BITS, 1);
 
-        if ($this->mode === MT_RAND_MT19937) {
+        if ($this->mode === \MT_RAND_MT19937) {
             $twist = self::$math->toInt($v & self::$LO_BIT) ? self::$TWIST_CONST : self::$ZERO;
         } else {
             $twist = self::$math->toInt($u & self::$LO_BIT) ? self::$TWIST_CONST : self::$ZERO;
@@ -245,8 +234,8 @@ final class Mt19937 implements Engine, Serializable
      */
     private function getStates(): array
     {
-        $states = array_map(function ($state) {
-            return bin2hex(self::$math->toBinary($state));
+        $states = \array_map(function ($state) {
+            return \bin2hex(self::$math->toBinary($state));
         }, $this->state);
         $states[] = $this->stateCount;
         $states[] = $this->mode;
@@ -261,13 +250,13 @@ final class Mt19937 implements Engine, Serializable
     private function loadStates(array $states): bool
     {
         /** @var GMP[] $state */
-        $state = array_fill(0, self::N, null);
+        $state = \array_fill(0, self::N, null);
 
         for ($i = 0; $i < self::N; $i++) {
             if (!isset($states[$i])) {
                 return false;
             }
-            $stateBin = @hex2bin($states[$i]);
+            $stateBin = @\hex2bin($states[$i]);
             if ($stateBin === false) {
                 return false;
             }
@@ -278,7 +267,7 @@ final class Mt19937 implements Engine, Serializable
         $count = $states[self::N];
         $mode = $states[self::N + 1];
 
-        if ($mode !== MT_RAND_PHP && $mode !== MT_RAND_MT19937) {
+        if ($mode !== \MT_RAND_PHP && $mode !== \MT_RAND_MT19937) {
             return false;
         }
 

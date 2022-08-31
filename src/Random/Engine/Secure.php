@@ -18,20 +18,18 @@ use Error;
 use Exception;
 use Random\CryptoSafeEngine;
 
-use function random_bytes;
-
 final class Secure implements CryptoSafeEngine
 {
     use NoDynamicProperties;
 
     public function generate(): string
     {
-        return random_bytes(PHP_INT_SIZE);
+        return \random_bytes(\PHP_INT_SIZE);
     }
 
     private function range(int $min, int $max): ?int
     {
-        return random_int($min, $max);
+        return \random_int($min, $max);
     }
 
     /**

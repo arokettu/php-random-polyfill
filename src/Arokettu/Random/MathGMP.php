@@ -15,17 +15,6 @@ namespace Arokettu\Random;
 
 use GMP;
 
-use function gmp_export;
-use function gmp_import;
-use function gmp_init;
-use function gmp_intval;
-use function gmp_pow;
-use function str_pad;
-use function strlen;
-
-use const GMP_LITTLE_ENDIAN;
-use const GMP_LSW_FIRST;
-
 /**
  * @internal
  * @psalm-suppress MoreSpecificImplementedParamType
@@ -45,7 +34,7 @@ final class MathGMP extends Math
      */
     public function __construct(int $sizeof)
     {
-        $this->mask = gmp_pow(2, $sizeof * 8) - 1;
+        $this->mask = \gmp_pow(2, $sizeof * 8) - 1;
         $this->sizeof = $sizeof;
     }
 
@@ -145,7 +134,7 @@ final class MathGMP extends Math
      */
     public function fromHex(string $value)
     {
-        return gmp_init($value, 16);
+        return \gmp_init($value, 16);
     }
 
     /**
@@ -163,16 +152,16 @@ final class MathGMP extends Math
      */
     public function fromBinary(string $value)
     {
-        switch (strlen($value) <=> $this->sizeof) {
+        switch (\strlen($value) <=> $this->sizeof) {
             case -1:
-                $value = str_pad($value, $this->sizeof, "\0");
+                $value = \str_pad($value, $this->sizeof, "\0");
                 break;
 
             case 1:
-                $value = substr($value, 0, $this->sizeof);
+                $value = \substr($value, 0, $this->sizeof);
         }
 
-        return gmp_import($value, $this->sizeof, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST);
+        return \gmp_import($value, $this->sizeof, \GMP_LITTLE_ENDIAN | \GMP_LSW_FIRST);
     }
 
     /**
@@ -180,7 +169,7 @@ final class MathGMP extends Math
      */
     public function toInt($value): int
     {
-        return gmp_intval($value);
+        return \gmp_intval($value);
     }
 
     /**
@@ -189,10 +178,10 @@ final class MathGMP extends Math
     public function toSignedInt($value): int
     {
         if (($value & 1 << ($this->sizeof * 8 - 1)) != 0) { // sign
-            $value -= gmp_pow(2, $this->sizeof * 8);
+            $value -= \gmp_pow(2, $this->sizeof * 8);
         }
 
-        return gmp_intval($value);
+        return \gmp_intval($value);
     }
 
     /**
@@ -201,7 +190,7 @@ final class MathGMP extends Math
     public function toBinary($value): string
     {
         // gmp_export returns empty string for zero, we should return exact bytes as sizeof
-        return str_pad(gmp_export($value, $this->sizeof, GMP_LITTLE_ENDIAN | GMP_LSW_FIRST), $this->sizeof, "\0");
+        return \str_pad(\gmp_export($value, $this->sizeof, \GMP_LITTLE_ENDIAN | \GMP_LSW_FIRST), $this->sizeof, "\0");
     }
 
     /**

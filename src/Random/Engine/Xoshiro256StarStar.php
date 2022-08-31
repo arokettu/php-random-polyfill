@@ -26,14 +26,6 @@ use Serializable;
 use TypeError;
 use ValueError;
 
-use function bin2hex;
-use function get_debug_type;
-use function is_int;
-use function is_string;
-use function random_bytes;
-use function str_split;
-use function strlen;
-
 /**
  * @noinspection PhpComposerExtensionStubsInspection
  */
@@ -92,7 +84,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
         if ($seed === null) {
             try {
                 do {
-                    $seed = random_bytes(32);
+                    $seed = \random_bytes(32);
                 } while ($seed === "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
                 $this->seedString($seed);
             } catch (Exception $e) {
@@ -101,8 +93,8 @@ final class Xoshiro256StarStar implements Engine, Serializable
             return;
         }
 
-        if (is_string($seed)) {
-            if (strlen($seed) !== 32) {
+        if (\is_string($seed)) {
+            if (\strlen($seed) !== 32) {
                 throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) must be a 32 byte (256 bit) string');
             }
 
@@ -115,7 +107,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
         }
 
         /** @psalm-suppress RedundantConditionGivenDocblockType we don't trust user input */
-        if (is_int($seed)) {
+        if (\is_int($seed)) {
             $this->seedInt($seed);
             return;
         }
@@ -123,7 +115,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
         throw new TypeError(
             __METHOD__ .
             '(): Argument #1 ($seed) must be of type string|int|null, ' .
-            get_debug_type($seed) . ' given'
+            \get_debug_type($seed) . ' given'
         );
     }
 
@@ -183,7 +175,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
     private function seedString(string $seed): void
     {
-        $seeds = str_split($seed, 8);
+        $seeds = \str_split($seed, 8);
 
         $this->seed256(
             self::$math->fromBinary($seeds[0]),
@@ -285,10 +277,10 @@ final class Xoshiro256StarStar implements Engine, Serializable
     private function getStates(): array
     {
         return [
-            bin2hex(self::$math->toBinary($this->state[0])),
-            bin2hex(self::$math->toBinary($this->state[1])),
-            bin2hex(self::$math->toBinary($this->state[2])),
-            bin2hex(self::$math->toBinary($this->state[3])),
+            \bin2hex(self::$math->toBinary($this->state[0])),
+            \bin2hex(self::$math->toBinary($this->state[1])),
+            \bin2hex(self::$math->toBinary($this->state[2])),
+            \bin2hex(self::$math->toBinary($this->state[3])),
         ];
     }
 
@@ -299,7 +291,7 @@ final class Xoshiro256StarStar implements Engine, Serializable
     {
         $this->state = [];
         for ($i = 0; $i < 4; $i++) {
-            $stateBin = @hex2bin($states[$i]);
+            $stateBin = @\hex2bin($states[$i]);
             if ($stateBin === false) {
                 return false;
             }

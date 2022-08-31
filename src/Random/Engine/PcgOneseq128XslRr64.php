@@ -26,15 +26,6 @@ use Serializable;
 use TypeError;
 use ValueError;
 
-use function array_is_list;
-use function count;
-use function get_debug_type;
-use function is_int;
-use function is_string;
-use function random_bytes;
-use function str_split;
-use function strlen;
-
 final class PcgOneseq128XslRr64 implements Engine, Serializable
 {
     use NoDynamicProperties;
@@ -67,22 +58,22 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
     {
         $this->initMath();
 
-        if (is_int($seed)) {
+        if (\is_int($seed)) {
             $this->seedInt($seed);
             return;
         }
 
         if ($seed === null) {
             try {
-                $seed = random_bytes(Math::SIZEOF_UINT128_T);
+                $seed = \random_bytes(Math::SIZEOF_UINT128_T);
             } catch (Exception $e) {
                 throw new RuntimeException('Failed to generate a random seed');
             }
         }
 
         /** @psalm-suppress RedundantConditionGivenDocblockType we don't trust user input */
-        if (is_string($seed)) {
-            if (strlen($seed) !== Math::SIZEOF_UINT128_T) {
+        if (\is_string($seed)) {
+            if (\strlen($seed) !== Math::SIZEOF_UINT128_T) {
                 throw new ValueError(__METHOD__ . '(): Argument #1 ($seed) must be a 16 byte (128 bit) string');
             }
 
@@ -93,7 +84,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
         throw new TypeError(
             __METHOD__ .
             '(): Argument #1 ($seed) must be of type string|int|null, ' .
-            get_debug_type($seed) . ' given'
+            \get_debug_type($seed) . ' given'
         );
     }
 
@@ -125,7 +116,7 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
 
     private function seedString(string $seed): void
     {
-        [$hi, $lo] = str_split($seed, Math::SIZEOF_UINT64_T);
+        [$hi, $lo] = \str_split($seed, Math::SIZEOF_UINT64_T);
 
         $this->seed128(self::$math128->fromBinary($lo . $hi));
     }
@@ -202,10 +193,10 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      */
     private function getStates(): array
     {
-        [$lo, $hi] = str_split(self::$math128->toBinary($this->state), Math::SIZEOF_UINT64_T);
+        [$lo, $hi] = \str_split(self::$math128->toBinary($this->state), Math::SIZEOF_UINT64_T);
         return [
-            bin2hex($hi),
-            bin2hex($lo),
+            \bin2hex($hi),
+            \bin2hex($lo),
         ];
     }
 
@@ -215,15 +206,15 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      */
     private function loadStates(array $states): bool
     {
-        if (!array_is_list($states) || count($states) < 2) {
+        if (!\array_is_list($states) || \count($states) < 2) {
             return false;
         }
         [$hi, $lo] = $states;
-        if (strlen($hi) !== Math::SIZEOF_UINT64_T * 2 || strlen($lo) !== Math::SIZEOF_UINT64_T * 2) {
+        if (\strlen($hi) !== Math::SIZEOF_UINT64_T * 2 || \strlen($lo) !== Math::SIZEOF_UINT64_T * 2) {
             return false;
         }
-        $hiBin = @hex2bin($hi);
-        $loBin = @hex2bin($lo);
+        $hiBin = @\hex2bin($hi);
+        $loBin = @\hex2bin($lo);
         if ($hiBin === false || $loBin === false) {
             return false;
         }

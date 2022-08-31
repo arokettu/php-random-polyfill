@@ -13,8 +13,6 @@ namespace Arokettu\Random;
 
 use GMP;
 
-use function extension_loaded;
-
 /**
  * @codeCoverageIgnore We don't care about math that was not used
  */
@@ -35,11 +33,11 @@ abstract class Math
     protected static function build(int $sizeof): self
     {
         // only less because PHP int is always signed
-        if ($sizeof < PHP_INT_SIZE) {
+        if ($sizeof < \PHP_INT_SIZE) {
             return new MathNative($sizeof);
         }
 
-        if (extension_loaded('gmp')) {
+        if (\extension_loaded('gmp')) {
             return new MathGMP($sizeof);
         }
 

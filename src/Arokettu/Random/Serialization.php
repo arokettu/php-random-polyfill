@@ -11,10 +11,6 @@ namespace Arokettu\Random;
 
 use Exception;
 
-use function serialize;
-use function trigger_error;
-use function unserialize;
-
 /**
  * @internal
  */
@@ -26,8 +22,8 @@ trait Serialization
 
     public function serialize(): string
     {
-        trigger_error('Serialized object will be incompatible with PHP 8.2', E_USER_WARNING);
-        return serialize($this->__serialize());
+        \trigger_error('Serialized object will be incompatible with PHP 8.2', \E_USER_WARNING);
+        return \serialize($this->__serialize());
     }
 
     /**
@@ -37,7 +33,7 @@ trait Serialization
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function unserialize($data): void
     {
-        $this->__unserialize(unserialize($data));
+        $this->__unserialize(\unserialize($data));
     }
 
     public function __serialize(): array
@@ -53,7 +49,7 @@ trait Serialization
         $this->initMath();
         $result = $this->loadStates($data[1] ?? []);
         if ($result === false) {
-            throw new Exception(sprintf('Invalid serialization data for %s object', static::class));
+            throw new Exception(\sprintf('Invalid serialization data for %s object', static::class));
         }
     }
 
