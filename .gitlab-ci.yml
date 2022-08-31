@@ -14,7 +14,6 @@ cache:
     # install system packages
     - apt-get update && apt-get install -y git unzip libgmp-dev
     # install extensions
-    - docker-php-ext-install gmp
     - if [ "$INSTALL_XDEBUG" -eq 1 ]; then pecl install xdebug; docker-php-ext-enable xdebug; fi
     # install composer
     - php -r "copy('https://composer.github.io/installer.sig', '/tmp/composer.sig');"
@@ -27,6 +26,10 @@ cache:
     - composer config -g cache-dir "$(pwd)/.composer-cache"
   script:
     - composer update
+    # native + unsigned
+    - vendor/bin/phpunit
+    - docker-php-ext-install gmp
+    # native + gmp
     - vendor/bin/phpunit
 
 # coverage
@@ -40,6 +43,7 @@ coverage:
   image: php:8.1
   script:
     - composer update
+    - docker-php-ext-install gmp
     - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover coverage.xml
     - bash <(curl -s https://codecov.io/bash)
 
