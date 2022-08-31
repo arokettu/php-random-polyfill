@@ -25,6 +25,7 @@ use function Arokettu\Unsigned\shift_right;
 use function Arokettu\Unsigned\sub;
 use function Arokettu\Unsigned\sub_int;
 use function Arokettu\Unsigned\to_int;
+use function Arokettu\Unsigned\to_signed_int;
 use function str_split;
 use function strlen;
 
@@ -186,12 +187,7 @@ final class MathUnsigned extends Math
      */
     public function toSignedInt($value): int
     {
-        if (is_bit_set($value, $this->sizeof * 8 - 1)) {
-            $valueNeg = neg($value);
-            return $valueNeg === $value ? PHP_INT_MIN : -to_int($valueNeg);
-        }
-
-        return to_int($value);
+        return to_signed_int($value);
     }
 
     /**
