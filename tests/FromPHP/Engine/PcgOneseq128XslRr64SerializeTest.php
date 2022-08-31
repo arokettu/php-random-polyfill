@@ -14,11 +14,11 @@ class PcgOneseq128XslRr64SerializeTest extends TestCase
 {
     public function testSerialize(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
-        $s = serialize(new PcgOneseq128XslRr64(1234));
+        $s = \serialize(new PcgOneseq128XslRr64(1234));
 
         self::assertEquals(
             'O:33:"Random\Engine\PcgOneseq128XslRr64":2:{i:0;a:0:{}i:1;a:2:{i:0;s:16:"c6d571c37c41a8d1";' .

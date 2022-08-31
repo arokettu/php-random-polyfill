@@ -17,5 +17,5 @@
     <!-- no need to cover 8.2 and later -->
     <config name="testVersion" value="7.1-8.1"/>
     <file>src</file>
-<!--    <file>tests</file>-->
+    <file>tests</file>
 </ruleset>

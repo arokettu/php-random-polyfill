@@ -22,6 +22,6 @@ class PcgOneseq128XslRr64ValueTest extends TestCase
 
         $engine->jump(1234567);
 
-        self::assertEquals('b88e2a0f23720a1d', bin2hex($engine->generate()));
+        self::assertEquals('b88e2a0f23720a1d', \bin2hex($engine->generate()));
     }
 }

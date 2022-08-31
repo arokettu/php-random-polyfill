@@ -20,7 +20,7 @@ class Mt19937ErrorTest extends TestCase
         try {
             new Mt19937(1234, 2);
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, get_class($e));
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\Mt19937::__construct():' .
                     ' Argument #2 ($mode) must be either MT_RAND_MT19937 or MT_RAND_PHP',

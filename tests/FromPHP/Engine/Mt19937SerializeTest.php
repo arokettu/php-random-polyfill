@@ -14,7 +14,7 @@ class Mt19937SerializeTest extends TestCase
 {
     public function testSerialize(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
@@ -146,6 +146,6 @@ class Mt19937SerializeTest extends TestCase
             '16f";i:617;s:8:"60a25216";i:618;s:8:"dcce86a3";i:619;s:8:"bfcec0cd";i:620;s:8:"fb4170ed";i:621;s:8:"9bf5' .
             'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:0;}}';
 
-        self::assertEquals($s, serialize(new Mt19937(1234)));
+        self::assertEquals($s, \serialize(new Mt19937(1234)));
     }
 }

@@ -16,12 +16,12 @@ class AllSerializeErrorTest extends TestCase
 {
     public function testMt19937MalformedHex(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:626:{i:0;s:7:"5aa6b98";i:1;s:8:"8660cc14";i:2;s:8:"' .
                 'c0b631ca";i:3;s:8:"e85464ad";i:4;s:8:"70fa6108";i:5;s:8:"c5ed9c3c";i:6;s:8:"b05b7ff1";i:7;s:8:"faf33' .
                 'a3a";i:8;s:8:"ab7c0e61";i:9;s:8:"2d4c9c37";i:10;s:8:"daffe918";i:11;s:8:"644f25b9";i:12;s:8:"fdb352e' .
@@ -155,7 +155,7 @@ class AllSerializeErrorTest extends TestCase
                 '563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:0;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
@@ -168,12 +168,12 @@ class AllSerializeErrorTest extends TestCase
 
     public function testMt19937InvalidHex(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:626:{i:0;s:8:"5aa6b98g";i:1;s:8:"8660cc14";i:2;s:8:' .
                 '"c0b631ca";i:3;s:8:"e85464ad";i:4;s:8:"70fa6108";i:5;s:8:"c5ed9c3c";i:6;s:8:"b05b7ff1";i:7;s:8:"faf3' .
                 '3a3a";i:8;s:8:"ab7c0e61";i:9;s:8:"2d4c9c37";i:10;s:8:"daffe918";i:11;s:8:"644f25b9";i:12;s:8:"fdb352' .
@@ -307,7 +307,7 @@ class AllSerializeErrorTest extends TestCase
                 'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:0;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
@@ -320,12 +320,12 @@ class AllSerializeErrorTest extends TestCase
 
     public function testMt19937InvalidCount(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:626:{i:0;s:8:"5aa6b986";i:1;s:8:"8660cc14";i:2;s:8:' .
                 '"c0b631ca";i:3;s:8:"e85464ad";i:4;s:8:"70fa6108";i:5;s:8:"c5ed9c3c";i:6;s:8:"b05b7ff1";i:7;s:8:"faf3' .
                 '3a3a";i:8;s:8:"ab7c0e61";i:9;s:8:"2d4c9c37";i:10;s:8:"daffe918";i:11;s:8:"644f25b9";i:12;s:8:"fdb352' .
@@ -459,7 +459,7 @@ class AllSerializeErrorTest extends TestCase
                 'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:1000;i:625;i:0;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
@@ -472,12 +472,12 @@ class AllSerializeErrorTest extends TestCase
 
     public function testMt19937InvalidMode(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:626:{i:0;s:8:"5aa6b986";i:1;s:8:"8660cc14";i:2;s:8:' .
                 '"c0b631ca";i:3;s:8:"e85464ad";i:4;s:8:"70fa6108";i:5;s:8:"c5ed9c3c";i:6;s:8:"b05b7ff1";i:7;s:8:"faf3' .
                 '3a3a";i:8;s:8:"ab7c0e61";i:9;s:8:"2d4c9c37";i:10;s:8:"daffe918";i:11;s:8:"644f25b9";i:12;s:8:"fdb352' .
@@ -611,7 +611,7 @@ class AllSerializeErrorTest extends TestCase
                 'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:2;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
@@ -624,17 +624,17 @@ class AllSerializeErrorTest extends TestCase
 
     public function testPcgOneseq128XslRr64MalformedHex(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:33:"Random\Engine\PcgOneseq128XslRr64":2:{i:0;a:0:{}i:1;a:2:{i:0;s:15:' .
                 '"c6d571c37c41a8d";i:1;s:16:"345e7e82265d6e27";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\PcgOneseq128XslRr64 object',
                 $e->getMessage()
@@ -650,17 +650,17 @@ class AllSerializeErrorTest extends TestCase
 
     public function testPcgOneseq128XslRr64InvalidHex(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:33:"Random\Engine\PcgOneseq128XslRr64":2:{i:0;a:0:{}i:1;a:2:{i:0;s:16:' .
                 '"c6d571c37c41a8d1";i:1;s:16:"345e7e82265d6e2g";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\PcgOneseq128XslRr64 object',
                 $e->getMessage()
@@ -676,17 +676,17 @@ class AllSerializeErrorTest extends TestCase
 
     public function testXoshiro256StarStarMalformedHex(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:32:"Random\Engine\Xoshiro256StarStar":2:{i:0;a:0:{}i:1;a:4:{i:0;s:15:"db1c182f1bf60cb";' .
                 'i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624e";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
                 $e->getMessage()
@@ -702,17 +702,17 @@ class AllSerializeErrorTest extends TestCase
 
     public function testXoshiro256StarStarInvalidHex(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
         try {
-            unserialize(
+            \unserialize(
                 'O:32:"Random\Engine\Xoshiro256StarStar":2:{i:0;a:0:{}i:1;a:4:{i:0;s:16:"db1c182f1bf60cbb";' .
                 'i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624g";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
                 $e->getMessage()

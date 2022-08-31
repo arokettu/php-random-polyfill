@@ -25,7 +25,7 @@ class AllSerializeNativeTest extends TestCase
             for ($i = 0; $i < 1000; $i++) {
                 $engine->generate();
             }
-            $engine2 = unserialize(@serialize($engine));
+            $engine2 = \unserialize(@\serialize($engine));
             for ($i = 0; $i < 5000; $i++) {
                 self::assertEquals($engine->generate(), $engine2->generate());
             }

@@ -23,6 +23,6 @@ class Xoshiro256StarStarValueTest extends TestCase
         $engine->jump();
         $engine->jumpLong();
 
-        self::assertEquals('1f197e9ca7969123', bin2hex($engine->generate()));
+        self::assertEquals('1f197e9ca7969123', \bin2hex($engine->generate()));
     }
 }

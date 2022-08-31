@@ -24,9 +24,9 @@ class EngineSecureTest extends TestCase
     public function testNonSerializable(): void
     {
         try {
-            serialize(new Secure());
+            \serialize(new Secure());
         } catch (\Throwable $e) {
-            self::assertEquals(\Exception::class, get_class($e));
+            self::assertEquals(\Exception::class, \get_class($e));
             self::assertEquals("Serialization of 'Random\Engine\Secure' is not allowed", $e->getMessage());
             self::assertNull($e->getPrevious());
 

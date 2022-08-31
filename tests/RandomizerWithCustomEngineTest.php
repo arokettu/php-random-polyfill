@@ -166,7 +166,7 @@ class RandomizerWithCustomEngineTest extends TestCase
             $rnd = new Randomizer(new Xorshift32($seed));
 
             for ($i = 0; $i < 20; $i++) {
-                $num = bin2hex($rnd->getBytes($i + 1));
+                $num = \bin2hex($rnd->getBytes($i + 1));
                 self::assertEquals($strings[$i], $num, "Seed: $seed Index: $i");
             }
         }
@@ -174,7 +174,7 @@ class RandomizerWithCustomEngineTest extends TestCase
 
     public function testShuffleArray(): void
     {
-        $array = range(1, 100);
+        $array = \range(1, 100);
 
         $testMatrix = [
             -4850 => [
@@ -219,7 +219,7 @@ class RandomizerWithCustomEngineTest extends TestCase
 
     public function testShuffleString(): void
     {
-        $string = implode(range('a', 'z')) . implode(range('0', 9)) . implode(range('A', 'Z'));
+        $string = \implode(\range('a', 'z')) . \implode(\range('0', 9)) . \implode(\range('A', 'Z'));
 
         $testMatrix = [
             -35487 => 'bvzajxEifA4VDopFm3yr6Sh7Mg9XOnUqc8G50TLZIYe2BNwtlkHPQCduWJR1sK',
@@ -240,7 +240,7 @@ class RandomizerWithCustomEngineTest extends TestCase
     public function testPickKeys(): void
     {
         // try to be accurate at least on packed arrays
-        $array = array_flip(array_merge(range('a', 'z'), range('0', 9), range('A', 'Z')));
+        $array = \array_flip(\array_merge(\range('a', 'z'), \range('0', 9), \range('A', 'Z')));
 
         $testMatrix = [
             63250 => [
@@ -367,19 +367,19 @@ class RandomizerWithCustomEngineTest extends TestCase
 
     public function testSerialize(): void
     {
-        $rnd1 = new Randomizer(new Xorshift32(random_int(0, PHP_INT_MAX)));
+        $rnd1 = new Randomizer(new Xorshift32(\random_int(0, \PHP_INT_MAX)));
 
         $rnd1->nextInt();
         $rnd1->nextInt();
 
-        $rnd2 = unserialize(@serialize($rnd1));
+        $rnd2 = \unserialize(@\serialize($rnd1));
 
         self::assertEquals($rnd1->nextInt(), $rnd2->nextInt());
     }
 
     public function testSerializeKnown(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
@@ -393,24 +393,24 @@ class RandomizerWithCustomEngineTest extends TestCase
         $rnd1->nextInt();
         $rnd1->nextInt();
 
-        self::assertEquals($serialized, serialize($rnd1));
+        self::assertEquals($serialized, \serialize($rnd1));
 
-        $rnd2 = unserialize($serialized);
+        $rnd2 = \unserialize($serialized);
 
         self::assertEquals($rnd1->nextInt(), $rnd2->nextInt());
     }
 
     public function testSerializeWarning(): void
     {
-        if (PHP_VERSION_ID >= 70400) {
+        if (\PHP_VERSION_ID >= 70400) {
             $this->expectNotToPerformAssertions();
-        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+        } elseif (\method_exists($this, 'expectWarning')) { // PHPUnit 8/9
             $this->expectWarning();
             $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
         } else {
             $this->markTestSkipped('PHPUnit is too old for this test');
         }
 
-        serialize(new Randomizer(new Zeros()));
+        \serialize(new Randomizer(new Zeros()));
     }
 }

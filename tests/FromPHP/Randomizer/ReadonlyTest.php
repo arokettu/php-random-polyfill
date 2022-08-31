@@ -29,7 +29,7 @@ class ReadonlyTest extends TestCase
         try {
             $one->engine = $one_ng_clone;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot modify readonly property Random\Randomizer::$engine',
                 $e->getMessage()
@@ -50,7 +50,7 @@ class ReadonlyTest extends TestCase
         try {
             $two_ng_clone = clone $two->engine;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Trying to clone an uncloneable object of class Random\Engine\Secure',
                 $e->getMessage()
@@ -79,7 +79,7 @@ class ReadonlyTest extends TestCase
         try {
             $two->engine = $one_ng_clone;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot modify readonly property Random\Randomizer::$engine',
                 $e->getMessage()

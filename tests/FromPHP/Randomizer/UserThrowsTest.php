@@ -30,7 +30,7 @@ class UserThrowsTest extends TestCase
         try {
             $randomizer->getBytes(1);
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, get_class($e));
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 "Error",
                 $e->getMessage()

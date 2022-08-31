@@ -13,6 +13,6 @@ class HeavilyBiasedEngine implements Engine
 {
     public function generate(): string
     {
-        return \str_repeat("\xff", PHP_INT_SIZE);
+        return \str_repeat("\xff", \PHP_INT_SIZE);
     }
 }

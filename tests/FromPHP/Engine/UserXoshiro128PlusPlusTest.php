@@ -15,7 +15,7 @@ class UserXoshiro128PlusPlusTest extends TestCase
     public function testXoshiro(): void
     {
         // only when running 64 bit
-        if (PHP_INT_SIZE < 8) {
+        if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped("It's a 64 bit test");
         }
 
@@ -25,6 +25,6 @@ class UserXoshiro128PlusPlusTest extends TestCase
             $g->generate();
         }
 
-        self::assertEquals('fa3c872c', bin2hex($g->generate()));
+        self::assertEquals('fa3c872c', \bin2hex($g->generate()));
     }
 }

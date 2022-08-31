@@ -18,10 +18,10 @@ final class ThreeBytes implements Engine
      */
     public function __construct($value = 0)
     {
-        if (is_int($value)) {
-            $value = abs($value) % 256;
+        if (\is_int($value)) {
+            $value = \abs($value) % 256;
         } else {
-            $value = ord(strval($value));
+            $value = \ord(\strval($value));
         }
 
         $this->chr = $value;
@@ -33,6 +33,6 @@ final class ThreeBytes implements Engine
             $this->chr = 0;
         }
 
-        return str_repeat(chr($this->chr++), 3);
+        return \str_repeat(\chr($this->chr++), 3);
     }
 }

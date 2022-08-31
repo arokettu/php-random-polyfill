@@ -23,7 +23,7 @@ class ConstructTwiceTest extends TestCase
         try {
             (new Randomizer())->__construct();
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot modify readonly property Random\Randomizer::$engine',
                 $e->getMessage()
@@ -43,7 +43,7 @@ class ConstructTwiceTest extends TestCase
             $r = new Randomizer(new Xoshiro256StarStar());
             $r->__construct(new PcgOneseq128XslRr64());
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot modify readonly property Random\Randomizer::$engine',
                 $e->getMessage()
@@ -51,7 +51,7 @@ class ConstructTwiceTest extends TestCase
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
-            self::assertEquals(Xoshiro256StarStar::class, get_class($r->engine));
+            self::assertEquals(Xoshiro256StarStar::class, \get_class($r->engine));
 
             return;
         }
@@ -65,7 +65,7 @@ class ConstructTwiceTest extends TestCase
             $r = new Randomizer(new ConstructTwiceTestUserEngine());
             $r->__construct(new ConstructTwiceTestUserEngine());
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot modify readonly property Random\Randomizer::$engine',
                 $e->getMessage()
@@ -85,7 +85,7 @@ class ConstructTwiceTest extends TestCase
             $r = new Randomizer(new Xoshiro256StarStar());
             $r->__construct(new ConstructTwiceTestUserEngine());
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot modify readonly property Random\Randomizer::$engine',
                 $e->getMessage()
@@ -93,7 +93,7 @@ class ConstructTwiceTest extends TestCase
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
-            self::assertEquals(Xoshiro256StarStar::class, get_class($r->engine));
+            self::assertEquals(Xoshiro256StarStar::class, \get_class($r->engine));
 
             return;
         }

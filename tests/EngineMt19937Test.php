@@ -17,7 +17,7 @@ class EngineMt19937Test extends TestCase
     public function testMtRandCompare(): void
     {
         // @see https://www.php.net/manual/en/migration72.incompatible.php#migration72.incompatible.rand-mt_rand-output
-        if (PHP_VERSION_ID < 70200) {
+        if (\PHP_VERSION_ID < 70200) {
             $this->markTestSkipped('PHP 7.1 has glitchy mt_rand');
         }
 
@@ -33,12 +33,12 @@ class EngineMt19937Test extends TestCase
         ];
 
         foreach ($params as [$seed, $min, $max]) {
-            mt_srand($seed);
+            \mt_srand($seed);
             $rnd = new Randomizer(new Mt19937($seed));
 
             for ($i = 0; $i < 1000; $i++) {
-                self::assertEquals(mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
-                self::assertEquals(mt_rand(), $rnd->nextInt(), "Seed: $seed, Index: $i");
+                self::assertEquals(\mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
+                self::assertEquals(\mt_rand(), $rnd->nextInt(), "Seed: $seed, Index: $i");
             }
         }
     }
@@ -57,12 +57,12 @@ class EngineMt19937Test extends TestCase
         ];
 
         foreach ($params as [$seed, $min, $max]) {
-            mt_srand($seed, MT_RAND_PHP);
-            $rnd = new Randomizer(new Mt19937($seed, MT_RAND_PHP));
+            \mt_srand($seed, \MT_RAND_PHP);
+            $rnd = new Randomizer(new Mt19937($seed, \MT_RAND_PHP));
 
             for ($i = 0; $i < 1000; $i++) {
-                self::assertEquals(mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
-                self::assertEquals(mt_rand(), $rnd->nextInt(), "Seed: $seed, Index: $i");
+                self::assertEquals(\mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
+                self::assertEquals(\mt_rand(), $rnd->nextInt(), "Seed: $seed, Index: $i");
             }
         }
     }
@@ -72,7 +72,7 @@ class EngineMt19937Test extends TestCase
         // test MT_RAND_PHP with mt_rand(), it seems to be consistent between versions
 
         // only when running 64 bit
-        if (PHP_INT_SIZE < 8) {
+        if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped("It's a 64 bit test");
         }
 
@@ -84,55 +84,55 @@ class EngineMt19937Test extends TestCase
         ];
 
         foreach ($seeds as $seed => [$min, $max]) {
-            if ($max - $min <= mt_getrandmax()) {
+            if ($max - $min <= \mt_getrandmax()) {
                 throw new LogicException('Invalid test params');
             }
 
-            mt_srand($seed, MT_RAND_PHP);
-            $rnd = new Randomizer(new Mt19937($seed, MT_RAND_PHP));
+            \mt_srand($seed, \MT_RAND_PHP);
+            $rnd = new Randomizer(new Mt19937($seed, \MT_RAND_PHP));
 
             for ($i = 0; $i < 1000; $i++) {
-                self::assertEquals(mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
+                self::assertEquals(\mt_rand($min, $max), $rnd->getInt($min, $max), "Seed: $seed, Index: $i");
             }
         }
     }
 
     public function testSerializable(): void
     {
-        mt_srand(2018239802);
+        \mt_srand(2018239802);
         $engine = new Mt19937(2018239802);
         $rnd = new Randomizer($engine);
 
         for ($i = 0; $i < 400; $i++) {
-            self::assertEquals(mt_rand(0, 10000), $rnd->getInt(0, 10000), "Index: $i");
+            self::assertEquals(\mt_rand(0, 10000), $rnd->getInt(0, 10000), "Index: $i");
         }
 
-        $engSer = @unserialize(serialize($engine)); // serialize engine
+        $engSer = @\unserialize(\serialize($engine)); // serialize engine
 
         $rnd2 = new Randomizer($engSer);
 
         for ($i = 0; $i < 400; $i++) {
-            self::assertEquals(mt_rand(0, 10000), $rnd2->getInt(0, 10000), "Index: $i");
+            self::assertEquals(\mt_rand(0, 10000), $rnd2->getInt(0, 10000), "Index: $i");
         }
 
-        $rndSer = @unserialize(serialize($rnd2)); // serialize entire randomizer
+        $rndSer = @\unserialize(\serialize($rnd2)); // serialize entire randomizer
 
         for ($i = 0; $i < 400; $i++) {
-            self::assertEquals(mt_rand(0, 10000), $rndSer->getInt(0, 10000), "Index: $i");
+            self::assertEquals(\mt_rand(0, 10000), $rndSer->getInt(0, 10000), "Index: $i");
         }
     }
 
     public function testSerializableWarning(): void
     {
-        if (PHP_VERSION_ID >= 70400) {
+        if (\PHP_VERSION_ID >= 70400) {
             $this->expectNotToPerformAssertions();
-        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+        } elseif (\method_exists($this, 'expectWarning')) { // PHPUnit 8/9
             $this->expectWarning();
             $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
         } else {
             $this->markTestSkipped('PHPUnit is too old for this test');
         }
 
-        serialize(new Mt19937());
+        \serialize(new Mt19937());
     }
 }

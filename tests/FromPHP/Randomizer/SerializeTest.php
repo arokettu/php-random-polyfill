@@ -23,8 +23,8 @@ class SerializeTest extends TestCase
     public function testSerializeSuccess(): void
     {
         $engines = [];
-        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), MT_RAND_MT19937);
-        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), MT_RAND_PHP);
+        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \MT_RAND_MT19937);
+        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \MT_RAND_PHP);
         $engines[] = new PcgOneseq128XslRr64(\random_int(\PHP_INT_MIN, \PHP_INT_MAX));
         $engines[] = new Xoshiro256StarStar(\random_int(\PHP_INT_MIN, \PHP_INT_MAX));
 
@@ -37,7 +37,7 @@ class SerializeTest extends TestCase
             $randomizer = new Randomizer($engine);
             $randomizer->getInt(\PHP_INT_MIN, \PHP_INT_MAX);
 
-            $randomizer2 = unserialize(@serialize($randomizer));
+            $randomizer2 = \unserialize(@\serialize($randomizer));
 
             self::assertEquals(
                 $randomizer->getInt(\PHP_INT_MIN, \PHP_INT_MAX),
@@ -54,9 +54,9 @@ class SerializeTest extends TestCase
         $randomizer->getInt(\PHP_INT_MIN, \PHP_INT_MAX);
 
         try {
-            $randomizer2 = unserialize(@serialize($randomizer));
+            $randomizer2 = \unserialize(@\serialize($randomizer));
         } catch (Throwable $e) {
-            self::assertEquals(\Exception::class, get_class($e));
+            self::assertEquals(\Exception::class, \get_class($e));
             self::assertEquals(
                 "Serialization of 'Random\Engine\Secure' is not allowed",
                 $e->getMessage()
@@ -88,10 +88,10 @@ class SerializeTest extends TestCase
         $randomizer->getInt(\PHP_INT_MIN, \PHP_INT_MAX);
 
         try {
-            $randomizer2 = unserialize(@serialize($randomizer));
+            $randomizer2 = \unserialize(@\serialize($randomizer));
         } catch (Throwable $e) {
-            self::assertEquals(\Exception::class, get_class($e));
-            if (method_exists(__CLASS__, 'assertMatchesRegularExpression')) {
+            self::assertEquals(\Exception::class, \get_class($e));
+            if (\method_exists(__CLASS__, 'assertMatchesRegularExpression')) {
                 self::assertMatchesRegularExpression(
                     "/Serialization of '.*@anonymous' is not allowed/",
                     $e->getMessage()

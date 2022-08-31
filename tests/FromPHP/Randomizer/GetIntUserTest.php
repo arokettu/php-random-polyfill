@@ -28,6 +28,6 @@ class GetIntUserTest extends TestCase
             }
         );
 
-        self::assertEquals('01020300', bin2hex(pack('V', $randomizer->getInt(0, 0xFFFFFF))));
+        self::assertEquals('01020300', \bin2hex(\pack('V', $randomizer->getInt(0, 0xFFFFFF))));
     }
 }

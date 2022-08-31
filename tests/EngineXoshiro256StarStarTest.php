@@ -62,7 +62,7 @@ class EngineXoshiro256StarStarTest extends TestCase
             $engine = new Xoshiro256StarStar($seed);
 
             for ($i = 0; $i < 100; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -70,7 +70,7 @@ class EngineXoshiro256StarStarTest extends TestCase
 
     public function testSeedInt64(): void
     {
-        if (PHP_INT_SIZE < 8) {
+        if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped('64 bit only');
         }
 
@@ -103,7 +103,7 @@ class EngineXoshiro256StarStarTest extends TestCase
             $engine = new Xoshiro256StarStar($seed);
 
             for ($i = 0; $i < 100; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -181,10 +181,10 @@ class EngineXoshiro256StarStarTest extends TestCase
         ];
 
         foreach ($seq as $seed => $bytesExpected) {
-            $engine = new Xoshiro256StarStar(hex2bin($seed));
+            $engine = new Xoshiro256StarStar(\hex2bin($seed));
 
             for ($i = 0; $i < 100; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -194,21 +194,21 @@ class EngineXoshiro256StarStarTest extends TestCase
     {
         $engine = new Xoshiro256StarStar(123456);
 
-        self::assertEquals('c4cb8684e9e8d520', bin2hex($engine->generate()));
-        self::assertEquals('7d731154119f2626', bin2hex($engine->generate()));
-        self::assertEquals('d68c804f79efddb7', bin2hex($engine->generate()));
+        self::assertEquals('c4cb8684e9e8d520', \bin2hex($engine->generate()));
+        self::assertEquals('7d731154119f2626', \bin2hex($engine->generate()));
+        self::assertEquals('d68c804f79efddb7', \bin2hex($engine->generate()));
 
         $engine->jump();
 
-        self::assertEquals('e02b9c3c698a50be', bin2hex($engine->generate()));
-        self::assertEquals('a47af196a01f0697', bin2hex($engine->generate()));
-        self::assertEquals('cb4baa5e2923ab4f', bin2hex($engine->generate()));
+        self::assertEquals('e02b9c3c698a50be', \bin2hex($engine->generate()));
+        self::assertEquals('a47af196a01f0697', \bin2hex($engine->generate()));
+        self::assertEquals('cb4baa5e2923ab4f', \bin2hex($engine->generate()));
 
         $engine->jumpLong();
 
-        self::assertEquals('c5a7ed51bdd8f289', bin2hex($engine->generate()));
-        self::assertEquals('fe1c26e9363fa406', bin2hex($engine->generate()));
-        self::assertEquals('b9345e05be4b96ea', bin2hex($engine->generate()));
+        self::assertEquals('c5a7ed51bdd8f289', \bin2hex($engine->generate()));
+        self::assertEquals('fe1c26e9363fa406', \bin2hex($engine->generate()));
+        self::assertEquals('b9345e05be4b96ea', \bin2hex($engine->generate()));
     }
 
     public function testSerialize(): void
@@ -218,14 +218,14 @@ class EngineXoshiro256StarStarTest extends TestCase
         $engine1->generate();
         $engine1->generate();
 
-        $engine2 = unserialize(@serialize($engine1));
+        $engine2 = \unserialize(@\serialize($engine1));
 
         self::assertEquals($engine1->generate(), $engine2->generate());
     }
 
     public function testSerializeKnown(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
@@ -239,24 +239,24 @@ class EngineXoshiro256StarStarTest extends TestCase
         $engine1->generate();
         $engine1->generate();
 
-        self::assertEquals($serialized, serialize($engine1));
+        self::assertEquals($serialized, \serialize($engine1));
 
-        $engine2 = unserialize($serialized);
+        $engine2 = \unserialize($serialized);
 
         self::assertEquals($engine1->generate(), $engine2->generate());
     }
 
     public function testSerializeWarning(): void
     {
-        if (PHP_VERSION_ID >= 70400) {
+        if (\PHP_VERSION_ID >= 70400) {
             $this->expectNotToPerformAssertions();
-        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+        } elseif (\method_exists($this, 'expectWarning')) { // PHPUnit 8/9
             $this->expectWarning();
             $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
         } else {
             $this->markTestSkipped('PHPUnit is too old for this test');
         }
 
-        serialize(new Xoshiro256StarStar());
+        \serialize(new Xoshiro256StarStar());
     }
 }

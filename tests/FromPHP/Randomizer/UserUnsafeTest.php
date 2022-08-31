@@ -22,7 +22,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->getInt(0, 123);
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
@@ -41,7 +41,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->nextInt();
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
@@ -60,7 +60,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->getBytes(1);
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
@@ -79,7 +79,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->shuffleArray(\range(1, 10));
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
@@ -98,7 +98,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->shuffleBytes('foobar');
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
@@ -117,7 +117,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->getInt(0, 123);
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()
@@ -135,14 +135,14 @@ class UserUnsafeTest extends TestCase
     {
         $r = (new Randomizer(new HeavilyBiasedEngine()))->nextInt();
 
-        self::assertEquals(PHP_INT_MAX, $r);
+        self::assertEquals(\PHP_INT_MAX, $r);
     }
 
     public function testHeavilyBiasedEngineGetBytes(): void
     {
         $r = (new Randomizer(new HeavilyBiasedEngine()))->getBytes(1);
 
-        self::assertEquals('ff', bin2hex($r));
+        self::assertEquals('ff', \bin2hex($r));
     }
 
     public function testHeavilyBiasedEngineShuffleArray(): void
@@ -150,7 +150,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->shuffleArray(\range(1, 10));
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()
@@ -169,7 +169,7 @@ class UserUnsafeTest extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->shuffleBytes('foobar');
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, get_class($e));
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()

@@ -23,7 +23,7 @@ class PcgOneseq128XslRr64JumpErrorTest extends TestCase
 
             $engine->jump(-1);
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, get_class($e));
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\PcgOneseq128XslRr64::jump():' .
                 ' Argument #1 ($advance) must be greater than or equal to 0',

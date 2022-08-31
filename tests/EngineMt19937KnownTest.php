@@ -15,7 +15,7 @@ class EngineMt19937KnownTest extends TestCase
 {
     public function testKnownRangeSequence(): void
     {
-        $engine = new Mt19937(-2086314273, MT_RAND_MT19937); // chosen by fair dice roll
+        $engine = new Mt19937(-2086314273, \MT_RAND_MT19937); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
         // 1000 elements to be longer than the reload period
@@ -90,7 +90,7 @@ class EngineMt19937KnownTest extends TestCase
 
     public function testKnownIntSequence(): void
     {
-        $engine = new Mt19937(1248441108, MT_RAND_MT19937); // chosen by fair dice roll
+        $engine = new Mt19937(1248441108, \MT_RAND_MT19937); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
         // 1000 elements to be longer than the reload period
@@ -216,7 +216,7 @@ class EngineMt19937KnownTest extends TestCase
 
     public function testKnownRangeBrokenSequence(): void
     {
-        $engine = new Mt19937(1055880668, MT_RAND_PHP); // chosen by fair dice roll
+        $engine = new Mt19937(1055880668, \MT_RAND_PHP); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
         // 1000 elements to be longer than the period
@@ -292,7 +292,7 @@ class EngineMt19937KnownTest extends TestCase
 
     public function testKnownIntBrokenSequence(): void
     {
-        $engine = new Mt19937(-406797440, MT_RAND_PHP); // chosen by fair dice roll
+        $engine = new Mt19937(-406797440, \MT_RAND_PHP); // chosen by fair dice roll
         $rnd = new Randomizer($engine);
 
         // 1000 elements to be longer than the reload period
@@ -501,7 +501,7 @@ class EngineMt19937KnownTest extends TestCase
         // for bug to bug compatibility
 
         // only when running 64 bit
-        if (PHP_INT_SIZE < 8) {
+        if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped("It's a 64 bit test");
         }
 
@@ -568,7 +568,7 @@ class EngineMt19937KnownTest extends TestCase
         ];
 
         foreach ($seeds as $seed => [$min, $max, $sequence]) {
-            $rnd = new Randomizer(new Mt19937($seed, MT_RAND_MT19937));
+            $rnd = new Randomizer(new Mt19937($seed, \MT_RAND_MT19937));
 
             foreach ($sequence as $idx => $int) {
                 self::assertEquals($int, $rnd->getInt($min, $max), "Seed: $seed, Index: $idx");
@@ -579,7 +579,7 @@ class EngineMt19937KnownTest extends TestCase
 
     public function testKnownDebugBrokenInfo(): void
     {
-        $engine = new Mt19937(276645134, MT_RAND_PHP); // use same seed as in non-broken
+        $engine = new Mt19937(276645134, \MT_RAND_PHP); // use same seed as in non-broken
 
         $expected = ['__states' => [
             '599cbe07', '7fc46430', '58a280d1', '4fcbb0f2', 'da73a5d2', '1899d378', 'a41971be', '47e50956', 'dce32b6f',
@@ -1044,10 +1044,10 @@ class EngineMt19937KnownTest extends TestCase
         ];
 
         foreach ($seq as $seed => $bytesExpected) {
-            $engine = new Mt19937($seed, MT_RAND_MT19937);
+            $engine = new Mt19937($seed, \MT_RAND_MT19937);
 
             for ($i = 0; $i < 1000; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -1440,10 +1440,10 @@ class EngineMt19937KnownTest extends TestCase
         ];
 
         foreach ($seq as $seed => $bytesExpected) {
-            $engine = new Mt19937($seed, MT_RAND_PHP);
+            $engine = new Mt19937($seed, \MT_RAND_PHP);
 
             for ($i = 0; $i < 1000; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -1451,11 +1451,11 @@ class EngineMt19937KnownTest extends TestCase
 
     public function testSerialize(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
-        $engine = new Mt19937(312321, MT_RAND_MT19937);
+        $engine = new Mt19937(312321, \MT_RAND_MT19937);
         $engineSerialized =
             'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:626:{i:0;s:8:"055fc132";i:1;s:8:"d1881314";i:2;s:8:"211' .
             '6a42b";i:3;s:8:"f7395316";i:4;s:8:"42e5947f";i:5;s:8:"865f00c8";i:6;s:8:"1fdc5356";i:7;s:8:"2ef878f2";i:' .
@@ -1584,20 +1584,20 @@ class EngineMt19937KnownTest extends TestCase
             'a10";i:617;s:8:"77816738";i:618;s:8:"79a2f7f2";i:619;s:8:"2c3ab050";i:620;s:8:"ac066eda";i:621;s:8:"ee16' .
             '7966";i:622;s:8:"d420f95b";i:623;s:8:"c859f45b";i:624;i:0;i:625;i:0;}}';
 
-        self::assertEquals($engineSerialized, serialize($engine));
+        self::assertEquals($engineSerialized, \serialize($engine));
 
-        $engineUnserialized = unserialize($engineSerialized);
+        $engineUnserialized = \unserialize($engineSerialized);
 
         self::assertEquals($engine->generate(), $engineUnserialized->generate());
     }
 
     public function testSerializeBroken(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
-        $engine = new Mt19937(312321, MT_RAND_PHP);
+        $engine = new Mt19937(312321, \MT_RAND_PHP);
         $engineSerialized =
             'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:626:{i:0;s:8:"daefc9ab";i:1;s:8:"0e381b8d";i:2;s:8:"211' .
             '6a42b";i:3;s:8:"28895b8f";i:4;s:8:"9d559ce6";i:5;s:8:"865f00c8";i:6;s:8:"c06c5bcf";i:7;s:8:"f148706b";i:' .
@@ -1726,9 +1726,9 @@ class EngineMt19937KnownTest extends TestCase
             '289";i:617;s:8:"a8316fa1";i:618;s:8:"79a2f7f2";i:619;s:8:"2c3ab050";i:620;s:8:"73b66643";i:621;s:8:"ee16' .
             '7966";i:622;s:8:"0b90f1c2";i:623;s:8:"78b178ce";i:624;i:0;i:625;i:1;}}';
 
-        self::assertEquals($engineSerialized, serialize($engine));
+        self::assertEquals($engineSerialized, \serialize($engine));
 
-        $engineUnserialized = unserialize($engineSerialized);
+        $engineUnserialized = \unserialize($engineSerialized);
 
         self::assertEquals($engine->generate(), $engineUnserialized->generate());
     }

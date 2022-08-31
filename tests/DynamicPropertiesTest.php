@@ -22,7 +22,7 @@ class DynamicPropertiesTest extends TestCase
             $r = new Randomizer();
             $r->test = 123;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot create dynamic property Random\Randomizer::$test',
                 $e->getMessage()
@@ -42,7 +42,7 @@ class DynamicPropertiesTest extends TestCase
             $engine = new Secure();
             $engine->test = 123;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot create dynamic property Random\Engine\Secure::$test',
                 $e->getMessage()
@@ -62,7 +62,7 @@ class DynamicPropertiesTest extends TestCase
             $engine = new Mt19937();
             $engine->test = 123;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot create dynamic property Random\Engine\Mt19937::$test',
                 $e->getMessage()
@@ -82,7 +82,7 @@ class DynamicPropertiesTest extends TestCase
             $engine = new PcgOneseq128XslRr64();
             $engine->test = 123;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot create dynamic property Random\Engine\PcgOneseq128XslRr64::$test',
                 $e->getMessage()
@@ -102,7 +102,7 @@ class DynamicPropertiesTest extends TestCase
             $engine = new Xoshiro256StarStar();
             $engine->test = 123;
         } catch (Throwable $e) {
-            self::assertEquals(Error::class, get_class($e));
+            self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
                 'Cannot create dynamic property Random\Engine\Xoshiro256StarStar::$test',
                 $e->getMessage()

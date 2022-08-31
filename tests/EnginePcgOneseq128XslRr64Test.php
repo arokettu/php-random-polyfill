@@ -62,7 +62,7 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
             $engine = new PcgOneseq128XslRr64($seed);
 
             for ($i = 0; $i < 100; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -70,7 +70,7 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
 
     public function testSeedInt64(): void
     {
-        if (PHP_INT_SIZE < 8) {
+        if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped('64 bit only');
         }
 
@@ -103,7 +103,7 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
             $engine = new PcgOneseq128XslRr64($seed);
 
             for ($i = 0; $i < 100; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -181,10 +181,10 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
         ];
 
         foreach ($seq as $seed => $bytesExpected) {
-            $engine = new PcgOneseq128XslRr64(hex2bin($seed));
+            $engine = new PcgOneseq128XslRr64(\hex2bin($seed));
 
             for ($i = 0; $i < 100; $i++) {
-                $bytes = bin2hex($engine->generate());
+                $bytes = \bin2hex($engine->generate());
                 self::assertEquals($bytesExpected[$i], $bytes, "Seed: $seed; Index: $i");
             }
         }
@@ -194,27 +194,27 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
     {
         $engine = new PcgOneseq128XslRr64(123456);
 
-        self::assertEquals('5541cb1034d23cbe', bin2hex($engine->generate()));
-        self::assertEquals('41d1f22928582772', bin2hex($engine->generate()));
-        self::assertEquals('1763bf76310a3e44', bin2hex($engine->generate()));
+        self::assertEquals('5541cb1034d23cbe', \bin2hex($engine->generate()));
+        self::assertEquals('41d1f22928582772', \bin2hex($engine->generate()));
+        self::assertEquals('1763bf76310a3e44', \bin2hex($engine->generate()));
 
         $engine->jump(0);
 
-        self::assertEquals('688456c10d3a6d63', bin2hex($engine->generate()));
-        self::assertEquals('4e50c51b77ee1e75', bin2hex($engine->generate()));
-        self::assertEquals('a43ff17b5a2d94a4', bin2hex($engine->generate()));
+        self::assertEquals('688456c10d3a6d63', \bin2hex($engine->generate()));
+        self::assertEquals('4e50c51b77ee1e75', \bin2hex($engine->generate()));
+        self::assertEquals('a43ff17b5a2d94a4', \bin2hex($engine->generate()));
 
         $engine->jump(127);
 
-        self::assertEquals('640a138e2e137c2f', bin2hex($engine->generate()));
-        self::assertEquals('9cbbb1317b3e3bf6', bin2hex($engine->generate()));
-        self::assertEquals('9f0466861d538c75', bin2hex($engine->generate()));
+        self::assertEquals('640a138e2e137c2f', \bin2hex($engine->generate()));
+        self::assertEquals('9cbbb1317b3e3bf6', \bin2hex($engine->generate()));
+        self::assertEquals('9f0466861d538c75', \bin2hex($engine->generate()));
 
         $engine->jump(256);
 
-        self::assertEquals('d20987c39c791f24', bin2hex($engine->generate()));
-        self::assertEquals('a635504550a7a8ab', bin2hex($engine->generate()));
-        self::assertEquals('07f2a1f42e889d98', bin2hex($engine->generate()));
+        self::assertEquals('d20987c39c791f24', \bin2hex($engine->generate()));
+        self::assertEquals('a635504550a7a8ab', \bin2hex($engine->generate()));
+        self::assertEquals('07f2a1f42e889d98', \bin2hex($engine->generate()));
     }
 
     public function testSerialize(): void
@@ -224,14 +224,14 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
         $engine1->generate();
         $engine1->generate();
 
-        $engine2 = unserialize(@serialize($engine1));
+        $engine2 = \unserialize(@\serialize($engine1));
 
         self::assertEquals($engine1->generate(), $engine2->generate());
     }
 
     public function testSerializeKnown(): void
     {
-        if (PHP_VERSION_ID < 70400) {
+        if (\PHP_VERSION_ID < 70400) {
             $this->markTestSkipped('Only 7.4+ is compatible');
         }
 
@@ -245,24 +245,24 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
         $engine1->generate();
         $engine1->generate();
 
-        self::assertEquals($serialized, serialize($engine1));
+        self::assertEquals($serialized, \serialize($engine1));
 
-        $engine2 = unserialize($serialized);
+        $engine2 = \unserialize($serialized);
 
         self::assertEquals($engine1->generate(), $engine2->generate());
     }
 
     public function testSerializeWarning(): void
     {
-        if (PHP_VERSION_ID >= 70400) {
+        if (\PHP_VERSION_ID >= 70400) {
             $this->expectNotToPerformAssertions();
-        } elseif (method_exists($this, 'expectWarning')) { // PHPUnit 8/9
+        } elseif (\method_exists($this, 'expectWarning')) { // PHPUnit 8/9
             $this->expectWarning();
             $this->expectWarningMessage('Serialized object will be incompatible with PHP 8.2');
         } else {
             $this->markTestSkipped('PHPUnit is too old for this test');
         }
 
-        serialize(new PcgOneseq128XslRr64());
+        \serialize(new PcgOneseq128XslRr64());
     }
 }

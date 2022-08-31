@@ -26,8 +26,8 @@ class BasicTest extends TestCase
     public function testBasic(): void
     {
         $engines = [];
-        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), MT_RAND_MT19937);
-        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), MT_RAND_PHP);
+        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \MT_RAND_MT19937);
+        $engines[] = new Mt19937(\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \MT_RAND_PHP);
         $engines[] = new PcgOneseq128XslRr64(\random_int(\PHP_INT_MIN, \PHP_INT_MAX));
         $engines[] = new Xoshiro256StarStar(\random_int(\PHP_INT_MIN, \PHP_INT_MAX));
         $engines[] = new Secure();
@@ -47,27 +47,27 @@ class BasicTest extends TestCase
                 try {
                     $randomizer->nextInt();
                 } catch (RandomException $e) {
-                    self::assertEquals('Generated value exceeds size of int', $e->getMessage(), get_class($engine));
+                    self::assertEquals('Generated value exceeds size of int', $e->getMessage(), \get_class($engine));
                 }
             }
 
             // getInt
             for ($i = 0; $i < self::ITERATIONS; $i++) {
                 $result = $randomizer->getInt(-50, 50);
-                self::assertGreaterThanOrEqual(-50, $result, get_class($engine));
-                self::assertLessThanOrEqual(50, $result, get_class($engine));
+                self::assertGreaterThanOrEqual(-50, $result, \get_class($engine));
+                self::assertLessThanOrEqual(50, $result, \get_class($engine));
             }
 
             // getBytes
             for ($i = 0; $i < self::ITERATIONS; $i++) {
                 $length = \random_int(1, 1024);
-                self::assertEquals($length, \strlen($randomizer->getBytes($length)), get_class($engine));
+                self::assertEquals($length, \strlen($randomizer->getBytes($length)), \get_class($engine));
             }
 
             // shuffleArray
-            $array = range(1, self::ITERATIONS);
+            $array = \range(1, self::ITERATIONS);
             $shuffled_array = $randomizer->shuffleArray($array);
-            self::assertNotEquals($array, $shuffled_array, get_class($engine));
+            self::assertNotEquals($array, $shuffled_array, \get_class($engine));
 
             // shuffleBytes
             $string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ' .
@@ -76,7 +76,7 @@ class BasicTest extends TestCase
                 'voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non ' .
                 'proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
             $shuffled_string = $randomizer->shuffleBytes($string);
-            self::assertNotEquals($string, $shuffled_string, get_class($engine));
+            self::assertNotEquals($string, $shuffled_string, \get_class($engine));
         }
     }
 }

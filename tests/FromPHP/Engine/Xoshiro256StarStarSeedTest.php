@@ -33,7 +33,7 @@ class Xoshiro256StarStarSeedTest extends TestCase
         try {
             new Xoshiro256StarStar(1.0);
         } catch (Throwable $e) {
-            self::assertEquals(TypeError::class, get_class($e));
+            self::assertEquals(TypeError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\Xoshiro256StarStar::__construct():' .
                 ' Argument #1 ($seed) must be of type string|int|null, float given',
@@ -53,7 +53,7 @@ class Xoshiro256StarStarSeedTest extends TestCase
         try {
             new Xoshiro256StarStar('foobar');
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, get_class($e));
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\Xoshiro256StarStar::__construct():' .
                 ' Argument #1 ($seed) must be a 32 byte (256 bit) string',
@@ -73,7 +73,7 @@ class Xoshiro256StarStarSeedTest extends TestCase
         try {
             $engine = new Xoshiro256StarStar(\str_repeat("\x00", 32));
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, get_class($e));
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\Xoshiro256StarStar::__construct():' .
                 ' Argument #1 ($seed) must not consist entirely of NUL bytes',
@@ -107,6 +107,6 @@ class Xoshiro256StarStarSeedTest extends TestCase
             $engine->generate();
         }
 
-        self::assertEquals('90a025df9300cfd1', bin2hex($engine->generate()));
+        self::assertEquals('90a025df9300cfd1', \bin2hex($engine->generate()));
     }
 }
