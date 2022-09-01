@@ -137,11 +137,7 @@ final class Randomizer implements Serializable
 
         $umax = self::$math64->subInt(self::$math64->fromInt($max), $min);
 
-        // not (algo->generate_size == 0 || algo->generate_size > sizeof(uint32_t))
-        $bit32 =
-            $this->engine instanceof Mt19937;
-
-        if (!$bit32 || self::$math64->compare($umax, self::$UINT32_MAX_64) > 0) {
+        if (self::$math64->compare($umax, self::$UINT32_MAX_64) > 0) {
             $rangeval = $this->range64($umax);
             return self::$math64->toSignedInt(self::$math64->addInt($rangeval, $min));
         } else {
