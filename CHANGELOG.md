@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0
+
+*Sep 1, 2022*
+
+Hopefully the last alpha
+
+* Exceptions are now compatible in most known cases
+* Full coverage
+* GMP is now an optional dependency (but highly recommended)
+
 ## 0.4.0
 
 *Aug 19, 2022*
