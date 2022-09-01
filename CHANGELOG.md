@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-beta1
+
+*Sep 2, 2022*
+
+* Fix incompatibility with PHP 8.2.0 RC1
+
 ## 0.5.0
 
 *Sep 1, 2022*
