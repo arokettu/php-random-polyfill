@@ -17,19 +17,42 @@ use Arokettu\Random\NoDynamicProperties;
 use Error;
 use Exception;
 use Random\CryptoSafeEngine;
+use Random\RandomException;
 
 final class Secure implements CryptoSafeEngine
 {
     use NoDynamicProperties;
 
+    /**
+     * @throws RandomException
+     */
     public function generate(): string
     {
-        return \random_bytes(\PHP_INT_SIZE);
+        try {
+            return \random_bytes(\PHP_INT_SIZE);
+            // @codeCoverageIgnoreStart
+            // catch unreproducible
+        } catch (\Exception $e) {
+            // random_bytes throws Exception in <= 8.1 but RandomException in >= 8.2
+            throw new RandomException($e->getMessage(), (int)$e->getCode(), $e->getPrevious());
+            // @codeCoverageIgnoreEnd
+        }
     }
 
+    /**
+     * @throws RandomException
+     */
     private function range(int $min, int $max): ?int
     {
-        return \random_int($min, $max);
+        try {
+            return \random_int($min, $max);
+            // @codeCoverageIgnoreStart
+            // catch unreproducible
+        } catch (\Exception $e) {
+            // random_bytes throws Exception in <= 8.1 but RandomException in >= 8.2
+            throw new RandomException($e->getMessage(), (int)$e->getCode(), $e->getPrevious());
+            // @codeCoverageIgnoreEnd
+        }
     }
 
     /**
