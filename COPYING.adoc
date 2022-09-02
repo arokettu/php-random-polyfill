@@ -34,7 +34,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ....
 
-## PHP
+== PHP
 
 The library includes code taken from the PHP 8.1.0 beta 1 and rewritten from C to PHP.
 
@@ -111,7 +111,7 @@ PHP includes the Zend Engine, freely available at
 <http://www.zend.com>.
 ....
 
-## Mersenne Twister
+== Mersenne Twister
 
 Mersenne Twister code in PHP is adapted from C++ code distributed under the 3-Clause BSD License.
 
