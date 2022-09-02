@@ -4,40 +4,14 @@ Compatibility Notes
 PHP
 ===
 
-The library is aimed to be compatible with ``ext-random`` from PHP 8.1.
-
-* Version 0.1 is compatible with PHP 8.2.0 beta 1
-* Version 0.3 is compatible with PHP 8.2.0 beta 2
-* Version 0.4 is compatible with PHP 8.2.0 beta 3
-* Version 1.0 will be compatible with PHP 8.2.0 rc 1
-
-Performance
-===========
-
-Well, even with GMP, it's guaranteed to be slow.
-According to my tests, the lib is 20 times slower than native with GMP or 80 times slower than native without any extensions.
-Good enough if you need a dozen numbers or so.
-
-What works
-==========
-
+The library aims to be compatible with ``ext-random`` as released in PHP 8.2.0 and subsequent patch releases.
 The library will not be a full replacement for ``ext-random`` and total compatibility does not seem to be achievable.
-
-* ``Random\Randomizer``
-
-* Engines
-
-  * ``Random\Engine`` interface
-  * ``Random\CryptoSafeEngine`` interface
-  * Secure Engine: ``Random\Engine\Secure``
-  * Mersenne Twister: ``Random\Engine\Mt19937``
-  * PCG64: ``Random\Engine\PcgOneseq128XslRr64``
-  * xoshiro256**: ``Random\Engine\Xoshiro256StarStar``
 
 Version 1.99.0
 ==============
 
-Version 1.99.0 will be released as an empty package for PHP >= 8.2.
+Version 1.99.0 is an empty package for PHP >= 8.2.
+It ensures that no overhead or extra code will be used for PHP 8.2+ apps.
 
 Known differences
 =================
@@ -94,3 +68,8 @@ Mt19937
 
 * Generating integers with ``$max - $min >= mt_getrandmax()`` with ``MT_RAND_PHP`` is considered undefined behavior.
   This library is consistent with PHP 8.2 behavior, not the version it runs under.
+
+Warnings
+--------
+
+For obvious reasons, native extension produces ``E_WARNING`` and the library produces ``E_USER_WARNING``.
