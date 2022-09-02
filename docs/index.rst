@@ -30,6 +30,9 @@ Documentation
    :maxdepth: 2
 
    compatibility
+   performance
+   license
+   thanks
 
 TODO
 ====
@@ -41,10 +44,9 @@ License
 =======
 
 The library is available as open source under the terms of the `3-Clause BSD License`__.
-See `COPYING.adoc`__ for additional licenses.
+See :ref:`license` for additional licenses.
 
 .. __: https://opensource.org/licenses/BSD-3-Clause
-.. __: https://gitlab.com/sandfox/php-random-polyfill/-/blob/master/COPYING.adoc
 
 .. |Packagist|  image:: https://img.shields.io/packagist/v/arokettu/random-polyfill.svg?style=flat-square
    :target:     https://packagist.org/packages/arokettu/random-polyfill
