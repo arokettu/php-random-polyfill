@@ -113,7 +113,7 @@ PHP includes the Zend Engine, freely available at
 
 ## Mersenne Twister
 
-Mersenne Twister code is adapted from C++ code distributed under the 3-Clause BSD License.
+Mersenne Twister code in PHP is adapted from C++ code distributed under the 3-Clause BSD License.
 
 ....
 Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
