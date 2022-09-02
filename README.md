@@ -25,24 +25,7 @@ composer require 'arokettu/random-polyfill'
 
 ## Compatibility
 
-The library is compatible with `ext-random` as released in PHP 8.2.0 beta 1.
-
-## What works
-
-* `Random\Randomizer`
-* Engines
-  * `Random\Engine` interface
-  * `Random\CryptoSafeEngine` interface
-  * Secure Engine: `Random\Engine\Secure`
-  * Mersenne Twister: `Random\Engine\Mt19937`
-  * PCG64: `Random\Engine\PcgOneseq128XslRr64`
-  * xoshiro256**: `Random\Engine\Xoshiro256StarStar`
-
-## TODO
-
-* Keep updating with fixes from the upcoming betas and release 1.0.0 around PHP 8.2.0 rc 1
-* Empty `arokettu/random-polyfill` v1.99 for PHP 8.2.0 users
-* Spin-off without extension dependencies?
+The library aims to be compatible with `ext-random` as released in PHP 8.2.0 and subsequent patch releases.
 
 ## Documentation
 
