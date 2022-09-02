@@ -165,14 +165,10 @@ final class Mt19937 implements Engine, Serializable
 
         $prevState = $state[0] = self::$math->fromInt($seed);
         for ($i = 1; $i < self::N; $i++) {
-            $prevState = $state[$i] =
-                self::$math->add(
-                    self::$math->mul(
-                        self::$SEED_STEP_VALUE,
-                        $prevState ^ self::$math->shiftRight($prevState, 30)
-                    ),
-                    self::$math->fromInt($i)
-                );
+            $prevState = $state[$i] = self::$math->addInt(self::$math->mul(
+                self::$SEED_STEP_VALUE,
+                $prevState ^ self::$math->shiftRight($prevState, 30)
+            ), $i);
         }
 
         $this->state = $state;
@@ -212,9 +208,9 @@ final class Mt19937 implements Engine, Serializable
         $mixBits = self::$math->shiftRight($u & self::$HI_BIT | $v & self::$LO_BITS, 1);
 
         if ($this->mode === \MT_RAND_MT19937) {
-            $twist = self::$math->toInt($v & self::$LO_BIT) ? self::$TWIST_CONST : self::$ZERO;
+            $twist = ($v & self::$LO_BIT) != self::$ZERO ? self::$TWIST_CONST : self::$ZERO;
         } else {
-            $twist = self::$math->toInt($u & self::$LO_BIT) ? self::$TWIST_CONST : self::$ZERO;
+            $twist = ($u & self::$LO_BIT) != self::$ZERO ? self::$TWIST_CONST : self::$ZERO;
         }
 
         return $m ^ $mixBits ^ $twist;

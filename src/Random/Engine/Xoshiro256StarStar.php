@@ -69,10 +69,6 @@ final class Xoshiro256StarStar implements Engine, Serializable
     private static $ZERO;
     /** @var GMP|string|int */
     private static $ONE;
-    /** @var GMP|string|int */
-    private static $FIVE;
-    /** @var GMP|string|int */
-    private static $NINE;
 
     /**
      * @param string|int|null $seed
@@ -149,8 +145,6 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
             self::$ZERO = self::$math->fromInt(0);
             self::$ONE  = self::$math->fromInt(1);
-            self::$FIVE = self::$math->fromInt(5);
-            self::$NINE = self::$math->fromInt(9);
         }
     }
 
@@ -203,9 +197,9 @@ final class Xoshiro256StarStar implements Engine, Serializable
 
     public function generate(): string
     {
-        $r = self::$math->mul(
-            $this->rotl(self::$math->mul($this->state[1], self::$FIVE), 7),
-            self::$NINE
+        $r = self::$math->mulInt(
+            $this->rotl(self::$math->mulInt($this->state[1], 5), 7),
+            9
         );
         $t = self::$math->shiftLeft($this->state[1], 17);
 

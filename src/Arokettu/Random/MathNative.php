@@ -106,8 +106,18 @@ class MathNative extends Math
     public function mul($value1, $value2)
     {
         $value1 = $this->auxMath->fromInt($value1);
-        $value2 = $this->auxMath->fromInt($value2);
-        return $this->auxMath->toInt($this->auxMath->mul($value1, $value2));
+        return $this->auxMath->toInt($this->auxMath->mulInt($value1, $value2));
+    }
+
+    /**
+     * @param int $value1
+     * @param int $value2
+     * @return int
+     */
+    public function mulInt($value1, int $value2)
+    {
+        $value1 = $this->auxMath->fromInt($value1);
+        return $this->auxMath->toInt($this->auxMath->mulInt($value1, $value2));
     }
 
     /**

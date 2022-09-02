@@ -110,6 +110,16 @@ final class MathGMP extends Math
 
     /**
      * @param GMP $value1
+     * @param int $value2
+     * @return GMP
+     */
+    public function mulInt($value1, int $value2)
+    {
+        return ($value1 * $value2) & $this->mask;
+    }
+
+    /**
+     * @param GMP $value1
      * @param GMP $value2
      * @return GMP
      */

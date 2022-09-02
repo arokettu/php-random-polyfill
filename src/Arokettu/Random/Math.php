@@ -100,6 +100,13 @@ abstract class Math
 
     /**
      * @param int|string|GMP $value1
+     * @param int $value2
+     * @return int|string|GMP
+     */
+    abstract public function mulInt($value1, int $value2);
+
+    /**
+     * @param int|string|GMP $value1
      * @param int|string|GMP $value2
      * @return int|string|GMP
      */

@@ -18,6 +18,7 @@ use function Arokettu\Unsigned\from_hex;
 use function Arokettu\Unsigned\from_int;
 use function Arokettu\Unsigned\mod;
 use function Arokettu\Unsigned\mul;
+use function Arokettu\Unsigned\mul_int;
 use function Arokettu\Unsigned\shift_left;
 use function Arokettu\Unsigned\shift_right;
 use function Arokettu\Unsigned\sub;
@@ -113,6 +114,16 @@ final class MathUnsigned extends Math
     public function mul($value1, $value2)
     {
         return mul($value1, $value2);
+    }
+
+    /**
+     * @param string $value1
+     * @param int $value2
+     * @return string
+     */
+    public function mulInt($value1, int $value2)
+    {
+        return mul_int($value1, $value2);
     }
 
     /**
