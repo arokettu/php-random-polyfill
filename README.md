@@ -15,7 +15,7 @@ RFC:
 ## Requirements
 
 * PHP 7.1
-* GMP extension is strongly recommended
+* GMP extension is strongly recommended on PHP 7
 
 ## Installation
 

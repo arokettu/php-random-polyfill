@@ -14,7 +14,7 @@ Requirements
 ============
 
 * PHP 7.1
-* GMP extension is strongly recommended
+* GMP extension is strongly recommended on PHP 7 and somewhat recommended on PHP 8
 
 Installation
 ============
