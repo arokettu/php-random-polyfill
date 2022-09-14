@@ -19,9 +19,9 @@ class GetIntGh9415Test extends TestCase
     {
         $randomizer = new Randomizer(new Mt19937(1234));
         // Parameters shifted by -2147483648 to be compatible with 32-bit.
-        self::assertEquals(-1324913873, $randomizer->getInt(-2147483648, 2147483647));
+        self::assertEquals(-1324913873, $randomizer->getInt(-2147483647 - 1, 2147483647));
 
         $randomizer = new Randomizer(new Mt19937(4321));
-        self::assertEquals(-1843387587, $randomizer->getInt(-2147483648, 2147483647));
+        self::assertEquals(-1843387587, $randomizer->getInt(-2147483647 - 1, 2147483647));
     }
 }
