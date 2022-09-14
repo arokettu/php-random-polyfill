@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-rc1
+*Sep 14, 2022*
+
+* `Secure` engine throws `RandomException` instead of `Exception`
+* Added verification of the number of elements in serialized data
+* Generated data is truncated to 64 bits in `Randomizer::getBytes()`
+* Fixed integer overflow in the upstream math lib
+
 ## 1.0.0-beta1
 
 *Sep 2, 2022*
