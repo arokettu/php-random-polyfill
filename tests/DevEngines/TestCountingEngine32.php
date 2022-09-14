@@ -9,13 +9,13 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/all_serialize_user.phpt
  */
-final class User64 implements Engine
+class TestCountingEngine32 implements Engine
 {
     /** @var int */
     private $count = 0;
 
     public function generate(): string
     {
-        return \pack('P*', ++$this->count);
+        return \pack('V', ++$this->count);
     }
 }

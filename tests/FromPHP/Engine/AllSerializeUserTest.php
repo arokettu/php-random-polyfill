@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Engine;
 
-use Arokettu\Random\Tests\DevEngines\User32;
-use Arokettu\Random\Tests\DevEngines\User64;
+use Arokettu\Random\Tests\DevEngines\TestCountingEngine32;
+use Arokettu\Random\Tests\DevEngines\TestShaEngine;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,17 +16,15 @@ class AllSerializeUserTest extends TestCase
     public function testSerialize(): void
     {
         $engines = [];
-        if (\PHP_INT_SIZE >= 8) {
-            $engines[] = new User64();
-        }
-        $engines[] = new User32();
+        $engines[] = new TestCountingEngine32();
+        $engines[] = new TestShaEngine();
 
         foreach ($engines as $engine) {
-            for ($i = 0; $i < 1000; $i++) {
+            for ($i = 0; $i < 10000; $i++) {
                 $engine->generate();
             }
             $engine2 = \unserialize(@\serialize($engine));
-            for ($i = 0; $i < 5000; $i++) {
+            for ($i = 0; $i < 10000; $i++) {
                 self::assertEquals($engine->generate(), $engine2->generate());
             }
         }

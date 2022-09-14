@@ -22,11 +22,11 @@ class AllSerializeNativeTest extends TestCase
         $engines[] = new Xoshiro256StarStar(1234);
 
         foreach ($engines as $engine) {
-            for ($i = 0; $i < 1000; $i++) {
+            for ($i = 0; $i < 10000; $i++) {
                 $engine->generate();
             }
             $engine2 = \unserialize(@\serialize($engine));
-            for ($i = 0; $i < 5000; $i++) {
+            for ($i = 0; $i < 10000; $i++) {
                 self::assertEquals($engine->generate(), $engine2->generate());
             }
         }

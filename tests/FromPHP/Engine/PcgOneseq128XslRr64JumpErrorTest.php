@@ -33,7 +33,9 @@ class PcgOneseq128XslRr64JumpErrorTest extends TestCase
             self::assertNull($e->getPrevious());
 
             // also state must not change
-            self::assertEquals($referenceEngine->generate(), $engine->generate());
+            for ($i = 0; $i < 10000; $i++) {
+                self::assertEquals($referenceEngine->generate(), $engine->generate());
+            }
 
             return;
         }
