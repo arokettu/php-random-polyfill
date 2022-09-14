@@ -110,5 +110,4 @@ class EngineUnsafeEmptyStringTest extends TestCase
 
         throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
-
 }
