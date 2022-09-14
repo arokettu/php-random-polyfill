@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Engine;
 
-use Arokettu\Random\Tests\DevEngines\TestWrapperEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\TestWrapperEngine;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\Mt19937;
 use Random\Engine\PcgOneseq128XslRr64;

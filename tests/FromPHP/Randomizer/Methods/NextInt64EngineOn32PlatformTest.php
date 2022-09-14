@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Random\Tests\FromPHP\Randomizer;
+namespace Arokettu\Random\Tests\FromPHP\Randomizer\Methods;
 
 use PHPUnit\Framework\TestCase;
 use Random\Engine\Xoshiro256StarStar;
@@ -10,9 +10,9 @@ use Random\RandomException;
 use Random\Randomizer;
 
 /**
- * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/nextint_error.phpt
+ * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/nextInt_64_engine_on_32_platform.phpt
  */
-class NextIntErrorTest extends TestCase
+class NextInt64EngineOn32PlatformTest extends TestCase
 {
     public function testNextIntError(): void
     {

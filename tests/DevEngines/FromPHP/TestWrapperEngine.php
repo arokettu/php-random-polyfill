@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Random\Tests\DevEngines;
+namespace Arokettu\Random\Tests\DevEngines\FromPHP;
 
 use Random\Engine;
 

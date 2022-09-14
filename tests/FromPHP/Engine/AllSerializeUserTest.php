@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Engine;
 
-use Arokettu\Random\Tests\DevEngines\TestCountingEngine32;
-use Arokettu\Random\Tests\DevEngines\TestShaEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\TestCountingEngine32;
+use Arokettu\Random\Tests\DevEngines\FromPHP\TestShaEngine;
 use PHPUnit\Framework\TestCase;
 
 /**

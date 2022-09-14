@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests;
 
-use Arokettu\Random\Tests\DevEngines\TestXoshiro128PlusPlusEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\TestXoshiro128PlusPlusEngine;
 use PHPUnit\Framework\TestCase;
 
 /**

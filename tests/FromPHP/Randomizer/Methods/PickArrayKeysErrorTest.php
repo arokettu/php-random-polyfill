@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Random\Tests\FromPHP\Randomizer;
+namespace Arokettu\Random\Tests\FromPHP\Randomizer\Methods;
 
 use PHPUnit\Framework\TestCase;
 use Random\Randomizer;
@@ -11,7 +11,7 @@ use Throwable;
 use ValueError;
 
 /**
- * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/pick_array_keys_error.phpt
+ * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/pickArrayKeys_error.phpt
  */
 class PickArrayKeysErrorTest extends TestCase
 {
