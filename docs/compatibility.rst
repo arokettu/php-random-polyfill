@@ -28,6 +28,10 @@ Serialization
   unserializable by the native extension.
 * Serialization in PHP 7.1 - 7.3 will trigger a warning.
   Silence it with ``@`` if you don't care.
+* Does not throw in GH-9186_ case but also does not create a dynamic property (PHP 7.4+)
+  Undefined behavior for PHP <7.4 (returns false with a warning for the given code)
+
+.. _GH-9186: https://github.com/php/php-src/issues/9186
 
 Randomizer
 ----------

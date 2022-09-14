@@ -6,7 +6,10 @@ namespace Arokettu\Random\Tests\DevEngines\FromPHP;
 
 use Random\Engine;
 
-class TestGetBytesEngine implements Engine
+/**
+ * https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getBytes_expansion.phpt
+ */
+class GetBytesExpansionEngine implements Engine
 {
     /** @var int */
     private $count = 0;

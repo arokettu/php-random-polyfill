@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer\Methods;
 
-use Arokettu\Random\Tests\DevEngines\FromPHP\TestGetBytesEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\GetBytesExpansionEngine;
 use PHPUnit\Framework\TestCase;
 use Random\Randomizer;
 
@@ -15,7 +15,7 @@ class GetBytesExpansionTest extends TestCase
 {
     public function testGetBytes(): void
     {
-        $randomizer = new Randomizer(new TestGetBytesEngine());
+        $randomizer = new Randomizer(new GetBytesExpansionEngine());
 
         self::assertEquals('Hello', $randomizer->getBytes(5));
         // Returned values are truncated to 64-bits for technical reasons, thus dropping i-z

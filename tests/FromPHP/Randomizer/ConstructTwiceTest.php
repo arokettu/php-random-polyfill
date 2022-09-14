@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer;
 
-use Arokettu\Random\Tests\DevEngines\ConstructTwiceTestUserEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\TestShaEngine;
 use Error;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\PcgOneseq128XslRr64;
@@ -62,8 +62,8 @@ class ConstructTwiceTest extends TestCase
     public function test3(): void
     {
         try {
-            $r = new Randomizer(new ConstructTwiceTestUserEngine());
-            $r->__construct(new ConstructTwiceTestUserEngine());
+            $r = new Randomizer(new TestShaEngine('1234'));
+            $r->__construct(new TestShaEngine('1234'));
         } catch (Throwable $e) {
             self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(
@@ -83,7 +83,7 @@ class ConstructTwiceTest extends TestCase
     {
         try {
             $r = new Randomizer(new Xoshiro256StarStar());
-            $r->__construct(new ConstructTwiceTestUserEngine());
+            $r->__construct(new TestShaEngine('1234'));
         } catch (Throwable $e) {
             self::assertEquals(Error::class, \get_class($e));
             self::assertEquals(

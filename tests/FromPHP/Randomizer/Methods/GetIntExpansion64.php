@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer\Methods;
 
-use Arokettu\Random\Tests\DevEngines\FromPHP\TestByteEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\ByteEngine;
 use PHPUnit\Framework\TestCase;
 use Random\Randomizer;
 
@@ -20,7 +20,7 @@ class GetIntExpansion64 extends TestCase
             $this->markTestSkipped("It's a 64 bit test");
         }
 
-        $randomizer = new Randomizer(new TestByteEngine());
+        $randomizer = new Randomizer(new ByteEngine());
 
         self::assertEquals('0102030405060700', \bin2hex(\pack('V', $randomizer->getInt(0, 0x00FFFFFFFFFFFFFF))));
     }

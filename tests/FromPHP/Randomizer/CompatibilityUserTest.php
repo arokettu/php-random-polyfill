@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer;
 
+use Arokettu\Random\Tests\DevEngines\FromPHP\TestWrapperEngine;
 use PHPUnit\Framework\TestCase;
-use Random\Engine;
 use Random\Engine\Mt19937;
 use Random\Engine\PcgOneseq128XslRr64;
 use Random\Engine\Xoshiro256StarStar;
-use Random\RandomException;
 use Random\Randomizer;
 
 /**
@@ -19,80 +18,20 @@ class CompatibilityUserTest extends TestCase
 {
     public function testCompatibility(): void
     {
-        $native_randomizer = new Randomizer(new Mt19937(1234));
-        $user_randomizer = new Randomizer(new class () implements Engine {
-            /** @var Engine */
-            private $engine;
+        $engines = [];
+        $engines[] = new Mt19937(1234);
+        $engines[] = new PcgOneseq128XslRr64(1234);
+        $engines[] = new Xoshiro256StarStar(1234);
 
-            public function __construct()
-            {
-                $this->engine = new Mt19937(1234);
-            }
+        foreach ($engines as $engine) {
+            $native_randomizer = new Randomizer(clone $engine);
+            $user_randomizer = new Randomizer(new TestWrapperEngine(clone $engine));
 
-            public function generate(): string
-            {
-                return $this->engine->generate();
-            }
-        });
-        for ($i = 0; $i < 1000; $i++) {
-            $native = $native_randomizer->nextInt();
-            $user = $user_randomizer->nextInt();
-            self::assertEquals($native, $user);
-        }
+            for ($i = 0; $i < 10000; $i++) {
+                $native = $native_randomizer->getInt(0, $i);
+                $user = $user_randomizer->getInt(0, $i);
 
-        try {
-            $native_randomizer = new Randomizer(new PcgOneseq128XslRr64(1234));
-            $user_randomizer = new Randomizer(new class () implements Engine {
-                /** @var Engine */
-                private $engine;
-
-                public function __construct()
-                {
-                    $this->engine = new PcgOneseq128XslRr64(1234);
-                }
-
-                public function generate(): string
-                {
-                    return $this->engine->generate();
-                }
-            });
-
-            for ($i = 0; $i < 1000; $i++) {
-                $native = $native_randomizer->nextInt();
-                $user = $user_randomizer->nextInt();
                 self::assertEquals($native, $user);
-            }
-        } catch (RandomException $e) {
-            if ($e->getMessage() !== 'Generated value exceeds size of int') {
-                throw $e;
-            }
-        }
-
-        try {
-            $native_randomizer = new Randomizer(new Xoshiro256StarStar(1234));
-            $user_randomizer = new Randomizer(new class () implements Engine {
-                /** @var Engine */
-                private $engine;
-
-                public function __construct()
-                {
-                    $this->engine = new Xoshiro256StarStar(1234);
-                }
-
-                public function generate(): string
-                {
-                    return $this->engine->generate();
-                }
-            });
-
-            for ($i = 0; $i < 1000; $i++) {
-                $native = $native_randomizer->nextInt();
-                $user = $user_randomizer->nextInt();
-                self::assertEquals($native, $user);
-            }
-        } catch (RandomException $e) {
-            if ($e->getMessage() !== 'Generated value exceeds size of int') {
-                throw $e;
             }
         }
     }

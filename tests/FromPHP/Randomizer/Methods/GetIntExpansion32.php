@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\FromPHP\Randomizer\Methods;
 
-use Arokettu\Random\Tests\DevEngines\FromPHP\TestByteEngine;
+use Arokettu\Random\Tests\DevEngines\FromPHP\ByteEngine;
 use PHPUnit\Framework\TestCase;
 use Random\Randomizer;
 
@@ -15,7 +15,7 @@ class GetIntExpansion32 extends TestCase
 {
     public function testGetInt(): void
     {
-        $randomizer = new Randomizer(new TestByteEngine());
+        $randomizer = new Randomizer(new ByteEngine());
 
         self::assertEquals('01020300', \bin2hex(\pack('V', $randomizer->getInt(0, 0x00FFFFFF))));
     }
