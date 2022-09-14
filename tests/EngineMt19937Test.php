@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests;
 
+use Exception;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\Mt19937;
 use Random\Randomizer;
+use RuntimeException;
+use Throwable;
 
 /**
  * Test Mt19937 against the current core mt_rand() function
@@ -134,6 +137,33 @@ class EngineMt19937Test extends TestCase
         }
 
         \serialize(new Mt19937());
+    }
+
+    public function testUnserializeWrongArrayLength(): void
+    {
+        if (\PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        // seed = 123456, 3 generates
+        $serialized =
+            'O:21:"Random\Engine\Mt19937":2:{i:0;a:0:{}i:1;a:2:{i:0;s:8:"daefc9ab";i:1;s:8:"0e381b8d";}}';
+
+        try {
+            \unserialize($serialized);
+        } catch (Throwable $e) {
+            self::assertEquals(Exception::class, \get_class($e));
+            self::assertEquals(
+                'Invalid serialization data for Random\Engine\Mt19937 object',
+                $e->getMessage()
+            );
+            self::assertEquals(0, $e->getCode());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 
     public function testVerySpecialRange32Branch(): void

@@ -11,7 +11,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt_expansion_64.phpt
  */
-class GetIntExpansion64 extends TestCase
+class GetIntExpansion64Test extends TestCase
 {
     public function testGetInt(): void
     {
@@ -22,6 +22,6 @@ class GetIntExpansion64 extends TestCase
 
         $randomizer = new Randomizer(new ByteEngine());
 
-        self::assertEquals('0102030405060700', \bin2hex(\pack('V', $randomizer->getInt(0, 0x00FFFFFFFFFFFFFF))));
+        self::assertEquals('0102030405060700', \bin2hex(\pack('P', $randomizer->getInt(0, 0x00FFFFFFFFFFFFFF))));
     }
 }

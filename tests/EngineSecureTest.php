@@ -35,4 +35,20 @@ class EngineSecureTest extends TestCase
 
         throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
+
+    public function testNonCloneable(): void
+    {
+        try {
+            $s = new Secure();
+            $s2 = clone $s;
+        } catch (\Throwable $e) {
+            self::assertEquals(\Error::class, \get_class($e));
+            self::assertEquals('Trying to clone an uncloneable object of class Random\Engine\Secure', $e->getMessage());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
+    }
 }

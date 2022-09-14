@@ -7,8 +7,11 @@ namespace Arokettu\Random\Tests;
 use Arokettu\Random\Tests\DevEngines\SingleByte;
 use Arokettu\Random\Tests\DevEngines\Xorshift32;
 use Arokettu\Random\Tests\DevEngines\Zeros;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Random\Randomizer;
+use RuntimeException;
+use Throwable;
 
 class RandomizerWithCustomEngineTest extends TestCase
 {
@@ -440,5 +443,33 @@ class RandomizerWithCustomEngineTest extends TestCase
         }
 
         \serialize(new Randomizer(new Zeros()));
+    }
+
+    public function testUnserializeWrongArrayLength(): void
+    {
+        if (\PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        // seed = 123456, 3 generates
+        $serialized =
+            "O:17:\"Random\\Randomizer\":2:{i:0;a:1:{s:6:\"engine\";O:43:\"Arokettu\\Random\\Tests\\DevEngines\\Singl" .
+            "eByte\":1:{s:48:\"\0Arokettu\\Random\\Tests\\DevEngines\\SingleByte\0chr\";i:3;}}i:1;i:123;}";
+
+        try {
+            \unserialize($serialized);
+        } catch (Throwable $e) {
+            self::assertEquals(Exception::class, \get_class($e));
+            self::assertEquals(
+                'Invalid serialization data for Random\Randomizer object',
+                $e->getMessage()
+            );
+            self::assertEquals(0, $e->getCode());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 }

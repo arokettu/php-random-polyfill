@@ -11,7 +11,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt_expansion_32.phpt
  */
-class GetIntExpansion32 extends TestCase
+class GetIntExpansion32Test extends TestCase
 {
     public function testGetInt(): void
     {

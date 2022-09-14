@@ -266,12 +266,12 @@ final class Randomizer implements Serializable
     public function nextInt(): int
     {
         $result = $this->generate();
-        // @codeCoverageSkipStart
+        // @codeCoverageIgnoreStart
         // coverage runs on 64 but this stuff is for 32
         if (\strlen($result) > \PHP_INT_SIZE) {
             throw new RandomException('Generated value exceeds size of int');
         }
-        // @codeCoverageSkipEnd
+        // @codeCoverageIgnoreEnd
         $result = self::$math64->fromBinary($result);
 
         return self::$math64->toInt(self::$math64->shiftRight($result, 1));
@@ -286,11 +286,7 @@ final class Randomizer implements Serializable
         $retval = '';
 
         do {
-            $result = $this->generate();
-            if ($result === '') {
-                throw new BrokenRandomEngineError('A random engine must return a non-empty string');
-            }
-            $retval .= $result;
+            $retval .= $this->generate();
         } while (\strlen($retval) < $length);
 
         return \substr($retval, 0, $length);

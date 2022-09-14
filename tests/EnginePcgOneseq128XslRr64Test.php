@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\PcgOneseq128XslRr64;
+use RuntimeException;
+use Throwable;
 
 class EnginePcgOneseq128XslRr64Test extends TestCase
 {
@@ -264,5 +267,32 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
         }
 
         \serialize(new PcgOneseq128XslRr64());
+    }
+
+    public function testUnserializeWrongArrayLength(): void
+    {
+        if (\PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        // seed = 123456, 3 generates
+        $serialized =
+            'O:33:"Random\Engine\PcgOneseq128XslRr64":2:{i:0;a:0:{}i:1;a:1:{i:0;s:16:"48443d943ea2ee8f";}}';
+
+        try {
+            \unserialize($serialized);
+        } catch (Throwable $e) {
+            self::assertEquals(Exception::class, \get_class($e));
+            self::assertEquals(
+                'Invalid serialization data for Random\Engine\PcgOneseq128XslRr64 object',
+                $e->getMessage()
+            );
+            self::assertEquals(0, $e->getCode());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
 }

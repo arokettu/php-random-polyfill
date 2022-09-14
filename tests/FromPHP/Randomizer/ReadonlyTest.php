@@ -15,7 +15,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/readonly.phpt
  */
-class ReadonlyTest
+class ReadonlyTest extends TestCase
 {
     public function testReadonly(): void
     {
