@@ -287,6 +287,9 @@ final class Randomizer implements Serializable
 
         do {
             $result = $this->engine->generate();
+            if (\strlen($result) > 8) { // in C code returned values are truncated to 64-bits for technical reasons
+                $result = \substr($result, 0, 8);
+            }
             if ($result === '') {
                 throw new BrokenRandomEngineError('A random engine must return a non-empty string');
             }
