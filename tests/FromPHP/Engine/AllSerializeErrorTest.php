@@ -725,4 +725,56 @@ class AllSerializeErrorTest extends TestCase
 
         throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
     }
+
+    public function testXoshiro256StarStarAdditionalArrayValues1(): void
+    {
+        if (\PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        try {
+            \unserialize(
+                'O:32:"Random\Engine\Xoshiro256StarStar":3:{i:0;a:0:{}i:1;a:4:{i:0;s:16:"db1c182f1bf60cbb";' .
+                'i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624e";}i:2;N;}'
+            );
+        } catch (Throwable $e) {
+            self::assertEquals(Exception::class, \get_class($e));
+            self::assertEquals(
+                'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
+                $e->getMessage()
+            );
+            self::assertEquals(0, $e->getCode());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
+    }
+
+    public function testXoshiro256StarStarAdditionalArrayValues2(): void
+    {
+        if (\PHP_VERSION_ID < 70400) {
+            $this->markTestSkipped('Only 7.4+ is compatible');
+        }
+
+        try {
+            \unserialize(
+                'O:32:"Random\Engine\Xoshiro256StarStar":2:{i:0;a:0:{}i:1;a:5:{i:0;s:16:"db1c182f1bf60cbb"' .
+                ';i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624e";i:4;N;}}'
+            );
+        } catch (Throwable $e) {
+            self::assertEquals(Exception::class, \get_class($e));
+            self::assertEquals(
+                'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
+                $e->getMessage()
+            );
+            self::assertEquals(0, $e->getCode());
+            self::assertNull($e->getPrevious());
+
+            return;
+        }
+
+        throw new RuntimeException('Throwable expected'); // do not use expectException to test getPrevious()
+    }
 }

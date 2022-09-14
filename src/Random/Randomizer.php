@@ -21,6 +21,7 @@ use Arokettu\Random\Math;
 use Arokettu\Random\NoDynamicProperties;
 use Closure;
 use Error;
+use Exception;
 use GMP;
 use Random\Engine\Mt19937;
 use Random\Engine\Secure;
@@ -383,6 +384,10 @@ final class Randomizer implements Serializable
 
     public function __unserialize(array $data): void
     {
+        if (\count($data) !== 1 || !isset($data[0])) {
+            throw new Exception(\sprintf('Invalid serialization data for %s object', self::class));
+        }
+
         $this->initMath();
 
         [$fields] = $data;

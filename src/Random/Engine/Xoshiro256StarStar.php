@@ -288,6 +288,10 @@ final class Xoshiro256StarStar implements Engine, Serializable
      */
     private function loadStates(array $states): bool
     {
+        /* Verify the expected number of elements, this implicitly ensures that no additional elements are present. */
+        if (\count($states) !== 4) {
+            return false;
+        }
         $this->state = [];
         for ($i = 0; $i < 4; $i++) {
             $stateBin = @\hex2bin($states[$i]);

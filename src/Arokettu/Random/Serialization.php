@@ -46,6 +46,10 @@ trait Serialization
      */
     public function __unserialize(array $data): void
     {
+        /* Verify the expected number of elements, this implicitly ensures that no additional elements are present. */
+        if (\count($data) !== 2 || !\array_is_list($data)) {
+            throw new Exception(\sprintf('Invalid serialization data for %s object', static::class));
+        }
         $this->initMath();
         $result = $this->loadStates($data[1] ?? []);
         if ($result === false) {

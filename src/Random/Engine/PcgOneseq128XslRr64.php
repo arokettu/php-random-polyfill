@@ -211,11 +211,8 @@ final class PcgOneseq128XslRr64 implements Engine, Serializable
      */
     private function loadStates(array $states): bool
     {
-        if (!\array_is_list($states) || \count($states) < 2) {
-            // @codeCoverageIgnoreStart
-            // trust the logic
+        if (\count($states) !== 2 || !\array_is_list($states)) {
             return false;
-            // @codeCoverageIgnoreEnd
         }
         [$hi, $lo] = $states;
         if (\strlen($hi) !== Math::SIZEOF_UINT64_T * 2 || \strlen($lo) !== Math::SIZEOF_UINT64_T * 2) {

@@ -252,7 +252,12 @@ final class Mt19937 implements Engine, Serializable
      */
     private function loadStates(array $states): bool
     {
-        /** @var GMP[] $state */
+        /* Verify the expected number of elements, this implicitly ensures that no additional elements are present. */
+        if (\count($states) !== self::N + 2) {
+            return false;
+        }
+
+        /** @var GMP[]|string[]|int[] $state */
         $state = \array_fill(0, self::N, null);
 
         for ($i = 0; $i < self::N; $i++) {
