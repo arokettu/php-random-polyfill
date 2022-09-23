@@ -185,10 +185,7 @@ final class Randomizer implements Serializable
 
         while (self::$math32->compare($result, $limit) > 0) {
             if (++$count > self::RANDOM_RANGE_ATTEMPTS) {
-                // @codeCoverageIgnoreStart
-                // MT doesn't do that and other engines don't use range32
                 throw new BrokenRandomEngineError('Failed to generate an acceptable random number in 50 attempts');
-                // @codeCoverageIgnoreEnd
             }
 
             $result = '';
