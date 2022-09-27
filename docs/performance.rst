@@ -9,7 +9,7 @@ Performance test
 
 https://github.com/arokettu/random-polyfill-perf
 
-* Secure engine is mostly not affected on the backend used
+* Secure engine is mostly unaffected by the choice of backend (except for nextInt() case)
 * PHP 7:
 
   * With GMP installed, all engines is approximately 400 times slower than native
