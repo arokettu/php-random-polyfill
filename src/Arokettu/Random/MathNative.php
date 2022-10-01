@@ -23,9 +23,9 @@ class MathNative extends Math
     /** @var int */
     private $mask;
     /** @var int */
+    private $halfMask;
+    /** @var int */
     private $sizeof;
-    /** @var Math */
-    private $auxMath;
 
     /**
      * @param int $sizeof
@@ -33,9 +33,8 @@ class MathNative extends Math
     public function __construct(int $sizeof)
     {
         $this->mask = (2 ** ($sizeof * 8)) - 1;
+        $this->halfMask = (2 ** ($sizeof * 4)) - 1;
         $this->sizeof = $sizeof;
-        // multiplier to avoid overflow
-        $this->auxMath = \extension_loaded('gmp') ? new MathGMP($sizeof) : new MathUnsigned($sizeof);
     }
 
     /**
@@ -105,8 +104,19 @@ class MathNative extends Math
      */
     public function mul($value1, $value2)
     {
-        $value1 = $this->auxMath->fromInt($value1);
-        return $this->auxMath->toInt($this->auxMath->mulInt($value1, $value2));
+        // do some crazy stuff to avoid overflow larger than a byte
+        // split like splitHiLo but do not create an array
+        $halfBits = $this->sizeof * 4;
+
+        $v1hi = $value1 >> $halfBits;
+        $v2hi = $value2 >> $halfBits;
+        $v1lo = $value1 & $this->halfMask;
+        $v2lo = $value2 & $this->halfMask;
+
+        $hi = $v1hi * $v2lo + $v1lo * $v2hi;
+        $lo = $v1lo * $v2lo;
+
+        return (($hi << $halfBits) + $lo) & $this->mask;
     }
 
     /**
@@ -116,8 +126,7 @@ class MathNative extends Math
      */
     public function mulInt($value1, int $value2)
     {
-        $value1 = $this->auxMath->fromInt($value1);
-        return $this->auxMath->toInt($this->auxMath->mulInt($value1, $value2));
+        return $this->mul($value1, $value2);
     }
 
     /**
@@ -212,14 +221,9 @@ class MathNative extends Math
      */
     public function splitHiLo($value): array
     {
-        // A lot of assumptions about correct usage here
-        $halfSize = $this->sizeof >> 1;
-        /** @var self $halfMath */
-        $halfMath = Math::create($halfSize);
-
         return [
-            $value >> ($halfSize * 8),
-            $value & $halfMath->mask,
+            $value >> ($this->sizeof * 8 / 2),
+            $value & $this->halfMask,
         ];
     }
 }
