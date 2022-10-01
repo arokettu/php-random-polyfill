@@ -1,6 +1,13 @@
 # Changelog
 
+## 1.0.0-rc2
+
+*Oct 1, 2022*
+
+* Speed up 32 bit calculations in 64 bit envs
+
 ## 1.0.0-rc1
+
 *Sep 14, 2022*
 
 * `Secure` engine throws `RandomException` instead of `Exception`
