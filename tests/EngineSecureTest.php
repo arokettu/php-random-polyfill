@@ -26,8 +26,8 @@ class EngineSecureTest extends TestCase
         try {
             \serialize(new Secure());
         } catch (\Throwable $e) {
-            self::assertEquals(\Exception::class, \get_class($e));
             self::assertEquals("Serialization of 'Random\Engine\Secure' is not allowed", $e->getMessage());
+            self::assertEquals(\Exception::class, \get_class($e));
             self::assertNull($e->getPrevious());
 
             return;
@@ -42,8 +42,8 @@ class EngineSecureTest extends TestCase
             $s = new Secure();
             $s2 = clone $s;
         } catch (\Throwable $e) {
-            self::assertEquals(\Error::class, \get_class($e));
             self::assertEquals('Trying to clone an uncloneable object of class Random\Engine\Secure', $e->getMessage());
+            self::assertEquals(\Error::class, \get_class($e));
             self::assertNull($e->getPrevious());
 
             return;

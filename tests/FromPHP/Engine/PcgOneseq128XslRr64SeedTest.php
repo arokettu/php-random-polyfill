@@ -33,12 +33,12 @@ class PcgOneseq128XslRr64SeedTest extends TestCase
         try {
             new PcgOneseq128XslRr64(1.0);
         } catch (Throwable $e) {
-            self::assertEquals(TypeError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\PcgOneseq128XslRr64::__construct():' .
                     ' Argument #1 ($seed) must be of type string|int|null, float given',
                 $e->getMessage()
             );
+            self::assertEquals(TypeError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -53,12 +53,12 @@ class PcgOneseq128XslRr64SeedTest extends TestCase
         try {
             new PcgOneseq128XslRr64('foobar');
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Engine\PcgOneseq128XslRr64::__construct():' .
                 ' Argument #1 ($seed) must be a 16 byte (128 bit) string',
                 $e->getMessage()
             );
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

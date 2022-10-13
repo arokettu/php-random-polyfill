@@ -23,11 +23,11 @@ class EngineUnsafeThrowsTest extends TestCase
         try {
             $randomizer->getBytes(1);
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 "Error",
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

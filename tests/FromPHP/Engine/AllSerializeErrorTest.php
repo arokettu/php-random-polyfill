@@ -155,8 +155,8 @@ class AllSerializeErrorTest extends TestCase
                 '563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:0;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -307,8 +307,8 @@ class AllSerializeErrorTest extends TestCase
                 'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:0;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -459,8 +459,8 @@ class AllSerializeErrorTest extends TestCase
                 'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:1000;i:625;i:0;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -611,8 +611,8 @@ class AllSerializeErrorTest extends TestCase
                 'e563";i:622;s:8:"04fa51af";i:623;s:8:"dd86eeb1";i:624;i:0;i:625;i:2;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals('Invalid serialization data for Random\Engine\Mt19937 object', $e->getMessage());
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -634,11 +634,11 @@ class AllSerializeErrorTest extends TestCase
                 '"c6d571c37c41a8d";i:1;s:16:"345e7e82265d6e27";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\PcgOneseq128XslRr64 object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -660,11 +660,11 @@ class AllSerializeErrorTest extends TestCase
                 '"c6d571c37c41a8d1";i:1;s:16:"345e7e82265d6e2g";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\PcgOneseq128XslRr64 object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -686,11 +686,11 @@ class AllSerializeErrorTest extends TestCase
                 'i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624e";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -712,11 +712,11 @@ class AllSerializeErrorTest extends TestCase
                 'i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624g";}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -738,11 +738,11 @@ class AllSerializeErrorTest extends TestCase
                 'i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624e";}i:2;N;}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -764,11 +764,11 @@ class AllSerializeErrorTest extends TestCase
                 ';i:1;s:16:"2465f04d36a1c797";i:2;s:16:"da25c09be4fabe33";i:3;s:16:"33a0d052f241624e";i:4;N;}}'
             );
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\Xoshiro256StarStar object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

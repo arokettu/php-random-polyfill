@@ -21,11 +21,11 @@ class EngineUnsafeBiasedTest extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->getInt(0, 123);
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -54,11 +54,11 @@ class EngineUnsafeBiasedTest extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->shuffleArray(\range(1, 1234));
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -73,11 +73,11 @@ class EngineUnsafeBiasedTest extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->shuffleBytes('foobar');
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

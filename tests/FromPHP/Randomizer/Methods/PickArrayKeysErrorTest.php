@@ -20,12 +20,12 @@ class PickArrayKeysErrorTest extends TestCase
         try {
             (new Randomizer())->pickArrayKeys([], 0);
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Randomizer::pickArrayKeys():' .
                 ' Argument #1 ($array) cannot be empty',
                 $e->getMessage()
             );
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -40,12 +40,12 @@ class PickArrayKeysErrorTest extends TestCase
         try {
             (new Randomizer())->pickArrayKeys(\range(1, 3), 0);
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Randomizer::pickArrayKeys():' .
                 ' Argument #2 ($num) must be between 1 and the number of elements in argument #1 ($array)',
                 $e->getMessage()
             );
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -60,12 +60,12 @@ class PickArrayKeysErrorTest extends TestCase
         try {
             (new Randomizer())->pickArrayKeys(\range(1, 3), -1);
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Randomizer::pickArrayKeys():' .
                 ' Argument #2 ($num) must be between 1 and the number of elements in argument #1 ($array)',
                 $e->getMessage()
             );
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -80,12 +80,12 @@ class PickArrayKeysErrorTest extends TestCase
         try {
             (new Randomizer())->pickArrayKeys(\range(1, 3), 10);
         } catch (Throwable $e) {
-            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(
                 'Random\Randomizer::pickArrayKeys():' .
                 ' Argument #2 ($num) must be between 1 and the number of elements in argument #1 ($array)',
                 $e->getMessage()
             );
+            self::assertEquals(ValueError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

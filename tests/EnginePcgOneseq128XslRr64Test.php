@@ -282,11 +282,11 @@ class EnginePcgOneseq128XslRr64Test extends TestCase
         try {
             \unserialize($serialized);
         } catch (Throwable $e) {
-            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(
                 'Invalid serialization data for Random\Engine\PcgOneseq128XslRr64 object',
                 $e->getMessage()
             );
+            self::assertEquals(Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

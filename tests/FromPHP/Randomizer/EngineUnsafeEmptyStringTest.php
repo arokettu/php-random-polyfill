@@ -21,11 +21,11 @@ class EngineUnsafeEmptyStringTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->getInt(0, 123);
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -40,11 +40,11 @@ class EngineUnsafeEmptyStringTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->nextInt();
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -59,11 +59,11 @@ class EngineUnsafeEmptyStringTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->getBytes(1);
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -78,11 +78,11 @@ class EngineUnsafeEmptyStringTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->shuffleArray(\range(1, 1234));
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 
@@ -97,11 +97,11 @@ class EngineUnsafeEmptyStringTest extends TestCase
         try {
             (new Randomizer(new EmptyStringEngine()))->shuffleBytes('foobar');
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'A random engine must return a non-empty string',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

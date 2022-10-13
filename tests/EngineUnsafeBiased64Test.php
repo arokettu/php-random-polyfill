@@ -27,11 +27,11 @@ class EngineUnsafeBiased64Test extends TestCase
         try {
             (new Randomizer(new HeavilyBiasedEngine()))->getInt(0, 1234567890123456789); // somewhat close to 2^60
         } catch (Throwable $e) {
-            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(
                 'Failed to generate an acceptable random number in 50 attempts',
                 $e->getMessage()
             );
+            self::assertEquals(BrokenRandomEngineError::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

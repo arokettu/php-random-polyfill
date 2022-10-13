@@ -25,11 +25,11 @@ class SerializeDisallowedTest extends TestCase
         try {
             $randomizer2 = \unserialize(@\serialize($randomizer));
         } catch (Throwable $e) {
-            self::assertEquals(\Exception::class, \get_class($e));
             self::assertEquals(
                 "Serialization of 'Random\Engine\Secure' is not allowed",
                 $e->getMessage()
             );
+            self::assertEquals(\Exception::class, \get_class($e));
             self::assertEquals(0, $e->getCode());
             self::assertNull($e->getPrevious());
 

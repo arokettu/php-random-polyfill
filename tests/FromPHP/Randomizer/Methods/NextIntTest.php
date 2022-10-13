@@ -36,6 +36,8 @@ class NextIntTest extends TestCase
             } catch (RandomException $e) {
                 self::assertEquals(4, \PHP_INT_SIZE); // can only happen with 32 bit
                 self::assertEquals('Generated value exceeds size of int', $e->getMessage());
+                self::assertEquals(0, $e->getCode());
+                self::assertNull($e->getPrevious());
             }
         }
     }
