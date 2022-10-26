@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0
+
+*Oct 26, 2022*
+
+Since RC1/RC2 are compatible with last 4 release candidates of PHP 8.2 (RC2-RC5),
+RC2 is re-released as stable.
+
+* No user facing changes since RC2
+
 ## 1.0.0-rc2
 
 *Oct 1, 2022*
