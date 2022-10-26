@@ -81,7 +81,6 @@ test-8.1:
 # control that our tests are valid
 test-8.2-control:
   extends: .test
-  allow_failure: true
   stage: test
   image: php:8.2-rc
   script:
