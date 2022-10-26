@@ -14,7 +14,7 @@ https://github.com/arokettu/random-polyfill-perf
 
   * With GMP installed, all engines is approximately 400 times slower than native
   * Mersenne Twister is consistently 400 times slower than native, whether you use GMP or not
-  * PCG is 100 times slower than GMP and xoshiro256** is 50 times slower than GMP
+  * PCG is 100 times slower without GMP and xoshiro256** is 50 times slower without GMP
 * PHP 8:
 
   * 100-150 times slower than native
