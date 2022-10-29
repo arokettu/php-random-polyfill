@@ -113,7 +113,24 @@ final class Randomizer implements Serializable
             );
         }
 
-        // engine has range func
+        // handle MT_RAND_PHP
+        /** @psalm-suppress PossiblyInvalidFunctionCall */
+        if (
+            $this->engine instanceof Mt19937 &&
+            Closure::bind(function () {
+                /** @psalm-suppress UndefinedThisPropertyFetch */
+                return $this->mode === \MT_RAND_PHP; // read private property
+            }, $this->engine, $this->engine)()
+        ) {
+            return $this->rangeBadscaling($min, $max);
+        }
+
+        return $this->doGetInt($min, $max);
+    }
+
+    private function doGetInt(int $min, int $max): int
+    {
+        // special handler for Secure
         if (
             $this->engine instanceof Secure
         ) {
@@ -126,18 +143,6 @@ final class Randomizer implements Serializable
                 throw new RandomException($e->getMessage(), (int)$e->getCode(), $e->getPrevious());
                 // @codeCoverageIgnoreEnd
             }
-        }
-
-        // handle MT_RAND_PHP
-        /** @psalm-suppress PossiblyInvalidFunctionCall */
-        if (
-            $this->engine instanceof Mt19937 &&
-            Closure::bind(function () {
-                /** @psalm-suppress UndefinedThisPropertyFetch */
-                return $this->mode === \MT_RAND_PHP; // read private property
-            }, $this->engine, $this->engine)()
-        ) {
-            return $this->rangeBadscaling($min, $max);
         }
 
         $umax = self::$math64->subInt(self::$math64->fromInt($max), $min);
@@ -304,7 +309,7 @@ final class Randomizer implements Serializable
         $nLeft = \count($hash);
 
         while (--$nLeft) {
-            $rndIdx = $this->getInt(0, $nLeft);
+            $rndIdx = $this->doGetInt(0, $nLeft);
             $tmp = $hash[$nLeft];
             $hash[$nLeft] = $hash[$rndIdx];
             $hash[$rndIdx] = $tmp;
@@ -322,7 +327,7 @@ final class Randomizer implements Serializable
         $nLeft = \strlen($bytes);
 
         while (--$nLeft) {
-            $rndIdx = $this->getInt(0, $nLeft);
+            $rndIdx = $this->doGetInt(0, $nLeft);
             $tmp = $bytes[$nLeft];
             $bytes[$nLeft] = $bytes[$rndIdx];
             $bytes[$rndIdx] = $tmp;
@@ -346,7 +351,7 @@ final class Randomizer implements Serializable
         $keys = \array_keys($array);
 
         if ($num === 1) {
-            return [$keys[$this->getInt(0, $numAvail - 1)]];
+            return [$keys[$this->doGetInt(0, $numAvail - 1)]];
         }
 
         if ($num <= 0 || $num > $numAvail) {
@@ -361,7 +366,7 @@ final class Randomizer implements Serializable
         $i = $num;
 
         while ($i) {
-            $idx = $this->getInt(0, $numAvail - 1);
+            $idx = $this->doGetInt(0, $numAvail - 1);
 
             if (\array_key_exists($idx, $retval) === false) {
                 $retval[$idx] = $keys[$idx];
