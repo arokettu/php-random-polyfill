@@ -7,8 +7,11 @@
 
 * Rely on symfony/polyfill-php82 for interface implementations and Random\Engine\Secure ([#6][gh#6]),
   thanks to [Nicolas Grekas][gh@nicolas-grekas]
+* Added compatibility with PHP regression fix: [PHP#9839] ([#5][gh#5])
 
-[gh#6]: https://github.com/arokettu/php-random-polyfill/issues/6
+[gh#6]: https://github.com/arokettu/php-random-polyfill/pull/6
+[PHP#9839]: https://github.com/php/php-src/pull/9839
+[gh#5]: https://github.com/arokettu/php-random-polyfill/pull/5
 
 ## 1.0.0
 
