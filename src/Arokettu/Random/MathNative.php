@@ -18,7 +18,7 @@ namespace Arokettu\Random;
  */
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 // phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
-class MathNative extends Math
+final class MathNative extends Math
 {
     /** @var int */
     private $mask;
