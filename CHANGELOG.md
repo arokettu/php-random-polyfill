@@ -1,5 +1,15 @@
 # Changelog
 
+[gh@TimWolla]: https://github.com/TimWolla
+[gh@nicolas-grekas]: https://github.com/nicolas-grekas
+
+## next
+
+* Rely on symfony/polyfill-php82 for interface implementations and Random\Engine\Secure ([#6][gh#6]),
+  thanks to [Nicolas Grekas][gh@nicolas-grekas]
+
+[gh#6]: https://github.com/arokettu/php-random-polyfill/issues/6
+
 ## 1.0.0
 
 *Oct 26, 2022*
@@ -67,11 +77,10 @@ Hopefully the last alpha
 * ``arrayPickKeys()`` throws a warning because full compatibility is not achievable.
   Thanks to [Tim Düsterhus][gh@TimWolla] for [the explanation][gh#1]
   * No warning if the engine is ``CryptoSafeEngine``
-* Fixed incorrect range function selection [[#1][gh#1]], thanks to [Tim Düsterhus][gh@TimWolla]
+* Fixed incorrect range function selection ([#1][gh#1]), thanks to [Tim Düsterhus][gh@TimWolla]
 * Fixed byte selection in range64
 
 [gh#1]: https://github.com/arokettu/php-random-polyfill/issues/1
-[gh@TimWolla]: https://github.com/TimWolla
 
 ## 0.2.0
 
