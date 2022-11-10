@@ -16,6 +16,8 @@ use Throwable;
 
 class DynamicPropertiesTest extends TestCase
 {
+    use AssertRegexCompat;
+
     public function testRandomizer(): void
     {
         try {
@@ -63,8 +65,8 @@ class DynamicPropertiesTest extends TestCase
             $engine = new Secure();
             $engine->test = 123;
         } catch (Throwable $e) {
-            self::assertEquals(
-                'Cannot create dynamic property Random\Engine\Secure::$test',
+            self::assertRegex(
+                '/^Cannot create dynamic property (?<classname>.*)::\\$test$/',
                 $e->getMessage()
             );
             self::assertEquals(Error::class, \get_class($e));
