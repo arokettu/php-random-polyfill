@@ -117,11 +117,15 @@ final class Randomizer implements Serializable
         if (
             $this->engine instanceof Secure
         ) {
-            /** @psalm-suppress PossiblyInvalidFunctionCall */
-            return Closure::bind(function (int $min, int $max): ?int {
-                /** @psalm-suppress UndefinedMethod */
-                return $this->range($min, $max);
-            }, $this->engine, $this->engine)($min, $max);
+            try {
+                return \random_int($min, $max);
+                // @codeCoverageIgnoreStart
+                // catch unreproducible
+            } catch (\Exception $e) {
+                // random_bytes throws Exception in <= 8.1 but RandomException in >= 8.2
+                throw new RandomException($e->getMessage(), (int)$e->getCode(), $e->getPrevious());
+                // @codeCoverageIgnoreEnd
+            }
         }
 
         // handle MT_RAND_PHP
