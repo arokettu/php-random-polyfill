@@ -35,7 +35,7 @@ Also on Read the Docs: <https://php-random-polyfill.readthedocs.io/>
 
 ## Support
 
-Please file issues on our main repo at GitLab: <https://gitlab.com/sandfox/php-random-polyfill/-/issues>
+Please file issues on our main repo at GitHub: <https://github.com/arokettu/php-random-polyfill/issues>
 
 ## License
 
