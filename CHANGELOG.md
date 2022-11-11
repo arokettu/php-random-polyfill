@@ -3,7 +3,9 @@
 [gh@TimWolla]: https://github.com/TimWolla
 [gh@nicolas-grekas]: https://github.com/nicolas-grekas
 
-## next
+## 1.0.1
+
+*Nov 12, 2022*
 
 * Rely on symfony/polyfill-php82 for interface implementations and Random\Engine\Secure ([#6][gh#6]),
   thanks to [Nicolas Grekas][gh@nicolas-grekas]
