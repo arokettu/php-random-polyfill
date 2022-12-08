@@ -5,12 +5,7 @@
 [![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/sandfox/php-random-polyfill/master.svg?style=flat-square)](https://gitlab.com/sandfox/php-random-polyfill/-/pipelines)
 [![Codecov](https://img.shields.io/codecov/c/gl/sandfox/php-random-polyfill?style=flat-square)](https://codecov.io/gl/sandfox/php-random-polyfill/)
 
-This is a polyfill for the new `ext-random` extension that will be released with PHP 8.2.
-
-RFC:
-
-* https://wiki.php.net/rfc/rng_extension
-* https://wiki.php.net/rfc/random_extension_improvement
+This is a polyfill for the new `ext-random` extension that was released with PHP 8.2.
 
 ## Requirements
 
@@ -28,6 +23,12 @@ composer require 'arokettu/random-polyfill'
 The library aims to be compatible with `ext-random` as released in PHP 8.2.0 and subsequent patch releases.
 
 ## Documentation
+
+### Random Extension
+
+Read the official PHP doc: https://www.php.net/manual/en/book.random.php
+
+### The Polyfill
 
 Read full documentation here: <https://sandfox.dev/php/random-polyfill.html>
 

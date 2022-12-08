@@ -4,8 +4,27 @@ Compatibility Notes
 PHP
 ===
 
+.. note::
+    Random Extension doc on the PHP website:
+    https://www.php.net/manual/en/book.random.php
+
 The library aims to be compatible with ``ext-random`` as released in PHP 8.2.0 and subsequent patch releases.
 The library will not be a full replacement for ``ext-random`` and total compatibility does not seem to be achievable.
+
+Available classes:
+
+* This polyfill:
+
+  * `Random\\Randomizer <https://www.php.net/manual/en/class.random-randomizer.php>`__
+  * `Random\\Engine\\Mt19937 <https://www.php.net/manual/en/class.random-engine-mt19937.php>`__
+  * `Random\\Engine\\PcgOneseq128XslRr64 <https://www.php.net/manual/en/class.random-engine-pcgoneseq128xslrr64.php>`__
+  * `Random\\Engine\\Xoshiro256StarStar <https://www.php.net/manual/en/class.random-engine-xoshiro256starstar.php>`__
+
+* From `symfony/polyfill-php82 <https://packagist.org/packages/symfony/polyfill-php82>`__:
+
+  * `Random\\Engine <https://www.php.net/manual/en/class.random-engine.php>`__
+  * `Random\\Engine\\CryptoSafeEngine <https://www.php.net/manual/en/class.random-cryptosafeengine.php>`__
+  * `Random\\Engine\\Secure <https://www.php.net/manual/en/class.random-engine-secure.php>`__
 
 Version 1.99.0
 ==============

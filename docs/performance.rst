@@ -12,7 +12,7 @@ https://github.com/arokettu/random-polyfill-perf
 * Secure engine is mostly unaffected by the choice of backend (except for nextInt() case)
 * PHP 7:
 
-  * With GMP installed, all engines is approximately 400 times slower than native
+  * With GMP installed, all engines are approximately 400 times slower than native
   * Mersenne Twister is consistently 400 times slower than native, whether you use GMP or not
   * PCG is 100 times slower without GMP and xoshiro256** is 50 times slower without GMP
 * PHP 8:

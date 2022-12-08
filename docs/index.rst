@@ -3,12 +3,7 @@ Random Extension Polyfill
 
 |Packagist| |GitLab| |GitHub| |Bitbucket| |Gitea|
 
-This is a polyfill for the new ``ext-random`` extension that will be released with PHP 8.2.
-
-RFC:
-
-* https://wiki.php.net/rfc/rng_extension
-* https://wiki.php.net/rfc/random_extension_improvement
+This is a polyfill for the new ``ext-random`` extension that was released with PHP 8.2.
 
 Requirements
 ============
@@ -22,6 +17,11 @@ Installation
 .. code-block:: bash
 
     composer require 'arokettu/random-polyfill'
+
+Random Extension Documentation
+==============================
+
+On the PHP website: https://www.php.net/manual/en/book.random.php
 
 Documentation
 =============
