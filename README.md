@@ -1,7 +1,7 @@
 # Random Extension Polyfill for PHP
 
 [![PHP](https://img.shields.io/packagist/php-v/arokettu/random-polyfill/dev-master.svg?style=flat-square)](https://packagist.org/packages/arokettu/random-polyfill)
-[![Packagist](https://img.shields.io/packagist/l/arokettu/random-polyfill.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
+[![Packagist](https://img.shields.io/packagist/l/arokettu/random-polyfill.svg?style=flat-square)][COPYING]
 [![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/sandfox/php-random-polyfill/master.svg?style=flat-square)](https://gitlab.com/sandfox/php-random-polyfill/-/pipelines)
 [![Codecov](https://img.shields.io/codecov/c/gl/sandfox/php-random-polyfill?style=flat-square)](https://codecov.io/gl/sandfox/php-random-polyfill/)
 
@@ -43,5 +43,5 @@ Please file issues on our main repo at GitHub: <https://github.com/arokettu/php-
 The library is available as open source under the terms of the [3-Clause BSD License].
 See [COPYING.adoc][COPYING] for additional licenses.
 
-[3-Clause BSD License]: https://opensource.org/licenses/BSD-3-Clause
+[3-Clause BSD License]: LICENSE.md
 [COPYING]: COPYING.adoc
