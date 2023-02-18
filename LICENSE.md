@@ -1,7 +1,5 @@
 # BSD 3-Clause "New" or "Revised" License
 
-_This is a license for the product as a whole, see `COPYING.adoc` for additional licenses._
-
 Copyright © 2022 Anton Smirnov
 
 Redistribution and use in source and binary forms, with or without
