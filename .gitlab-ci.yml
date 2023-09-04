@@ -48,35 +48,22 @@ coverage:
     - bash <(curl -s https://codecov.io/bash)
 
 # test in every version
-test-7.1:
+test:
   extends: .test
   stage: test
-  image: php:7.1
-
-test-7.2:
-  extends: .test
-  stage: test
-  image: php:7.2
-
-test-7.3:
-  extends: .test
-  stage: test
-  image: php:7.3
-
-test-7.4:
-  extends: .test
-  stage: test
-  image: php:7.4
-
-test-8.0:
-  extends: .test
-  stage: test
-  image: php:8.0
-
-test-8.1:
-  extends: .test
-  stage: test
-  image: php:8.1
+  image: ${ARCH}/php:${PHP_VERSION}
+  parallel:
+    matrix:
+      - PHP_VERSION:
+          - '7.1'
+          - '7.2'
+          - '7.3'
+          - '7.4'
+          - '8.0'
+          - '8.1'
+        ARCH:
+          - amd64
+          - i386
 
 # control that our tests are valid
 test-8.2-control:
