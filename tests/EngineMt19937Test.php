@@ -168,6 +168,11 @@ class EngineMt19937Test extends TestCase
 
     public function testVerySpecialRange32Branch(): void
     {
+        // @see https://www.php.net/manual/en/migration72.incompatible.php#migration72.incompatible.rand-mt_rand-output
+        if (\PHP_VERSION_ID < 70200) {
+            $this->markTestSkipped('PHP 7.1 has glitchy mt_rand');
+        }
+
         \mt_srand(123456);
         $r = new Randomizer(new Mt19937(123456));
 
