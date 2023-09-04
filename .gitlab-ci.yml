@@ -26,10 +26,6 @@ cache:
     - composer config -g cache-dir "$(pwd)/.composer-cache"
   script:
     - composer update
-    # native + unsigned
-    - vendor/bin/phpunit
-    - docker-php-ext-install gmp
-    # native + gmp
     - vendor/bin/phpunit
 
 # coverage
@@ -64,6 +60,24 @@ test:
         ARCH:
           - amd64
           - i386
+
+test-gmp:
+  extends: .test
+  stage: test
+  image: ${ARCH}/php:${PHP_VERSION}
+  parallel:
+    matrix:
+      - PHP_VERSION:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+        ARCH:
+          - amd64
+          - i386
+  script:
+    - docker-php-ext-install gmp
+    - composer update
+    - vendor/bin/phpunit
 
 # control that our tests are valid
 test-8.2-control:
