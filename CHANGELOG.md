@@ -5,6 +5,12 @@
 
 ## 1.x
 
+### 1.0.2
+
+*Sep 7, 2023*
+
+* Bump arokettu/unsigned to 1.2.1, previous versions may cause invalid results in Mersenne Twister on 32-bit systems.
+
 ### 1.0.1
 
 *Nov 12, 2022*
