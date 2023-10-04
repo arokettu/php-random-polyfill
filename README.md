@@ -38,6 +38,8 @@ Also on Read the Docs: <https://php-random-polyfill.readthedocs.io/>
 
 Please file issues on our main repo at GitHub: <https://github.com/arokettu/php-random-polyfill/issues>
 
+Feel free to ask any questions in our room on Gitter: <https://gitter.im/arokettu/community>
+
 ## License
 
 The library is available as open source under the terms of the [3-Clause BSD License].
