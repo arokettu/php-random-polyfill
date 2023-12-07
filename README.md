@@ -1,9 +1,18 @@
 # Random Extension Polyfill for PHP
 
-[![PHP](https://img.shields.io/packagist/php-v/arokettu/random-polyfill/dev-master.svg?style=flat-square)](https://packagist.org/packages/arokettu/random-polyfill)
-[![Packagist](https://img.shields.io/packagist/l/arokettu/random-polyfill.svg?style=flat-square)][COPYING]
-[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/sandfox/php-random-polyfill/master.svg?style=flat-square)](https://gitlab.com/sandfox/php-random-polyfill/-/pipelines)
-[![Codecov](https://img.shields.io/codecov/c/gl/sandfox/php-random-polyfill?style=flat-square)](https://codecov.io/gl/sandfox/php-random-polyfill/)
+[![PHP]][Packagist]
+[![License]][COPYING]
+[![Gitlab pipeline status]](https://gitlab.com/sandfox/php-random-polyfill/-/pipelines)
+[![Codecov]](https://codecov.io/gl/sandfox/php-random-polyfill/)
+[![Packagist Downloads]][Packagist]
+
+[PHP]: https://img.shields.io/packagist/php-v/arokettu/random-polyfill/dev-master.svg?style=flat-square
+[License]: https://img.shields.io/packagist/l/arokettu/random-polyfill.svg?style=flat-square
+[Gitlab pipeline status]: https://img.shields.io/gitlab/pipeline/sandfox/php-random-polyfill/master.svg?style=flat-square
+[Codecov]: https://img.shields.io/codecov/c/gl/sandfox/php-random-polyfill?style=flat-square
+[Packagist Downloads]: https://img.shields.io/packagist/dd/arokettu/unsigned?style=flat-square
+
+[Packagist]: (https://packagist.org/packages/arokettu/random-polyfill)
 
 This is a polyfill for the new `ext-random` extension that was released with PHP 8.2.
 
