@@ -12,7 +12,7 @@
 [Codecov]: https://img.shields.io/codecov/c/gl/sandfox/php-random-polyfill?style=flat-square
 [Packagist Downloads]: https://img.shields.io/packagist/dd/arokettu/random-polyfill?style=flat-square
 
-[Packagist]: (https://packagist.org/packages/arokettu/random-polyfill)
+[Packagist]: https://packagist.org/packages/arokettu/random-polyfill
 
 This is a polyfill for the new `ext-random` extension that was released with PHP 8.2.
 
