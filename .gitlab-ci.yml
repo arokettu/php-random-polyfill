@@ -40,7 +40,6 @@ coverage:
   image: php:8.1
   script:
     - composer update
-    - docker-php-ext-install gmp
     - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover coverage.xml
     - bash <(curl -s https://codecov.io/bash)
 
