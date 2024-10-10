@@ -11,6 +11,8 @@ Random Extension Polyfill for PHP
 
 The library itself.
 
+.. code-block:: text
+
     Copyright © 2022 Anton Smirnov
 
     Redistribution and use in source and binary forms, with or without
