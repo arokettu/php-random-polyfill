@@ -28,7 +28,10 @@
         "psr-0": {
             "Arokettu\\Random\\": "src",
             "Random\\": "src"
-        }
+        },
+        "files": [
+            "src/lib.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -37,7 +40,6 @@
     },
     "require": {
         "php": "^7.1 | ^8.0",
-        "arokettu/unsigned": "^1.2.1",
         "symfony/polyfill-php80": "^1.22",
         "symfony/polyfill-php81": "^1.22",
         "symfony/polyfill-php82": "^1.27"
