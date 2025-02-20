@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned\Tests;
+namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
-use function Arokettu\Unsigned\compare;
-use function Arokettu\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\compare;
+use function Arokettu\Random\Unsigned\from_int;
 
 class CompareTest extends TestCase
 {

@@ -11,20 +11,20 @@ declare(strict_types=1);
 
 namespace Arokettu\Random;
 
-use function Arokettu\Unsigned\add;
-use function Arokettu\Unsigned\add_int;
-use function Arokettu\Unsigned\compare;
-use function Arokettu\Unsigned\from_hex;
-use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\mod;
-use function Arokettu\Unsigned\mul;
-use function Arokettu\Unsigned\mul_int;
-use function Arokettu\Unsigned\shift_left;
-use function Arokettu\Unsigned\shift_right;
-use function Arokettu\Unsigned\sub;
-use function Arokettu\Unsigned\sub_int;
-use function Arokettu\Unsigned\to_int;
-use function Arokettu\Unsigned\to_signed_int;
+use function Arokettu\Random\Unsigned\add;
+use function Arokettu\Random\Unsigned\add_int;
+use function Arokettu\Random\Unsigned\compare;
+use function Arokettu\Random\Unsigned\from_hex;
+use function Arokettu\Random\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\mod;
+use function Arokettu\Random\Unsigned\mul;
+use function Arokettu\Random\Unsigned\mul_int;
+use function Arokettu\Random\Unsigned\shift_left;
+use function Arokettu\Random\Unsigned\shift_right;
+use function Arokettu\Random\Unsigned\sub;
+use function Arokettu\Random\Unsigned\sub_int;
+use function Arokettu\Random\Unsigned\to_int;
+use function Arokettu\Random\Unsigned\to_signed_int;
 
 /**
  * @internal

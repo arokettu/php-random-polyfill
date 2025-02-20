@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned\Tests;
+namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
-use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\mul;
-use function Arokettu\Unsigned\to_int;
+use function Arokettu\Random\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\mul;
+use function Arokettu\Random\Unsigned\to_int;
 
 class OverflowRegressionTest extends TestCase
 {

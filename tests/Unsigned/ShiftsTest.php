@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned\Tests;
+namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
-use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\shift_left;
-use function Arokettu\Unsigned\shift_right;
+use function Arokettu\Random\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\shift_left;
+use function Arokettu\Random\Unsigned\shift_right;
 
 class ShiftsTest extends TestCase
 {

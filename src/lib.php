@@ -7,11 +7,15 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned
+/** @internal */
+namespace Arokettu\Random\Unsigned
 {
-    use Arokettu\Unsigned as u;
-    use Arokettu\Unsigned\Internal as i;
+    use Arokettu\Random\Unsigned as u;
+    use Arokettu\Random\Unsigned\Internal as i;
 
+    /**
+     * @internal
+     */
     function from_int(int $value, int $sizeof): string
     {
         $hex = \dechex($value);
@@ -33,6 +37,9 @@ namespace Arokettu\Unsigned
         return \strrev(\hex2bin($hex));
     }
 
+    /**
+     * @internal
+     */
     function to_int(string $value): int
     {
         if (!u\fits_into_int($value)) {
@@ -42,6 +49,9 @@ namespace Arokettu\Unsigned
         return \hexdec(\bin2hex(\strrev($value)));
     }
 
+    /**
+     * @internal
+     */
     function to_signed_int(string $value): int
     {
         $sizeof = \strlen($value);
@@ -53,6 +63,9 @@ namespace Arokettu\Unsigned
         return u\to_int($value);
     }
 
+    /**
+     * @internal
+     */
     function fits_into_int(string $value): bool
     {
         $value = \rtrim($value, "\0");
@@ -65,6 +78,9 @@ namespace Arokettu\Unsigned
         return !$notFits;
     }
 
+    /**
+     * @internal
+     */
     function from_hex(string $value, int $sizeof): string
     {
         $strlen = \strlen($value);
@@ -85,11 +101,17 @@ namespace Arokettu\Unsigned
         return \strrev(\hex2bin($value));
     }
 
+    /**
+     * @internal
+     */
     function to_hex(string $value): string
     {
         return \bin2hex(\strrev($value));
     }
 
+    /**
+     * @internal
+     */
     function from_base(string $value, int $base, int $sizeof): string
     {
         if ($base < 2 || $base > 36) {
@@ -119,6 +141,9 @@ namespace Arokettu\Unsigned
         return $result;
     }
 
+    /**
+     * @internal
+     */
     function to_base(string $value, int $base): string
     {
         if ($base < 2 || $base > 36) {
@@ -149,6 +174,7 @@ namespace Arokettu\Unsigned
 
     /**
      * $value << $shift
+     * @internal
      */
     function shift_left(string $value, int $shift): string
     {
@@ -181,6 +207,7 @@ namespace Arokettu\Unsigned
 
     /**
      * $value >> $shift
+     * @internal
      */
     function shift_right(string $value, int $shift): string
     {
@@ -217,6 +244,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a + b
+     * @internal
      */
     function add(string $a, string $b): string
     {
@@ -238,6 +266,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a + int(b)
+     * @internal
      */
     function add_int(string $a, int $b): string
     {
@@ -266,6 +295,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a - b
+     * @internal
      */
     function sub(string $a, string $b): string
     {
@@ -274,6 +304,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a - int(b)
+     * @internal
      */
     function sub_int(string $a, int $b): string
     {
@@ -286,6 +317,7 @@ namespace Arokettu\Unsigned
 
     /**
      * int(a) - b
+     * @internal
      */
     function sub_int_rev(int $a, string $b): string
     {
@@ -294,6 +326,7 @@ namespace Arokettu\Unsigned
 
     /**
      * -a
+     * @internal
      */
     function neg(string $a): string
     {
@@ -302,6 +335,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a * b
+     * @internal
      */
     function mul(string $a, string $b): string
     {
@@ -310,6 +344,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a * int(b)
+     * @internal
      */
     function mul_int(string $a, int $b): string
     {
@@ -349,6 +384,7 @@ namespace Arokettu\Unsigned
      * a / b, a % b
      *
      * @return array [div -> string, mod -> string]
+     * @internal
      */
     function div_mod(string $a, string $b, bool $forceSlow = false): array
     {
@@ -430,6 +466,7 @@ namespace Arokettu\Unsigned
      * a / int(b), a % int(b)
      *
      * @return array [div -> string, mod -> int]
+     * @internal
      */
     function div_mod_int(string $a, int $b): array
     {
@@ -484,6 +521,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a / b
+     * @internal
      */
     function div(string $a, string $b): string
     {
@@ -492,6 +530,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a / int(b)
+     * @internal
      */
     function div_int(string $a, int $b): string
     {
@@ -508,6 +547,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a % b
+     * @internal
      */
     function mod(string $a, string $b): string
     {
@@ -554,6 +594,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a % int(b) -> int
+     * @internal
      */
     function mod_int(string $a, int $b): int
     {
@@ -598,6 +639,7 @@ namespace Arokettu\Unsigned
 
     /**
      * a <=> b
+     * @internal
      */
     function compare(string $a, string $b): int
     {
@@ -617,6 +659,9 @@ namespace Arokettu\Unsigned
         return 0;
     }
 
+    /**
+     * @internal
+     */
     function set_bit(string $a, int $bit): string
     {
         $sizeof = \strlen($a);
@@ -636,6 +681,9 @@ namespace Arokettu\Unsigned
         return $a;
     }
 
+    /**
+     * @internal
+     */
     function unset_bit(string $a, int $bit): string
     {
         $sizeof = \strlen($a);
@@ -655,6 +703,9 @@ namespace Arokettu\Unsigned
         return $a;
     }
 
+    /**
+     * @internal
+     */
     function is_bit_set(string $a, int $bit): bool
     {
         $sizeof = \strlen($a);
@@ -674,10 +725,10 @@ namespace Arokettu\Unsigned
 }
 
 /** @internal */
-namespace Arokettu\Unsigned\Internal
+namespace Arokettu\Random\Unsigned\Internal
 {
-    use Arokettu\Unsigned as u;
-    use Arokettu\Unsigned\Internal as i;
+    use Arokettu\Random\Unsigned as u;
+    use Arokettu\Random\Unsigned\Internal as i;
 
     /**
      * @internal

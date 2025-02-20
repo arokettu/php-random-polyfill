@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned\Tests;
+namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
-use function Arokettu\Unsigned\from_base;
-use function Arokettu\Unsigned\from_dec;
-use function Arokettu\Unsigned\from_hex;
-use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\to_base;
-use function Arokettu\Unsigned\to_dec;
-use function Arokettu\Unsigned\to_hex;
-use function Arokettu\Unsigned\to_int;
-use function Arokettu\Unsigned\to_signed_int;
+use function Arokettu\Random\Unsigned\from_base;
+use function Arokettu\Random\Unsigned\from_dec;
+use function Arokettu\Random\Unsigned\from_hex;
+use function Arokettu\Random\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\to_base;
+use function Arokettu\Random\Unsigned\to_dec;
+use function Arokettu\Random\Unsigned\to_hex;
+use function Arokettu\Random\Unsigned\to_int;
+use function Arokettu\Random\Unsigned\to_signed_int;
 
 class ImportExportTest extends TestCase
 {

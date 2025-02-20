@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned\Tests;
+namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
-use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\is_bit_set;
-use function Arokettu\Unsigned\set_bit;
-use function Arokettu\Unsigned\to_int;
-use function Arokettu\Unsigned\unset_bit;
+use function Arokettu\Random\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\is_bit_set;
+use function Arokettu\Random\Unsigned\set_bit;
+use function Arokettu\Random\Unsigned\to_int;
+use function Arokettu\Random\Unsigned\unset_bit;
 
 class BitsTest extends TestCase
 {

@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Arokettu\Unsigned\Tests;
+namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
-use function Arokettu\Unsigned\add_int;
-use function Arokettu\Unsigned\div_int;
-use function Arokettu\Unsigned\div_mod_int;
-use function Arokettu\Unsigned\from_hex;
-use function Arokettu\Unsigned\from_int;
-use function Arokettu\Unsigned\mod_int;
-use function Arokettu\Unsigned\mul_int;
-use function Arokettu\Unsigned\sub_int;
-use function Arokettu\Unsigned\sub_int_rev;
-use function Arokettu\Unsigned\to_dec;
-use function Arokettu\Unsigned\to_hex;
-use function Arokettu\Unsigned\to_int;
+use function Arokettu\Random\Unsigned\add_int;
+use function Arokettu\Random\Unsigned\div_int;
+use function Arokettu\Random\Unsigned\div_mod_int;
+use function Arokettu\Random\Unsigned\from_hex;
+use function Arokettu\Random\Unsigned\from_int;
+use function Arokettu\Random\Unsigned\mod_int;
+use function Arokettu\Random\Unsigned\mul_int;
+use function Arokettu\Random\Unsigned\sub_int;
+use function Arokettu\Random\Unsigned\sub_int_rev;
+use function Arokettu\Random\Unsigned\to_dec;
+use function Arokettu\Random\Unsigned\to_hex;
+use function Arokettu\Random\Unsigned\to_int;
 
 class ArithmeticIntTest extends TestCase
 {
