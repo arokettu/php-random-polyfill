@@ -5,6 +5,13 @@
 
 ## 1.x
 
+### 1.0.3 "The Final"
+
+*Feb 20, 2025*
+
+* Inline arokettu/unsigned
+* Unlock the upper PHP version because the lib will fall back to the native ext-random in 8.2+ anyway
+
 ### 1.0.2
 
 *Sep 7, 2023*
