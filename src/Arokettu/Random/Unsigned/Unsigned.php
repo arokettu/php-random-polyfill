@@ -9,6 +9,9 @@
 
 declare(strict_types=1);
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
 namespace Arokettu\Random\Unsigned;
 
 /**
@@ -684,11 +687,11 @@ final class Unsigned
     /**
      * @internal
      */
-    const _ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';
+    private const _ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';
     /**
      * @internal
      */
-    const _DIGIT_VALUE = [
+    private const _DIGIT_VALUE = [
         0 => 0, 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 'a' => 10, 'b' => 11, 'c' => 12,
         'd' => 13, 'e' => 14, 'f' => 15, 'g' => 16, 'h' => 17, 'i' => 18, 'j' => 19, 'k' => 20, 'l' => 21, 'm' => 22,
         'n' => 23, 'o' => 24, 'p' => 25, 'q' => 26, 'r' => 27, 's' => 28, 't' => 29, 'u' => 30, 'v' => 31, 'w' => 32,
@@ -699,17 +702,17 @@ final class Unsigned
      * @internal
      * Max integer that can be added to a byte without overflowing
      */
-    const _MAX_ADD = \PHP_INT_MAX - 255;
+    private const _MAX_ADD = \PHP_INT_MAX - 255;
     /**
      * @internal
      * Max integer that can be multiplied by a byte without overflowing (+ carry)
      */
-    const _MAX_MUL = (\PHP_INT_MAX >> 8) + 1;
+    private const _MAX_MUL = (\PHP_INT_MAX >> 8) + 1;
     /**
      * @internal
      * Max dividend that can be shifted by a byte length without overflowing
      */
-    const _MAX_DIV = \PHP_INT_MAX >> 8;
+    private const _MAX_DIV = \PHP_INT_MAX >> 8;
 
     /**
      * @internal
