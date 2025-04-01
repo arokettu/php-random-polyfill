@@ -43,7 +43,7 @@ The library itself.
 PHP
 ===
 
-The library includes code taken from the PHP 8.1.0 beta 1 and rewritten from C to PHP.
+The library includes code taken from the PHP 8.2.0 beta 1 and rewritten from C to PHP.
 
 PHP is distributed under the PHP License.
 
