@@ -21,7 +21,7 @@ use function Arokettu\Random\Unsigned\to_int;
 
 class ArithmeticIntTest extends TestCase
 {
-    public function testSum()
+    public function testSum(): void
     {
         // normal
         self::assertEquals(
@@ -50,7 +50,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testAddOverlfow64()
+    public function testAddOverlfow64(): void
     {
         if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped();
@@ -77,7 +77,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testAddOverlfow32()
+    public function testAddOverlfow32(): void
     {
         $maxAdd = 2147483392;
         $overflow = 2147483393;
@@ -100,7 +100,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testSub()
+    public function testSub(): void
     {
         // normal
         self::assertEquals(
@@ -119,7 +119,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testSubRev()
+    public function testSubRev(): void
     {
         // normal
         self::assertEquals(
@@ -138,7 +138,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testMul()
+    public function testMul(): void
     {
         // normal
         self::assertEquals(
@@ -182,7 +182,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testMulOverflow64()
+    public function testMulOverflow64(): void
     {
         if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped();
@@ -201,7 +201,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testMulOverflow32()
+    public function testMulOverflow32(): void
     {
         $maxMul = 0x800000;
         $overflow = 0x800001;
@@ -216,7 +216,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testDiv()
+    public function testDiv(): void
     {
         self::assertEquals(\intdiv(123456, 1000), to_int(div_int(from_int(123456, 8), 1000)));
         self::assertEquals(\intdiv(123456, 1), to_int(div_int(from_int(123456, 8), 1)));
@@ -225,7 +225,7 @@ class ArithmeticIntTest extends TestCase
         self::assertEquals(\intdiv(123456, 123456), to_int(div_int(from_int(123456, 8), 123456)));
     }
 
-    public function testDivNoZero()
+    public function testDivNoZero(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Division by zero');
@@ -233,7 +233,7 @@ class ArithmeticIntTest extends TestCase
         div_int(from_int(123456, 8), 0);
     }
 
-    public function testDivNoNeg()
+    public function testDivNoNeg(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$b must be greater than zero. Use div($a, from_int($b)) for unsigned logic');
@@ -241,7 +241,7 @@ class ArithmeticIntTest extends TestCase
         div_int(from_int(123456, 8), -2);
     }
 
-    public function testMod()
+    public function testMod(): void
     {
         self::assertEquals(123456 % 1000, mod_int(from_int(123456, 8), 1000));
         self::assertEquals(123456 % 1, mod_int(from_int(123456, 8), 1));
@@ -259,7 +259,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testModOverflow64()
+    public function testModOverflow64(): void
     {
         if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped();
@@ -285,7 +285,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testDivMod()
+    public function testDivMod(): void
     {
         self::assertEquals(
             div_mod_int(from_int(123456, 8), 1000)[1],
@@ -317,7 +317,7 @@ class ArithmeticIntTest extends TestCase
         );
     }
 
-    public function testDivModNoNeg()
+    public function testDivModNoNeg(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$b must be greater than zero. Use div_mod($a, from_int($b)) for unsigned logic');
@@ -325,7 +325,7 @@ class ArithmeticIntTest extends TestCase
         div_mod_int(from_int(123456, 8), -2);
     }
 
-    public function testDivModFromUuid()
+    public function testDivModFromUuid(): void
     {
         $a = from_hex('200000000000011', 8);
         $b = 10000000;
@@ -339,7 +339,7 @@ class ArithmeticIntTest extends TestCase
         self::assertEquals(5855889, mod_int($a, $b));
     }
 
-    public function testDivModFromUuid2()
+    public function testDivModFromUuid2(): void
     {
         $a = from_hex('1ee9537cf605180', 8);
         $b = 10000000;
@@ -353,7 +353,7 @@ class ArithmeticIntTest extends TestCase
         self::assertEquals(0, mod_int($a, $b));
     }
 
-    public function testDivModFromUuid2SameCaseButFor64Bit()
+    public function testDivModFromUuid2SameCaseButFor64Bit(): void
     {
         if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped();
@@ -371,7 +371,7 @@ class ArithmeticIntTest extends TestCase
         self::assertEquals(0, mod_int($a, $b));
     }
 
-    public function testDivModBigButBFits()
+    public function testDivModBigButBFits(): void
     {
         if (\PHP_INT_SIZE < 8) {
             $this->markTestSkipped();
@@ -389,7 +389,7 @@ class ArithmeticIntTest extends TestCase
         self::assertEquals(0, mod_int($a, $b));
     }
 
-    public function testModNoZero()
+    public function testModNoZero(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Modulo by zero');
@@ -397,7 +397,7 @@ class ArithmeticIntTest extends TestCase
         mod_int(from_int(123456, 8), 0);
     }
 
-    public function testModNoNeg()
+    public function testModNoNeg(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$b must be greater than zero. Use mod($a, from_int($b)) for unsigned logic');

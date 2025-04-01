@@ -21,7 +21,7 @@ use function Arokettu\Random\Unsigned\to_int;
 
 class ArithmeticTest extends TestCase
 {
-    public function testSum()
+    public function testSum(): void
     {
         // normal
         self::assertEquals(
@@ -35,7 +35,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testSumDifferentSizes()
+    public function testSumDifferentSizes(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Arguments must be the same size, 1 and 2 bytes given');
@@ -43,7 +43,7 @@ class ArithmeticTest extends TestCase
         add("\0", "\0\0");
     }
 
-    public function testSub()
+    public function testSub(): void
     {
         // normal
         self::assertEquals(
@@ -57,7 +57,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testNeg()
+    public function testNeg(): void
     {
         // something that converts to int
         self::assertEquals(
@@ -76,7 +76,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testSubDifferentSizes()
+    public function testSubDifferentSizes(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Arguments must be the same size, 1 and 2 bytes given');
@@ -84,7 +84,7 @@ class ArithmeticTest extends TestCase
         sub("\0", "\0\0");
     }
 
-    public function testMul()
+    public function testMul(): void
     {
         // normal
         self::assertEquals(
@@ -132,7 +132,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testMul32()
+    public function testMul32(): void
     {
         $_raw_mul32 = \Closure::bind(function (string $a, string $b, int $sizeof): string {
             return Unsigned::_raw_mul32($a, $b, $sizeof);
@@ -192,7 +192,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testMulDifferentSizes()
+    public function testMulDifferentSizes(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Arguments must be the same size, 1 and 2 bytes given');
@@ -200,7 +200,7 @@ class ArithmeticTest extends TestCase
         mul("\0", "\0\0");
     }
 
-    public function testDiv()
+    public function testDiv(): void
     {
         self::assertEquals(\intdiv(123456, 1000), to_int(div(from_int(123456, 8), from_int(1000, 8))));
         self::assertEquals(\intdiv(123456, 1), to_int(div(from_int(123456, 8), from_int(1, 8))));
@@ -297,7 +297,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testDivDifferentSizes()
+    public function testDivDifferentSizes(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Arguments must be the same size, 1 and 2 bytes given');
@@ -305,7 +305,7 @@ class ArithmeticTest extends TestCase
         div("\0", "\0\0");
     }
 
-    public function testDivNoZero()
+    public function testDivNoZero(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Division by zero');
@@ -313,7 +313,7 @@ class ArithmeticTest extends TestCase
         div(from_int(123456, 8), from_int(0, 8));
     }
 
-    public function testMod()
+    public function testMod(): void
     {
         self::assertEquals(123456 % 1000, to_int(mod(from_int(123456, 8), from_int(1000, 8))));
         self::assertEquals(123456 % 1, to_int(mod(from_int(123456, 8), from_int(1, 8))));
@@ -382,7 +382,7 @@ class ArithmeticTest extends TestCase
         );
     }
 
-    public function testModNoZero()
+    public function testModNoZero(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('Modulo by zero');
@@ -390,7 +390,7 @@ class ArithmeticTest extends TestCase
         mod(from_int(123456, 8), from_int(0, 8));
     }
 
-    public function testModDifferentSizes()
+    public function testModDifferentSizes(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Arguments must be the same size, 1 and 2 bytes given');
@@ -398,7 +398,7 @@ class ArithmeticTest extends TestCase
         mod("\0", "\0\0");
     }
 
-    public function testDivMod()
+    public function testDivMod(): void
     {
 //        self::assertEquals(123456 % 1000, to_int(mod(from_int(123456, 8), from_int(1000, 8)))));
         self::assertEquals(123456 % 1, to_int(div_mod(from_int(123456, 8), from_int(1, 8))[1]));

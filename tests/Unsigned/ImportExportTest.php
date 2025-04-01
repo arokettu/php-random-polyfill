@@ -19,7 +19,7 @@ use function Arokettu\Random\Unsigned\to_signed_int;
 
 class ImportExportTest extends TestCase
 {
-    public function testFromInt()
+    public function testFromInt(): void
     {
         // target below PHP_INT_SIZE
 
@@ -53,13 +53,13 @@ class ImportExportTest extends TestCase
         self::assertEquals("\0\0\0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff", from_int(-0x1000000, 16));
     }
 
-    public function testFromIntTruncate()
+    public function testFromIntTruncate(): void
     {
         self::assertEquals(1193046 & 65535, to_int(from_int(1193046, 2)));
         self::assertEquals(-6636321 & 65535, to_int(from_int(-6636321, 2)));
     }
 
-    public function testToInt()
+    public function testToInt(): void
     {
         self::assertEquals(0x123, to_int("\x23\x01"));
         self::assertEquals(\PHP_INT_MAX, to_int(from_int(\PHP_INT_MAX, \PHP_INT_SIZE)));
@@ -67,7 +67,7 @@ class ImportExportTest extends TestCase
         self::assertEquals(-1 & \PHP_INT_MAX >> 7, to_int(from_int(-1, \PHP_INT_SIZE - 1)));
     }
 
-    public function testToIntTooBig()
+    public function testToIntTooBig(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('The value is larger than PHP integer');
@@ -75,7 +75,7 @@ class ImportExportTest extends TestCase
         to_int(\str_repeat("\xff", \PHP_INT_SIZE + 1));
     }
 
-    public function testToIntTooBigNeg()
+    public function testToIntTooBigNeg(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('The value is larger than PHP integer');
@@ -84,7 +84,7 @@ class ImportExportTest extends TestCase
         to_int(from_int(-1, \PHP_INT_SIZE));
     }
 
-    public function testToSigned()
+    public function testToSigned(): void
     {
         self::assertEquals(0, to_signed_int(from_int(0, \PHP_INT_SIZE)));
         self::assertEquals(1, to_signed_int(from_int(1, \PHP_INT_SIZE)));
@@ -95,7 +95,7 @@ class ImportExportTest extends TestCase
         self::assertEquals(\PHP_INT_MIN, to_signed_int(from_int(\PHP_INT_MIN, \PHP_INT_SIZE)));
     }
 
-    public function testFromHex()
+    public function testFromHex(): void
     {
         // exact
         self::assertEquals("\x23\x01", from_hex('0123', 2));
@@ -107,19 +107,19 @@ class ImportExportTest extends TestCase
         self::assertEquals("\x23\x01\x00\x00", from_hex('123', 4));
     }
 
-    public function testToHex()
+    public function testToHex(): void
     {
         self::assertEquals('000123', to_hex(from_int(0x123, 3)));
     }
 
-    public function testFromDec()
+    public function testFromDec(): void
     {
         self::assertEquals(123456789, to_int(from_dec('123456789', 16)));
         self::assertEquals(123456789 & 255 /*21*/, to_int(from_dec('123456789', 1)));
         self::assertEquals(0, to_int(from_dec('0', 16)));
     }
 
-    public function testFromDecOnlyDigits()
+    public function testFromDecOnlyDigits(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$value contains invalid digits');
@@ -127,7 +127,7 @@ class ImportExportTest extends TestCase
         from_dec('abc', 16);
     }
 
-    public function testToDec()
+    public function testToDec(): void
     {
         self::assertEquals('123456789', to_dec(from_int(123456789, 16)));
         self::assertEquals('21', to_dec(from_int(123456789, 1)));
@@ -135,7 +135,7 @@ class ImportExportTest extends TestCase
         self::assertEquals('340282366920938463463374607431768211455', to_dec(from_int(-1, 16)));
     }
 
-    public function testToBase()
+    public function testToBase(): void
     {
         $num = from_int(123, 3);
 
@@ -149,7 +149,7 @@ class ImportExportTest extends TestCase
         self::assertEquals('3f', to_base($num, 36));
     }
 
-    public function testToBaseMax()
+    public function testToBaseMax(): void
     {
         $num = from_int(-1, 3);
 
@@ -163,7 +163,7 @@ class ImportExportTest extends TestCase
         self::assertEquals('9zldr', to_base($num, 36));
     }
 
-    public function testToBase16()
+    public function testToBase16(): void
     {
         $num = from_int(31415926, 8);
 
@@ -173,7 +173,7 @@ class ImportExportTest extends TestCase
         self::assertEquals('0000000001df5e76', to_hex($num));
     }
 
-    public function testToBaseInvalid()
+    public function testToBaseInvalid(): void
     {
         $num = from_int(-1, 3);
 
@@ -183,7 +183,7 @@ class ImportExportTest extends TestCase
         to_base($num, 37);
     }
 
-    public function testFromBase()
+    public function testFromBase(): void
     {
         $num = \bin2hex(from_int(-1, 3));
 
@@ -197,7 +197,7 @@ class ImportExportTest extends TestCase
         self::assertEquals($num, \bin2hex(from_base('9zldr', 36, 3)));
     }
 
-    public function testFromBaseInvalidBase()
+    public function testFromBaseInvalidBase(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$base must be between 2 and 36');
@@ -205,7 +205,7 @@ class ImportExportTest extends TestCase
         from_base('111121111', 1, 3);
     }
 
-    public function testFromBaseInvalidDigits2()
+    public function testFromBaseInvalidDigits2(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$value contains invalid digits');
@@ -213,7 +213,7 @@ class ImportExportTest extends TestCase
         from_base('111121111', 2, 3);
     }
 
-    public function testFromBaseInvalidDigits10()
+    public function testFromBaseInvalidDigits10(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$value contains invalid digits');
@@ -221,7 +221,7 @@ class ImportExportTest extends TestCase
         from_base('1111a1111', 2, 3);
     }
 
-    public function testFromBaseInvalidDigits36()
+    public function testFromBaseInvalidDigits36(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$value contains invalid digits');
@@ -229,7 +229,7 @@ class ImportExportTest extends TestCase
         from_base('1111?111', 2, 3);
     }
 
-    public function testFitsIntoInt()
+    public function testFitsIntoInt(): void
     {
         self::assertTrue(fits_into_int("\0"));
 

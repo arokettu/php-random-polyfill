@@ -12,7 +12,7 @@ use function Arokettu\Random\Unsigned\to_int;
 
 class OverflowRegressionTest extends TestCase
 {
-    public function testMulGeneric32()
+    public function testMulGeneric32(): void
     {
         // error on 32 bit platforms
 

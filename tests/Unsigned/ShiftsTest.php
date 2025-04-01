@@ -12,7 +12,7 @@ use function Arokettu\Random\Unsigned\shift_right;
 
 class ShiftsTest extends TestCase
 {
-    public function testLeftShift()
+    public function testLeftShift(): void
     {
         $num = from_int(-1, \PHP_INT_SIZE);
 
@@ -21,7 +21,7 @@ class ShiftsTest extends TestCase
         }
     }
 
-    public function testRightShift()
+    public function testRightShift(): void
     {
         $num = from_int(\PHP_INT_MAX, \PHP_INT_SIZE);
 
@@ -30,7 +30,7 @@ class ShiftsTest extends TestCase
         }
     }
 
-    public function testNonNegLeftShift()
+    public function testNonNegLeftShift(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$shift must be non negative');
@@ -38,7 +38,7 @@ class ShiftsTest extends TestCase
         shift_left("\0", -1);
     }
 
-    public function testNonNegRightShift()
+    public function testNonNegRightShift(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$shift must be non negative');

@@ -14,7 +14,7 @@ use function Arokettu\Random\Unsigned\unset_bit;
 
 class BitsTest extends TestCase
 {
-    public function testIsSetBit()
+    public function testIsSetBit(): void
     {
         $bits = 0b1111000011001100;
         $a = from_int($bits, 8);
@@ -28,7 +28,7 @@ class BitsTest extends TestCase
         self::assertFalse(is_bit_set($a, 53));
     }
 
-    public function testIsSetBitAllBits()
+    public function testIsSetBitAllBits(): void
     {
         $bits = 0b1111111111111111;
         $a = from_int($bits, 2);
@@ -45,7 +45,7 @@ class BitsTest extends TestCase
         }
     }
 
-    public function testIsSetBitUnderflow()
+    public function testIsSetBitUnderflow(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Bit must be in range 0-63');
@@ -53,7 +53,7 @@ class BitsTest extends TestCase
         is_bit_set(from_int(0b1111000011001100, 8), -2);
     }
 
-    public function testIsSetBitOverflow()
+    public function testIsSetBitOverflow(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Bit must be in range 0-63');
@@ -61,7 +61,7 @@ class BitsTest extends TestCase
         is_bit_set(from_int(0b1111000011001100, 8), 100);
     }
 
-    public function testSetBit()
+    public function testSetBit(): void
     {
         $bits = 0b1111000011001100;
         $a = from_int($bits, 8);
@@ -73,7 +73,7 @@ class BitsTest extends TestCase
         self::assertEquals($bits | 1 << 9, to_int(set_bit($a, 9)));
     }
 
-    public function testSetBitUnderflow()
+    public function testSetBitUnderflow(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Bit must be in range 0-63');
@@ -81,7 +81,7 @@ class BitsTest extends TestCase
         set_bit(from_int(0b1111000011001100, 8), -2);
     }
 
-    public function testSetBitOverflow()
+    public function testSetBitOverflow(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Bit must be in range 0-63');
@@ -89,7 +89,7 @@ class BitsTest extends TestCase
         set_bit(from_int(0b1111000011001100, 8), 100);
     }
 
-    public function testUnsetBit()
+    public function testUnsetBit(): void
     {
         $bits = 0b1111000011001100;
         $a = from_int($bits, 8);
@@ -101,7 +101,7 @@ class BitsTest extends TestCase
         self::assertEquals($bits, to_int(unset_bit($a, 9)));
     }
 
-    public function testUnsetBitUnderflow()
+    public function testUnsetBitUnderflow(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Bit must be in range 0-63');
@@ -109,7 +109,7 @@ class BitsTest extends TestCase
         unset_bit(from_int(0b1111000011001100, 8), -2);
     }
 
-    public function testUnsetBitOverflow()
+    public function testUnsetBitOverflow(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Bit must be in range 0-63');
