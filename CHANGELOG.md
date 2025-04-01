@@ -5,6 +5,12 @@
 
 ## 1.x
 
+### 1.0.4 "The Final"_final
+
+*Apr 1, 2025*
+
+* Upgraded embedded arokettu/unsigned to 1.3.6, a more future-proof version 
+
 ### 1.0.3 "The Final"
 
 *Feb 20, 2025*
