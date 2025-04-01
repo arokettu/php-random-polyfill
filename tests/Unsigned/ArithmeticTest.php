@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\Unsigned;
 
+use Arokettu\Random\Unsigned\Unsigned;
 use PHPUnit\Framework\TestCase;
 
 use function Arokettu\Random\Unsigned\add;
@@ -11,7 +12,6 @@ use function Arokettu\Random\Unsigned\div;
 use function Arokettu\Random\Unsigned\div_mod;
 use function Arokettu\Random\Unsigned\from_hex;
 use function Arokettu\Random\Unsigned\from_int;
-use function Arokettu\Random\Unsigned\Internal\_raw_mul32;
 use function Arokettu\Random\Unsigned\mod;
 use function Arokettu\Random\Unsigned\mul;
 use function Arokettu\Random\Unsigned\neg;
@@ -134,44 +134,48 @@ class ArithmeticTest extends TestCase
 
     public function testMul32()
     {
+        $_raw_mul32 = \Closure::bind(function (string $a, string $b, int $sizeof): string {
+            return Unsigned::_raw_mul32($a, $b, $sizeof);
+        }, null, Unsigned::class);
+
         // normal
         self::assertEquals(
             11111 * 11111,
-            to_int(_raw_mul32(from_int(11111, \PHP_INT_SIZE), from_int(11111, \PHP_INT_SIZE), \PHP_INT_SIZE))
+            to_int($_raw_mul32(from_int(11111, \PHP_INT_SIZE), from_int(11111, \PHP_INT_SIZE), \PHP_INT_SIZE))
         );
         //overflow
         self::assertEquals(
             (11111 * 11111) & 65535,
-            to_int(_raw_mul32(from_int(11111, 2), from_int(11111, 2), 2))
+            to_int($_raw_mul32(from_int(11111, 2), from_int(11111, 2), 2))
         );
         // 0
         self::assertEquals(
             0,
-            to_int(_raw_mul32(from_int(11111, 2), from_int(0, 2), 2))
+            to_int($_raw_mul32(from_int(11111, 2), from_int(0, 2), 2))
         );
         // 1
         self::assertEquals(
             11111,
-            to_int(_raw_mul32(from_int(11111, 2), from_int(1, 2), 2))
+            to_int($_raw_mul32(from_int(11111, 2), from_int(1, 2), 2))
         );
         // -1
         self::assertEquals(
             from_int(-11111, 2),
-            _raw_mul32(from_int(11111, 2), from_int(-1, 2), 2)
+            $_raw_mul32(from_int(11111, 2), from_int(-1, 2), 2)
         );
         // $a does not fit into int
         self::assertEquals(
             '01234566666666666666666666654321',
-            to_hex(_raw_mul32(from_hex('11111111111111111111111111', 16), from_hex('111111', 16), 16))
+            to_hex($_raw_mul32(from_hex('11111111111111111111111111', 16), from_hex('111111', 16), 16))
         );
         // both don't fit
         self::assertEquals(
             '01234566666666666666666666654321',
-            to_hex(_raw_mul32(from_hex('11111111111111111111111111', 16), from_hex('111111', 16), 16))
+            to_hex($_raw_mul32(from_hex('11111111111111111111111111', 16), from_hex('111111', 16), 16))
         );
         self::assertEquals(
             '56789aba987654320fedcba987654321',
-            to_hex(_raw_mul32(
+            to_hex($_raw_mul32(
                 from_hex('11111111111111111111111111', 16),
                 from_hex('11111111111111111111111111', 16),
                 16
@@ -180,7 +184,7 @@ class ArithmeticTest extends TestCase
         // infinite recursion detected
         self::assertEquals(
             1,
-            to_int(_raw_mul32(
+            to_int($_raw_mul32(
                 from_int(\PHP_INT_MAX, \PHP_INT_SIZE),
                 from_int(\PHP_INT_MAX, \PHP_INT_SIZE),
                 \PHP_INT_SIZE

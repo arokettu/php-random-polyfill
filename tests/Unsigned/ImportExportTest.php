@@ -6,6 +6,7 @@ namespace Arokettu\Random\Tests\Unsigned;
 
 use PHPUnit\Framework\TestCase;
 
+use function Arokettu\Random\Unsigned\fits_into_int;
 use function Arokettu\Random\Unsigned\from_base;
 use function Arokettu\Random\Unsigned\from_dec;
 use function Arokettu\Random\Unsigned\from_hex;
@@ -226,5 +227,22 @@ class ImportExportTest extends TestCase
         $this->expectExceptionMessage('$value contains invalid digits');
 
         from_base('1111?111', 2, 3);
+    }
+
+    public function testFitsIntoInt()
+    {
+        self::assertTrue(fits_into_int("\0"));
+
+        self::assertTrue(fits_into_int("\1\1\1\1")); // fits in 32
+        self::assertEquals(\PHP_INT_SIZE > 4, fits_into_int("\1\1\1\1\1")); // fits in 64 , doesn't in 32
+        self::assertEquals(\PHP_INT_SIZE > 4, fits_into_int("\1\1\1\xff")); // fits in 64 , doesn't in 32
+
+        if (\PHP_INT_SIZE > 8) {
+            throw new \LogicException('The future arrived! Update tests!');
+        }
+
+        self::assertEquals(\PHP_INT_SIZE > 4, fits_into_int("\1\1\1\1\1\1\1\1")); // fits in 64 , doesn't in 32
+        self::assertFalse(fits_into_int("\1\1\1\1\1\1\1\1\1"));
+        self::assertFalse(fits_into_int("\1\1\1\1\1\1\1\xff"));
     }
 }
