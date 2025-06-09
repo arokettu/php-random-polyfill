@@ -3,6 +3,14 @@
 [gh@TimWolla]: https://github.com/TimWolla
 [gh@nicolas-grekas]: https://github.com/nicolas-grekas
 
+## Special
+
+### 1.99.0
+
+*Sep 2, 2022*
+
+A special empty version to be installed on PHP >= 8.2.
+
 ## 1.x
 
 ### 1.0.4 "The Final"_final
