@@ -1,10 +1,11 @@
 <?php
 
 /**
- * @copyright Copyright © 2022 Anton Smirnov
+ * @copyright 2022 Anton Smirnov
  * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
  *
  * Includes adaptation of C code from the PHP Interpreter
+ * @copyright 1999-2022 The PHP Group. All rights reserved.
  * @license PHP-3.01 https://spdx.org/licenses/PHP-3.01.html
  * @see https://github.com/php/php-src/blob/master/ext/random/engine_pcgoneseq128xslrr64.c
  *
