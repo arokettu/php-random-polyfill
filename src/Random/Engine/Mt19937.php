@@ -238,7 +238,7 @@ final class Mt19937 implements Engine, Serializable
      */
     private function getStates(): array
     {
-        $states = \array_map(function ($state) {
+        $states = \array_map(static function ($state) {
             return \bin2hex(self::$math->toBinary($state));
         }, $this->state);
         $states[] = $this->stateCount;

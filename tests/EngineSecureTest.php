@@ -43,9 +43,9 @@ final class EngineSecureTest extends TestCase
 
     public function testNonCloneable(): void
     {
+        $s = new Secure();
         try {
-            $s = new Secure();
-            $s2 = clone $s;
+            clone $s;
         } catch (\Throwable $e) {
             self::assertEquals('Trying to clone an uncloneable object of class Random\Engine\Secure', $e->getMessage());
             self::assertEquals(\Error::class, \get_class($e));

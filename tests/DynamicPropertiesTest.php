@@ -55,6 +55,7 @@ final class DynamicPropertiesTest extends TestCase
         $r = new Randomizer();
         self::assertNull(@$r->test);
         $x = \strval($r->test); // trigger warning
+        self::assertNull($x);
     }
 
     public function testRandomizerIsset(): void

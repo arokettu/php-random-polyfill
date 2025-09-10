@@ -80,7 +80,7 @@ final class Xoshiro256StarStarSeedTest extends TestCase
     public function testSeedZeros(): void
     {
         try {
-            $engine = new Xoshiro256StarStar(\str_repeat("\x00", 32));
+            new Xoshiro256StarStar(\str_repeat("\x00", 32));
         } catch (Throwable $e) {
             self::assertEquals(
                 'Random\Engine\Xoshiro256StarStar::__construct():' .

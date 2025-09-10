@@ -32,7 +32,7 @@ final class SerializeDisallowedTest extends TestCase
         $randomizer->getInt(\PHP_INT_MIN, \PHP_INT_MAX);
 
         try {
-            $randomizer2 = \unserialize(@\serialize($randomizer));
+            \unserialize(@\serialize($randomizer));
         } catch (Throwable $e) {
             self::assertEquals(
                 "Serialization of 'Random\Engine\Secure' is not allowed",
