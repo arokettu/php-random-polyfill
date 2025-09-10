@@ -23,7 +23,7 @@ use ValueError;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/xoshiro256starstar_seed.phpt
  */
-class Xoshiro256StarStarSeedTest extends TestCase
+final class Xoshiro256StarStarSeedTest extends TestCase
 {
     public function testSeedInt(): void
     {

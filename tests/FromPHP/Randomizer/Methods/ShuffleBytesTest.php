@@ -24,7 +24,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/shuffleBytes.phpt
  */
-class ShuffleBytesTest extends TestCase
+final class ShuffleBytesTest extends TestCase
 {
     private function sortBytes(string $bytes): string
     {

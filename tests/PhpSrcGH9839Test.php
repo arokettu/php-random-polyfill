@@ -17,7 +17,7 @@ use Random\Randomizer;
  * @see https://github.com/php/php-src/pull/9839
  * @see https://github.com/arokettu/php-random-polyfill/issues/4#issuecomment-1293353629
  */
-class PhpSrcGH9839Test extends TestCase
+final class PhpSrcGH9839Test extends TestCase
 {
     // just so we don't break the regular algo
     public function testShuffleBytes(): void

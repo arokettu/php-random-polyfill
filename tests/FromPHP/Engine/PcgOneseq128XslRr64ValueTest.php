@@ -19,7 +19,7 @@ use Random\Engine\PcgOneseq128XslRr64;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/pcgoneseq128xslrr64_value.phpt
  */
-class PcgOneseq128XslRr64ValueTest extends TestCase
+final class PcgOneseq128XslRr64ValueTest extends TestCase
 {
     public function testValue(): void
     {

@@ -18,7 +18,7 @@ use Random\Engine;
 /**
  * https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getBytes_expansion.phpt
  */
-class GetBytesExpansionEngine implements Engine
+final class GetBytesExpansionEngine implements Engine
 {
     /** @var int */
     private $count = 0;

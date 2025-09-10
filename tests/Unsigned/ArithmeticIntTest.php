@@ -24,7 +24,7 @@ use function Arokettu\Random\Unsigned\to_dec;
 use function Arokettu\Random\Unsigned\to_hex;
 use function Arokettu\Random\Unsigned\to_int;
 
-class ArithmeticIntTest extends TestCase
+final class ArithmeticIntTest extends TestCase
 {
     public function testSum(): void
     {

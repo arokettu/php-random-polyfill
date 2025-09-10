@@ -14,7 +14,7 @@ use Random\Engine\Secure;
 use Random\Randomizer;
 use RuntimeException;
 
-class EngineSecureTest extends TestCase
+final class EngineSecureTest extends TestCase
 {
     public function testWorks(): void
     {

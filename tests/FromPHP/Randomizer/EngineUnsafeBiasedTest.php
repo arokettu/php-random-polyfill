@@ -23,7 +23,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/engine_unsafe_biased.phpt
  */
-class EngineUnsafeBiasedTest extends TestCase
+final class EngineUnsafeBiasedTest extends TestCase
 {
     public function testHeavilyBiasedEngineGetInt(): void
     {

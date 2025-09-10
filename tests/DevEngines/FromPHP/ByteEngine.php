@@ -8,6 +8,7 @@
  * @copyright 1999-2012 The PHP Group. All rights reserved.
  * @license PHP-3.01 https://spdx.org/licenses/PHP-3.01.html
  */
+
 declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\DevEngines\FromPHP;
@@ -18,7 +19,7 @@ use Random\Engine;
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt_expansion_32.phpt
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt_expansion_64.phpt
  */
-class ByteEngine implements Engine
+final class ByteEngine implements Engine
 {
     /** @var int */
     public $count = 0;

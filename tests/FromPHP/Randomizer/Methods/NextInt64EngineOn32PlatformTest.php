@@ -21,7 +21,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/nextInt_64_engine_on_32_platform.phpt
  */
-class NextInt64EngineOn32PlatformTest extends TestCase
+final class NextInt64EngineOn32PlatformTest extends TestCase
 {
     public function testNextIntError(): void
     {

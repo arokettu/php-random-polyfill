@@ -19,7 +19,7 @@ use Random\Engine\Xoshiro256StarStar;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/xoshiro256starstar_value.phpt
  */
-class Xoshiro256StarStarValueTest extends TestCase
+final class Xoshiro256StarStarValueTest extends TestCase
 {
     public function testValue(): void
     {

@@ -15,7 +15,7 @@ use Random\Engine\PcgOneseq128XslRr64;
 use RuntimeException;
 use Throwable;
 
-class EnginePcgOneseq128XslRr64Test extends TestCase
+final class EnginePcgOneseq128XslRr64Test extends TestCase
 {
     public function testSeedInt(): void
     {

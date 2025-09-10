@@ -22,7 +22,7 @@ use Random\Engine\Xoshiro256StarStar;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/user_compatibility.phpt
  */
-class UserCompatibilityTest extends TestCase
+final class UserCompatibilityTest extends TestCase
 {
     public function testWrapperCompatible(): void
     {

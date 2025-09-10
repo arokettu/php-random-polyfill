@@ -20,7 +20,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/compatibility_mt_rand.phpt
  */
-class CompatibilityMtRandTest extends TestCase
+final class CompatibilityMtRandTest extends TestCase
 {
     public function testCompatibility(): void
     {

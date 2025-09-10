@@ -24,7 +24,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/shuffleArray.phpt
  */
-class ShuffleArrayTest extends TestCase
+final class ShuffleArrayTest extends TestCase
 {
     public function testShuffleArray(): void
     {

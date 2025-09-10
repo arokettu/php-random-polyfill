@@ -20,7 +20,7 @@ use Throwable;
  * Modified to test 64 branch
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/engine_unsafe_biased.phpt
  */
-class EngineUnsafeBiased64Test extends TestCase
+final class EngineUnsafeBiased64Test extends TestCase
 {
     public function testHeavilyBiasedEngineGetInt(): void
     {

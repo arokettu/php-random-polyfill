@@ -15,7 +15,7 @@ use function Arokettu\Random\Unsigned\from_int;
 use function Arokettu\Random\Unsigned\shift_left;
 use function Arokettu\Random\Unsigned\shift_right;
 
-class ShiftsTest extends TestCase
+final class ShiftsTest extends TestCase
 {
     public function testLeftShift(): void
     {

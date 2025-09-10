@@ -22,7 +22,7 @@ use ValueError;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/pcgoneseq128xslrr64_jump_error.phpt
  */
-class PcgOneseq128XslRr64JumpErrorTest extends TestCase
+final class PcgOneseq128XslRr64JumpErrorTest extends TestCase
 {
     public function testNoNegJump(): void
     {

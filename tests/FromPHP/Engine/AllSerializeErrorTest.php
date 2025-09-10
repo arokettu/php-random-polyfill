@@ -21,7 +21,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/all_serialize_error.phpt
  */
-class AllSerializeErrorTest extends TestCase
+final class AllSerializeErrorTest extends TestCase
 {
     public function testMt19937MalformedHex(): void
     {

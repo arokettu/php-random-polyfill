@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use function Arokettu\Random\Unsigned\compare;
 use function Arokettu\Random\Unsigned\from_int;
 
-class CompareTest extends TestCase
+final class CompareTest extends TestCase
 {
     public function testCompare(): void
     {

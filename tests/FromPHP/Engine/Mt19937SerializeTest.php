@@ -19,7 +19,7 @@ use Random\Engine\Mt19937;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/mt19937_serialize.phpt
  */
-class Mt19937SerializeTest extends TestCase
+final class Mt19937SerializeTest extends TestCase
 {
     public function testSerialize(): void
     {

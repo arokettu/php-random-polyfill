@@ -20,7 +20,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt_expansion_64.phpt
  */
-class GetIntExpansion64Test extends TestCase
+final class GetIntExpansion64Test extends TestCase
 {
     public function testGetInt(): void
     {

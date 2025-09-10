@@ -24,7 +24,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt.phpt
  */
-class GetIntTest extends TestCase
+final class GetIntTest extends TestCase
 {
     public function testGetInt(): void
     {

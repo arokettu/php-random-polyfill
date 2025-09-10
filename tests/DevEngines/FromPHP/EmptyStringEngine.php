@@ -18,7 +18,7 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/engine_unsafe_empty_string.phpt
  */
-class EmptyStringEngine implements Engine
+final class EmptyStringEngine implements Engine
 {
     public function generate(): string
     {

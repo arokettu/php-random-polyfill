@@ -18,7 +18,7 @@ use Random\Randomizer;
 /**
  * These won't work in PHP 8.2+ but still check if they are compatible
  */
-class LegacySerializationTest extends TestCase
+final class LegacySerializationTest extends TestCase
 {
     public function testLegacySerialization(): void
     {

@@ -12,7 +12,7 @@ namespace Arokettu\Random\Tests;
 use PHPUnit\Framework\TestCase;
 use Random\Engine\Xoshiro256StarStar;
 
-class EngineXoshiro256StarStarTest extends TestCase
+final class EngineXoshiro256StarStarTest extends TestCase
 {
     public function testSeedInt(): void
     {

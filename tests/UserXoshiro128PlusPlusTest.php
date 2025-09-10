@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/user_xoshiro128plusplus.phpt
  */
-class UserXoshiro128PlusPlusTest extends TestCase
+final class UserXoshiro128PlusPlusTest extends TestCase
 {
     public function testXoshiro(): void
     {

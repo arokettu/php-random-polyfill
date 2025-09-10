@@ -20,7 +20,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/get_bytes.phpt
  */
-class GetBytesExpansionTest extends TestCase
+final class GetBytesExpansionTest extends TestCase
 {
     public function testGetBytes(): void
     {

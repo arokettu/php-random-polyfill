@@ -22,7 +22,7 @@ use Random\Randomizer;
  * polyfill never was affected but import it anyway
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getInt_gh9415.phpt
  */
-class GetIntGh9415Test extends TestCase
+final class GetIntGh9415Test extends TestCase
 {
     public function testGh9415(): void
     {

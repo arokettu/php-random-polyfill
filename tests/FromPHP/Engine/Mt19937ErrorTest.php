@@ -22,7 +22,7 @@ use ValueError;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/mt19937_error.phpt
  */
-class Mt19937ErrorTest extends TestCase
+final class Mt19937ErrorTest extends TestCase
 {
     public function testMtError(): void
     {

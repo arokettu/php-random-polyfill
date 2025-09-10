@@ -23,7 +23,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/engine_unsafe_empty_string.phpt
  */
-class EngineUnsafeEmptyStringTest extends TestCase
+final class EngineUnsafeEmptyStringTest extends TestCase
 {
     public function testEmptyStringEngineGetInt(): void
     {

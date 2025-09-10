@@ -23,7 +23,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/serialize.phpt
  */
-class SerializeTest extends TestCase
+final class SerializeTest extends TestCase
 {
     public function testSerializeSuccess(): void
     {

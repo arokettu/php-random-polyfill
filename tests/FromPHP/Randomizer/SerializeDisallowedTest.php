@@ -22,7 +22,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/serialize_disallowed.phpt
  */
-class SerializeDisallowedTest extends TestCase
+final class SerializeDisallowedTest extends TestCase
 {
     public function testSerializeSecure(): void
     {

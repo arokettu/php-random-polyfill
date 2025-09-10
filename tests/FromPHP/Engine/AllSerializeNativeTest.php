@@ -21,7 +21,7 @@ use Random\Engine\Xoshiro256StarStar;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/all_serialize_native.phpt
  */
-class AllSerializeNativeTest extends TestCase
+final class AllSerializeNativeTest extends TestCase
 {
     public function testSerialize(): void
     {

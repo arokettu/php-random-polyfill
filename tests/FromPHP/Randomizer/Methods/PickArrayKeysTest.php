@@ -24,7 +24,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/pickArrayKeys.phpt
  */
-class PickArrayKeysTest extends TestCase
+final class PickArrayKeysTest extends TestCase
 {
     public function testPickArrayKeys(): void
     {

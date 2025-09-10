@@ -19,7 +19,7 @@ use Random\Randomizer;
 use RuntimeException;
 use Throwable;
 
-class DynamicPropertiesTest extends TestCase
+final class DynamicPropertiesTest extends TestCase
 {
     use AssertRegexCompat;
 

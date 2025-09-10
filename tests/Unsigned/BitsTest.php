@@ -17,7 +17,7 @@ use function Arokettu\Random\Unsigned\set_bit;
 use function Arokettu\Random\Unsigned\to_int;
 use function Arokettu\Random\Unsigned\unset_bit;
 
-class BitsTest extends TestCase
+final class BitsTest extends TestCase
 {
     public function testIsSetBit(): void
     {

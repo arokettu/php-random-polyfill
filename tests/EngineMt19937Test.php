@@ -20,7 +20,7 @@ use Throwable;
 /**
  * Test Mt19937 against the current core mt_rand() function
  */
-class EngineMt19937Test extends TestCase
+final class EngineMt19937Test extends TestCase
 {
     public function testMtRandCompare(): void
     {

@@ -23,7 +23,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/compatibility_user.phpt
  */
-class CompatibilityUserTest extends TestCase
+final class CompatibilityUserTest extends TestCase
 {
     public function testCompatibility(): void
     {

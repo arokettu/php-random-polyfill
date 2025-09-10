@@ -22,7 +22,7 @@ use ValueError;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/pickArrayKeys_error.phpt
  */
-class PickArrayKeysErrorTest extends TestCase
+final class PickArrayKeysErrorTest extends TestCase
 {
     public function testEmptyArray(): void
     {

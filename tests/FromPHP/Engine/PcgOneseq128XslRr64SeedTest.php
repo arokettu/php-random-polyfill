@@ -23,7 +23,7 @@ use ValueError;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/pcgoneseq128xslrr64_seed.phpt
  */
-class PcgOneseq128XslRr64SeedTest extends TestCase
+final class PcgOneseq128XslRr64SeedTest extends TestCase
 {
     public function testSeedInt(): void
     {

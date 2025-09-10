@@ -19,7 +19,7 @@ use Random\Engine\Mt19937;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/mt19937_value.phpt
  */
-class Mt19937ValueTest extends TestCase
+final class Mt19937ValueTest extends TestCase
 {
     public function testValue(): void
     {

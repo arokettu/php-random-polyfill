@@ -18,7 +18,7 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/engines.inc
  */
-class TestWrapperEngine implements Engine
+final class TestWrapperEngine implements Engine
 {
     private $engine;
 

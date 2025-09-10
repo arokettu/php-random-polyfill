@@ -18,7 +18,7 @@ use Random\Randomizer;
 use RuntimeException;
 use Throwable;
 
-class RandomizerWithCustomEngineTest extends TestCase
+final class RandomizerWithCustomEngineTest extends TestCase
 {
     public function testGetInt(): void
     {

@@ -23,7 +23,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/engine_unsafe_throws.phpt
  */
-class EngineUnsafeThrowsTest extends TestCase
+final class EngineUnsafeThrowsTest extends TestCase
 {
     public function testEngineThrows(): void
     {

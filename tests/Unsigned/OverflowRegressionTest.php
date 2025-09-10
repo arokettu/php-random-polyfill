@@ -15,7 +15,7 @@ use function Arokettu\Random\Unsigned\from_int;
 use function Arokettu\Random\Unsigned\mul;
 use function Arokettu\Random\Unsigned\to_int;
 
-class OverflowRegressionTest extends TestCase
+final class OverflowRegressionTest extends TestCase
 {
     public function testMulGeneric32(): void
     {

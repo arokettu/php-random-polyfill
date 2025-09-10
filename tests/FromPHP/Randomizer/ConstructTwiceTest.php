@@ -25,7 +25,7 @@ use Throwable;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/construct_twice.phpt
  */
-class ConstructTwiceTest extends TestCase
+final class ConstructTwiceTest extends TestCase
 {
     public function test1(): void
     {

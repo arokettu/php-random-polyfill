@@ -18,7 +18,7 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/engines.inc
  */
-class TestShaEngine implements Engine
+final class TestShaEngine implements Engine
 {
     /** @var string */
     private $state;

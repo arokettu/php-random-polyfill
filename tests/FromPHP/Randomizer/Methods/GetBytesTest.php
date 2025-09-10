@@ -24,7 +24,7 @@ use Random\Randomizer;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/methods/getBytes.phpt
  */
-class GetBytesTest extends TestCase
+final class GetBytesTest extends TestCase
 {
     public function testGetBytes(): void
     {

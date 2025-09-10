@@ -22,7 +22,7 @@ use function Arokettu\Random\Unsigned\to_hex;
 use function Arokettu\Random\Unsigned\to_int;
 use function Arokettu\Random\Unsigned\to_signed_int;
 
-class ImportExportTest extends TestCase
+final class ImportExportTest extends TestCase
 {
     public function testFromInt(): void
     {

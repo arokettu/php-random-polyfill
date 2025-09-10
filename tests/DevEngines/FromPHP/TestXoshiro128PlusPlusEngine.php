@@ -18,7 +18,7 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/engines.inc
  */
-class TestXoshiro128PlusPlusEngine implements Engine
+final class TestXoshiro128PlusPlusEngine implements Engine
 {
     private $s0;
     private $s1;

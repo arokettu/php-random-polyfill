@@ -19,7 +19,7 @@ use Random\Engine\Xoshiro256StarStar;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/xoshiro256starstar_serialize.phpt
  */
-class Xoshiro256StarStarSerializeTest extends TestCase
+final class Xoshiro256StarStarSerializeTest extends TestCase
 {
     public function testSerialization(): void
     {

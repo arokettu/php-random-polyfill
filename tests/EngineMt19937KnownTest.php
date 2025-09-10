@@ -16,7 +16,7 @@ use Random\Randomizer;
 /**
  * Test Mt19937 against pre-generated sequences
  */
-class EngineMt19937KnownTest extends TestCase
+final class EngineMt19937KnownTest extends TestCase
 {
     public function testKnownRangeSequence(): void
     {

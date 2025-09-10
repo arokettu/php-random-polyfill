@@ -19,7 +19,7 @@ use Random\Engine;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/03_randomizer/engine_unsafe_throws.phpt
  */
-class ThrowingEngine implements Engine
+final class ThrowingEngine implements Engine
 {
     public function generate(): string
     {

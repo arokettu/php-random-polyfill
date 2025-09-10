@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @see https://github.com/php/php-src/blob/master/ext/random/tests/02_engine/all_serialize_user.phpt
  */
-class AllSerializeUserTest extends TestCase
+final class AllSerializeUserTest extends TestCase
 {
     public function testSerialize(): void
     {
