@@ -3,7 +3,7 @@
 /**
  * Extracted from arokettu/unsigned
  *
- * @copyright Copyright © 2022 Anton Smirnov
+ * @copyright 2022 Anton Smirnov
  * @license BSD-2-Clause https://spdx.org/licenses/BSD-2-Clause.html
  */
 

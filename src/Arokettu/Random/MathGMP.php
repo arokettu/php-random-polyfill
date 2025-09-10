@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright Copyright © 2022 Anton Smirnov
+ * @copyright 2022 Anton Smirnov
  * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
  *
  * @noinspection PhpComposerExtensionStubsInspection
