@@ -13,6 +13,12 @@ A special empty version to be installed on PHP >= 8.2.
 
 ## 1.x
 
+### 1.0.5
+
+*Sep 10, 2025*
+
+* Removed always included lib.php, now the library has absolutely no side effects in PHP 8.2+
+
 ### 1.0.4 "The Final"_final
 
 *Apr 1, 2025*
