@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright 2022 Anton Smirnov
+ * @license BSD-2-Clause https://spdx.org/licenses/BSD-2-Clause.html
+ */
+
 declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\Unsigned;
