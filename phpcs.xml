@@ -2,10 +2,14 @@
 <!--
     @see https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset
 -->
-<ruleset name="Custom Standard" namespace="MyProject\CS\Standard">
+<ruleset>
     <rule ref="SandFox_PHP71">
         <!-- crashes -->
         <exclude name="Security.BadFunctions.CallbackFunctions"/>
+        <!-- not enforced by this package -->
+        <exclude name="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
+        <!-- false positives -->
+        <exclude name="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
     </rule>
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions">
         <properties>
