@@ -9,29 +9,26 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\Unsigned;
 
+use Arokettu\Random\Unsigned\Unsigned as u;
 use PHPUnit\Framework\TestCase;
-
-use function Arokettu\Random\Unsigned\from_int;
-use function Arokettu\Random\Unsigned\shift_left;
-use function Arokettu\Random\Unsigned\shift_right;
 
 final class ShiftsTest extends TestCase
 {
     public function testLeftShift(): void
     {
-        $num = from_int(-1, \PHP_INT_SIZE);
+        $num = u::from_int(-1, \PHP_INT_SIZE);
 
         for ($i = 0; $i <= \PHP_INT_SIZE * 8; $i++) {
-            self::assertEquals(from_int(-1 << $i, \PHP_INT_SIZE), shift_left($num, $i));
+            self::assertEquals(u::from_int(-1 << $i, \PHP_INT_SIZE), u::shift_left($num, $i));
         }
     }
 
     public function testRightShift(): void
     {
-        $num = from_int(\PHP_INT_MAX, \PHP_INT_SIZE);
+        $num = u::from_int(\PHP_INT_MAX, \PHP_INT_SIZE);
 
         for ($i = 0; $i <= \PHP_INT_SIZE * 8; $i++) {
-            self::assertEquals(from_int(\PHP_INT_MAX >> $i, \PHP_INT_SIZE), shift_right($num, $i));
+            self::assertEquals(u::from_int(\PHP_INT_MAX >> $i, \PHP_INT_SIZE), u::shift_right($num, $i));
         }
     }
 
@@ -40,7 +37,7 @@ final class ShiftsTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$shift must be non negative');
 
-        shift_left("\0", -1);
+        u::shift_left("\0", -1);
     }
 
     public function testNonNegRightShift(): void
@@ -48,6 +45,6 @@ final class ShiftsTest extends TestCase
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('$shift must be non negative');
 
-        shift_right("\0", -1);
+        u::shift_right("\0", -1);
     }
 }

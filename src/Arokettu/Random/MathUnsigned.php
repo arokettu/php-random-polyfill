@@ -11,20 +11,7 @@ declare(strict_types=1);
 
 namespace Arokettu\Random;
 
-use function Arokettu\Random\Unsigned\add;
-use function Arokettu\Random\Unsigned\add_int;
-use function Arokettu\Random\Unsigned\compare;
-use function Arokettu\Random\Unsigned\from_hex;
-use function Arokettu\Random\Unsigned\from_int;
-use function Arokettu\Random\Unsigned\mod;
-use function Arokettu\Random\Unsigned\mul;
-use function Arokettu\Random\Unsigned\mul_int;
-use function Arokettu\Random\Unsigned\shift_left;
-use function Arokettu\Random\Unsigned\shift_right;
-use function Arokettu\Random\Unsigned\sub;
-use function Arokettu\Random\Unsigned\sub_int;
-use function Arokettu\Random\Unsigned\to_int;
-use function Arokettu\Random\Unsigned\to_signed_int;
+use Arokettu\Random\Unsigned\Unsigned;
 
 /**
  * @internal
@@ -53,7 +40,7 @@ final class MathUnsigned extends Math
      */
     public function shiftLeft($value, int $shift)
     {
-        return shift_left($value, $shift);
+        return Unsigned::shift_left($value, $shift);
     }
 
     /**
@@ -63,7 +50,7 @@ final class MathUnsigned extends Math
      */
     public function shiftRight($value, int $shift)
     {
-        return shift_right($value, $shift);
+        return Unsigned::shift_right($value, $shift);
     }
 
     /**
@@ -73,7 +60,7 @@ final class MathUnsigned extends Math
      */
     public function add($value1, $value2)
     {
-        return add($value1, $value2);
+        return Unsigned::add($value1, $value2);
     }
 
     /**
@@ -83,7 +70,7 @@ final class MathUnsigned extends Math
      */
     public function addInt($value1, int $value2)
     {
-        return add_int($value1, $value2);
+        return Unsigned::add_int($value1, $value2);
     }
 
     /**
@@ -93,7 +80,7 @@ final class MathUnsigned extends Math
      */
     public function sub($value1, $value2)
     {
-        return sub($value1, $value2);
+        return Unsigned::sub($value1, $value2);
     }
 
     /**
@@ -103,7 +90,7 @@ final class MathUnsigned extends Math
      */
     public function subInt($value1, int $value2)
     {
-        return sub_int($value1, $value2);
+        return Unsigned::sub_int($value1, $value2);
     }
 
     /**
@@ -113,7 +100,7 @@ final class MathUnsigned extends Math
      */
     public function mul($value1, $value2)
     {
-        return mul($value1, $value2);
+        return Unsigned::mul($value1, $value2);
     }
 
     /**
@@ -123,7 +110,7 @@ final class MathUnsigned extends Math
      */
     public function mulInt($value1, int $value2)
     {
-        return mul_int($value1, $value2);
+        return Unsigned::mul_int($value1, $value2);
     }
 
     /**
@@ -133,7 +120,7 @@ final class MathUnsigned extends Math
      */
     public function mod($value1, $value2)
     {
-        return mod($value1, $value2);
+        return Unsigned::mod($value1, $value2);
     }
 
     /**
@@ -143,7 +130,7 @@ final class MathUnsigned extends Math
      */
     public function compare($value1, $value2): int
     {
-        return compare($value1, $value2);
+        return Unsigned::compare($value1, $value2);
     }
 
     /**
@@ -152,7 +139,7 @@ final class MathUnsigned extends Math
      */
     public function fromHex(string $value)
     {
-        return from_hex($value, $this->sizeof);
+        return Unsigned::from_hex($value, $this->sizeof);
     }
 
     /**
@@ -161,7 +148,7 @@ final class MathUnsigned extends Math
      */
     public function fromInt(int $value)
     {
-        return from_int($value, $this->sizeof);
+        return Unsigned::from_int($value, $this->sizeof);
     }
 
     /**
@@ -187,7 +174,7 @@ final class MathUnsigned extends Math
      */
     public function toInt($value): int
     {
-        return to_int($value);
+        return Unsigned::to_int($value);
     }
 
     /**
@@ -195,7 +182,7 @@ final class MathUnsigned extends Math
      */
     public function toSignedInt($value): int
     {
-        return to_signed_int($value);
+        return Unsigned::to_signed_int($value);
     }
 
     /**

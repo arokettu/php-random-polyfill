@@ -9,11 +9,8 @@ declare(strict_types=1);
 
 namespace Arokettu\Random\Tests\Unsigned;
 
+use Arokettu\Random\Unsigned\Unsigned as u;
 use PHPUnit\Framework\TestCase;
-
-use function Arokettu\Random\Unsigned\from_int;
-use function Arokettu\Random\Unsigned\mul;
-use function Arokettu\Random\Unsigned\to_int;
 
 final class OverflowRegressionTest extends TestCase
 {
@@ -21,11 +18,11 @@ final class OverflowRegressionTest extends TestCase
     {
         // error on 32 bit platforms
 
-        $value1 = from_int(1812433253, 4);
-        $value2 = from_int(1262528769, 4);
+        $value1 = u::from_int(1812433253, 4);
+        $value2 = u::from_int(1262528769, 4);
 
-        $mul = mul($value1, $value2);
+        $mul = u::mul($value1, $value2);
 
-        self::assertEquals(1442526821, to_int($mul));
+        self::assertEquals(1442526821, u::to_int($mul));
     }
 }
