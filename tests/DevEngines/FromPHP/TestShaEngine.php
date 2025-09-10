@@ -5,7 +5,7 @@
  * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
  *
  * Includes test code from the PHP Interpreter
- * @copyright 1999-2012 The PHP Group. All rights reserved.
+ * @copyright 1999-2022 The PHP Group. All rights reserved.
  * @license PHP-3.01 https://spdx.org/licenses/PHP-3.01.html
  */
 
