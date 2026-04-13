@@ -5,8 +5,8 @@
  * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
  *
  * Includes adaptation of C code from the PHP Interpreter
- * @copyright 1999-2022 The PHP Group. All rights reserved.
- * @license PHP-3.01 https://spdx.org/licenses/PHP-3.01.html
+ * @copyright 1999-2022 The PHP Group and Contributors.
+ * @license BSD-3-Clause https://spdx.org/licenses/BSD-3-Clause.html
  * @see https://github.com/php/php-src/blob/eff9aed/ext/random/randomizer.c
  * @see https://github.com/php/php-src/blob/eff9aed/ext/standard/array.c
  * @see https://github.com/php/php-src/blob/eff9aed/ext/standard/string.c
