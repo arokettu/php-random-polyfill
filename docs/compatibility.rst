@@ -9,7 +9,7 @@ PHP
     https://www.php.net/manual/en/book.random.php
 
 The library aims to be compatible with ``ext-random`` as released in PHP 8.2.0 and subsequent patch releases.
-The library will not be a full replacement for ``ext-random`` and total compatibility does not seem to be achievable.
+The library is not a full replacement for ``ext-random`` and total compatibility does not seem to be achievable.
 
 Available classes:
 
@@ -57,7 +57,7 @@ Randomizer
 
 * ``pickArrayKeys()`` messes a lot with the internal structure of the PHP hash tables and therefore
   may produce different results in the userland.
-  Example from `Tim Düsterhus`__:
+  `Example from Tim Düsterhus`__:
 
   .. code-block:: php
 

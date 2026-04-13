@@ -3,7 +3,7 @@ Random Extension Polyfill
 
 |Packagist| |GitLab| |GitHub| |Codeberg| |Gitea|
 
-This is a polyfill for the new ``ext-random`` extension that was released with PHP 8.2.
+This is a polyfill for the built-in ``ext-random`` extension that was released with PHP 8.2.
 
 Requirements
 ============
