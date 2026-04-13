@@ -51,6 +51,6 @@ Feel free to ask any questions in our room on Gitter: <https://gitter.im/arokett
 
 ## License
 
-The library is available as open source under the terms of the [3-Clause BSD License].
+The library is available as open source under the terms of the [3-Clause BSD License][COPYING].
 
-[3-Clause BSD License]: LICENSE.md
+[COPYING]: LICENSE.md
