@@ -1,6 +1,9 @@
 # BSD 3-Clause "New" or "Revised" License
 
-Copyright © 2022 Anton Smirnov
+The polyfill \
+Copyright © 2022 Anton Smirnov \
+The PHP Source \
+Copyright © 1999-2022 The PHP Group and Contributors.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

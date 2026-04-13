@@ -31,14 +31,12 @@ Documentation
 
    compatibility
    performance
-   license
    thanks
 
 License
 =======
 
 The library is available as open source under the terms of the `3-Clause BSD License`__.
-See :ref:`license` for additional licenses.
 
 .. __: https://opensource.org/licenses/BSD-3-Clause
 
