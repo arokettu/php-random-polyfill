@@ -13,6 +13,13 @@ A special empty version to be installed on PHP >= 8.2.
 
 ## 1.x
 
+### 1.0.6
+
+*Apr 13, 2026*
+
+* By the PHP license 3.01 clause 5, updated the upstream license to the PHP License 4.0 (3-Clause BSD)
+  making the library purely licensed under the 3-Clause BSD
+
 ### 1.0.5
 
 *Sep 10, 2025*
