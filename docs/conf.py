@@ -72,4 +72,11 @@ html_context = {
     'doc_path': "docs",
 }
 
+html_static_path = [
+    '_static',
+]
+html_css_files = [
+    'custom.css',
+]
+
 exclude_patterns = ['venv/*']
